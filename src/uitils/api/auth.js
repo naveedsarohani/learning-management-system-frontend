@@ -18,7 +18,7 @@ async function login(data, handler, user) {
         toast.error(error.message);
     } finally {
         handler.setLoading(loading => !loading);
-    }
+    } 
 }
 
 // function to logout

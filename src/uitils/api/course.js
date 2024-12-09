@@ -8,14 +8,19 @@ async function all(token, setCourses, handler) {
     try {
         const responseData = response(await request.get('/courses', token));
         responseData && setCourses(responseData[1]);
-        console.log(responseData);
     }
     catch (error) { toast.error(error.message); }
     finally { handler.setLoading(loading => !loading); }
 }
 
-function show(token, setCourses, setMessage, setLoading) {
-
+async function show(id, token, setCourse, handler) {
+    handler.setLoading(loading => !loading);
+    try {
+        const responseData = response(await request.get(`/courses/${id}`, token));
+        responseData && setCourse(responseData.course);
+    }
+    catch (error) { toast.error(error.message); }
+    finally { handler.setLoading(loading => !loading); }
 }
 
 function store(token, setCourses, setMessage, setLoading) {

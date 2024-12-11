@@ -23,6 +23,7 @@ export default function AllCourses() {
                 <th>Sno.</th>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Created On</th>
                 <th>Action</th>
             </>}
 
@@ -31,7 +32,7 @@ export default function AllCourses() {
                 <td>{course.title}</td>
                 <td>{course.description}</td>
                 <td>
-                    <Link to={'./show/' + course.id}>View</Link>
+                    <Link to={'./' + course.id}>View</Link>
                 </td>
             </tr>)}
         />

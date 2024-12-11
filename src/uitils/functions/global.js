@@ -88,3 +88,15 @@ export function roleBaseRedirection(userRole, navigate) {
 export function isLoading(handler, nonLoadingState, loadingState = 'Loading...') {
     return handler.loading ? loadingState : nonLoadingState;
 }
+
+// function to formatdate date
+export function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+}

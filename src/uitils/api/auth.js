@@ -1,7 +1,19 @@
 import { toast } from "react-toastify";
 import { response, roleBaseRedirection } from "../functions/global";
 import request from "../functions/request";
-import { role } from "../functions/constants";
+
+// function to login
+async function register(data, handler) {
+    handler.setLoading(loading => !loading);
+
+    try {
+        response(await request.post('/auth/register', data), handler.setValidationErrors);
+    } catch (error) {
+        toast.error(error.message);
+    } finally {
+        handler.setLoading(loading => !loading);
+    }
+}
 
 // function to login
 async function login(data, handler, user) {
@@ -36,4 +48,17 @@ async function logout(token, handler) {
     }
 }
 
-export default { login, logout }
+// function to login
+async function updatePassword(data, token, handler) {
+    handler.setLoading(loading => !loading);
+
+    try {
+        response(await request.post('/auth/update-password', data, token), handler.setValidationErrors);
+    } catch (error) {
+        toast.error(error.message);
+    } finally {
+        handler.setLoading(loading => !loading);
+    }
+}
+
+export default { register, login, logout, updatePassword }

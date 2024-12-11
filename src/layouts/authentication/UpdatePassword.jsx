@@ -18,7 +18,7 @@ export default function UpdatePassword() {
         <h1>Update Password</h1>
         <h5>Using your old password you can update your password</h5>
 
-        <Form {...{ handleSubmit,  }}>
+        <Form {...{ handleSubmit, }}>
             <InputField
                 type={'password'}
                 name={'old_password'}

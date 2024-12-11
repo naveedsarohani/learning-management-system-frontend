@@ -8,9 +8,7 @@ import { useHandler } from "../../contexts/Handler";
 
 export default function ShowCourse() {
   const { id } = useParams();
-  const {
-    credentials: { token },
-  } = useAuth();
+  const { credentials: { token } } = useAuth();
   const { handler } = useHandler();
   const [course, setCourse] = useState(blueprint.course);
 

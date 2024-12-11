@@ -28,7 +28,7 @@ export default function Login() {
             </p>
 
             <Form {...{ handleSubmit }} className="space-y-4  ">
-              <div className="mb-8">
+              <div className="mb-2">
                 <InputField
                   name={"email"}
                   placeholder={"enter your email address"}

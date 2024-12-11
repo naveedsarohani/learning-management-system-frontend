@@ -1,14 +1,14 @@
-import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
-import { useAuth } from "../contexts/Authentication";
-import { useHandler } from "../contexts/Handler";
-import Navbar from "../components/global/navbar";
-import SideBar from "../components/global/SideBar";
-import Courses from "./Courses";
-import { role } from "../uitils/functions/constants";
-import DashboardHomePage from "../layouts/dashboards";
-import NotFound404 from "../layouts/404";
-import UpdatePassword from "../layouts/authentication/UpdatePassword";
+import { useEffect, useState } from "react"
+import { Route, Routes } from "react-router-dom"
+import { useAuth } from "../contexts/Authentication"
+import { useHandler } from "../contexts/Handler"
+import Navbar from "../components/global/navbar"
+import SideBar from "../components/global/SideBar"
+import Courses from "./Courses"
+import { role } from "../uitils/functions/constants"
+import DashboardHomePage from "../layouts/dashboards"
+import NotFound404 from "../layouts/404"
+import UpdatePassword from "../layouts/authentication/UpdatePassword"
 
 export default function Dashboard() {
   const {

@@ -19,8 +19,8 @@ export default function InputField({
   } = useHandler()
 
   return (
-    <label className="block text-sm font-bold text-gray-600 mb-2">
-      {capEach(separateBy(name, "_"))}{" "}
+    <label className="block text-sm font-bold text-gray-600 ">
+      {/* {capEach(separateBy(name, "_"))}{" "} */}
       <input
         className={className ?? "form-control"}
         type={type ?? ""}

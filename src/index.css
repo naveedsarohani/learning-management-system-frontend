@@ -1,0 +1,8 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.clip-slash {
+  clip-path: polygon(0 0, 100% 0%, 100% 100%, 10% 100%);
+}

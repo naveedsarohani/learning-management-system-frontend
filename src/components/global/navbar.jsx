@@ -24,7 +24,6 @@ export default function Navbar() {
 
   return (
     <header>
-      <Link to={"/"}>Learning Management System</Link>
       {/* <nav>
             <ol>
                 {user
@@ -34,12 +33,12 @@ export default function Navbar() {
             </ol>
         </nav> */}
 
-      <nav className="flex flex-wrap justify-between items-center px-4 sm:px-6 py-4 bg-white shadow-sm">
+      <nav className="flex flex-wrap justify-between items-center px-2 sm:px-6 py-4 bg-white shadow-sm rounded-lg">
         {/* Navbar Left */}
         <div className="flex items-center space-x-2 text-gray-500">
           <span>🏠</span>
           <span className="text-sm font-medium">
-            Learning Management System
+            <Link to={"/"}>Learning Management System</Link>
           </span>
         </div>
 

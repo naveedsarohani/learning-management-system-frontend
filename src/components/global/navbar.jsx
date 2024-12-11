@@ -75,18 +75,18 @@ export default function Navbar() {
                   </button>
                 </li>
                 <li>
-                  <button
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm text-gray-700"
-                    onClick={() => alert("Logging out...")}
-                  >
-                    {user ? (
-                      <li onClick={handleLogout}>Logout</li>
-                    ) : (
-                      <li>
-                        <Link to={"/auth/login"}>Login</Link>
-                      </li>
-                    )}
-                  </button>
+                  {user ? (
+                    <li onClick={handleLogout}>
+                      {" "}
+                      <button className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm text-gray-700">
+                        Logout{" "}
+                      </button>
+                    </li>
+                  ) : (
+                    <li>
+                      <Link to={"/auth/login"}>Login</Link>
+                    </li>
+                  )}
                 </li>
               </ul>
             </div>

@@ -32,7 +32,7 @@ export default function AddCourse() {
 
                 <InputField type={"file"} name={"image"} accept={".jpg,.jpeg.png"} />
 
-        <InputField
+                <InputField
                   type={"hidden"}
                   name={"user_id"}
                   value={user.id}

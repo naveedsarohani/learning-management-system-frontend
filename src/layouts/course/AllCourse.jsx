@@ -32,7 +32,7 @@ export default function AllCourses() {
                 <th>Action</th>
             </>}
 
-            tds={courses.at(0).id && courses.map((course, index) => <tr>
+            tds={courses.at(0).id && courses.map((course, index) => <tr key={course.id}>
                 <td>{index + 1}</td>
                 <td>{course.title}</td>
                 <td>{course.description}</td>

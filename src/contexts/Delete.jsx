@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 const DeleteContext = createContext();
 
 export default function DeleteContextProvider({ children }) {
-    const { deleteCreds, setDeleteCreds } = useState({
+    const [deleteCreds, setDeleteCreds] = useState({
         isBeingDeleted: false,
         route: '',
         id: '',
@@ -11,16 +11,19 @@ export default function DeleteContextProvider({ children }) {
     });
 
     function destory(route, id, identity) {
-        setDeleteCreds(pre => {
-            return { ...pre, route, id, identity };
-        })
+        setDeleteCreds({ isBeingDeleted: true, route, id, identity })
     }
 
     function setIsDeleting(deletion) {
-        setDeleteCreds.isBeingDeleted(deletion);
+        setDeleteCreds(pre => {
+            return {
+                ...pre,
+                isBeingDeleted: deletion,
+            }
+        });
     }
 
-    return <DeleteContext.Provider value={{ deletion: deleteCreds, destory, setIsDeleting }}>
+    return <DeleteContext.Provider value={{ deletion: { ...deleteCreds }, destory, setIsDeleting }}>
         {children}
     </DeleteContext.Provider>
 }

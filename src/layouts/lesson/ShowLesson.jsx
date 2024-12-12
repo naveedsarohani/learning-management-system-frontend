@@ -6,7 +6,7 @@ import courseapi from "../../uitils/api/course";
 import { useAuth } from "../../contexts/Authentication";
 import { useHandler } from "../../contexts/Handler";
 
-export default function ShowCourse() {
+export default function ShowLesson() {
   const { id } = useParams();
   const { credentials: { token } } = useAuth();
   const { handler } = useHandler();

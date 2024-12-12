@@ -87,7 +87,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                 </li>
                 <li>
                   <NavLink
-                    to="/courses"
+                    to="/dashboard/courses"
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"

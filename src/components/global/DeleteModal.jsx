@@ -8,15 +8,15 @@ import { useAuth } from "../../contexts/Authentication";
 export function DeleteModal() {
     const { handler } = useHandler();
     const { credentials: { token } } = useAuth();
-    const { isBeingDeleted, route, id, identity, setIsDeleting } = useDelete();
+    const { deletion: { route, id, identity }, setIsDeleting } = useDelete();
 
     async function handleDelete() {
-        handler.loading(true);
+        handler.setLoading(true);
         try {
             response(await request.delete(`${route}/${id}`, token));
         } catch (error) { toast.error(error.message) }
         finally {
-            handler.loading(false);
+            handler.setLoading(false);
             setIsDeleting(false);
         }
     }

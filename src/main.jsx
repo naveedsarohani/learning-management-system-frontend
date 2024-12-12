@@ -8,16 +8,19 @@ import AuthenticationProvider from './contexts/Authentication.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HandlerProvider from './contexts/Handler.jsx';
+import DeleteContextProvider from './contexts/Delete.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthenticationProvider>
-        <HandlerProvider>
-          <App />
-          <ToastContainer />
-        </HandlerProvider>
-      </AuthenticationProvider>
+      <DeleteContextProvider>
+        <AuthenticationProvider>
+          <HandlerProvider>
+            <App />
+            <ToastContainer />
+          </HandlerProvider>
+        </AuthenticationProvider>
+      </DeleteContextProvider>
     </BrowserRouter>
   </StrictMode>,
 );

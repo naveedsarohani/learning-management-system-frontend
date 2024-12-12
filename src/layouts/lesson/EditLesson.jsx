@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import DashboardPageCompement from "../../components/global/DashboardPage";
 import blueprint from "../../uitils/blueprint";
-import courseapi from "../../uitils/api/course";
 import Form from "../../components/form/Form";
 import InputField from "../../components/form/InputField";
 import { useParams } from "react-router-dom";
@@ -9,52 +8,44 @@ import { useHandler } from "../../contexts/Handler";
 import SubmitButton from "../../components/form/SubmitButton";
 import { useAuth } from "../../contexts/Authentication";
 import { isLoading } from "../../uitils/functions/global";
+import lessonapi from "../../uitils/api/lesson";
 
 export default function EditLesson() {
-  const [course, setCourse] = useState(blueprint.course);
+  const [lesson, setLesson] = useState(blueprint.lesson);
   const {
-    credentials: { token ,user },
+    credentials: { token },
   } = useAuth();
   const { handler } = useHandler();
-  const { id } = useParams();
+  const { lessonId } = useParams();
 
   function handleSubmit(data) {
-    courseapi.update(id, data, token, handler);
+    lessonapi.update(lessonId, data, token, handler);
   }
 
   useEffect(() => {
-    courseapi.show(id, token, setCourse, handler);
+    lessonapi.show(lessonId, token, setLesson, handler);
   }, []);
 
-  return  course.id && <DashboardPageCompement title={"edit course"}>
-      <h1>This is edit course page</h1>
+  return  lesson.id && <DashboardPageCompement title={"edit lesson"}>
+      <h1>This is edit Lesson page</h1>
 
       <Form {...{ handleSubmit }}>
         <InputField
           type={"text"}
           name={"title"}
-          value={course.title}
-          set={setCourse}
-          placeholder={"Course title"}
+          value={lesson.title}
+          set={setLesson}
+          
         />
 
         <InputField
-          type={"text"}
-          name={"description"}
-          value={course.description}
-          set={setCourse}
-          placeholder={"Course description"}
-        />
+            type={"file"}
+            name={"content"}
+            set={setLesson}
+            accept={".pdf,.docx,.xlsx,.txt,.mp4,.3gp,mkv"}
+          />        
 
-        <InputField
-          type={"hidden"}
-          name={"user_id"}
-          value={user.id}
-        />
-
-        <InputField type={"file"} name={"image"} accept={".jpg,.jpeg.png"} />
-
-        <SubmitButton name={isLoading(handler, "Edit Course")} />
+        <SubmitButton name={isLoading(handler, "Edit Lesson")} />
       </Form>
     </DashboardPageCompement>
 }

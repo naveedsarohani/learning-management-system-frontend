@@ -3,7 +3,7 @@ import AllCourses from "../layouts/course/AllCourse";
 import NotFound404 from "../layouts/404";
 import AddCourse from "../layouts/course/AddCourse";
 import EditCourse from "../layouts/course/EditCourse";
-import ShowCourse from "../layouts/course/ShowCourse";
+// import ShowCourse from "../layouts/course/ShowCourse";
 import Lesson from "./Lesson";
 
 export default function Courses() {

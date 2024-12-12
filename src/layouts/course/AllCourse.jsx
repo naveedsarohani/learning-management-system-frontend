@@ -7,7 +7,6 @@ import course from "../../uitils/api/course";
 import { Link } from "react-router-dom";
 import { useDelete } from "../../contexts/Delete";
 import blueprint from "../../uitils/blueprint";
-import { capEach } from "../../uitils/functions/global";
 
 export default function AllCourses() {
     const { handler } = useHandler();
@@ -32,14 +31,14 @@ export default function AllCourses() {
                 <th>Action</th>
             </>}
 
-            tds={courses.at(0).id && courses.map((course, index) => <tr>
+            tds={courses.at(0).id && courses.map((course, index) => <tr key={course.id}>
                 <td>{index + 1}</td>
                 <td>{course.title}</td>
                 <td>{course.description}</td>
                 <td>
                     <Link to={'./' + course.id}>View</Link>
                     <Link to={'./edit/' + course.id}>Edit</Link>
-                    <button onClick={() => destory('/courses', course.id, capEach(course.title + ' course'))}>Delete</button>
+                    <button onClick={() => destory('/courses', course.id, course.title + ' course')}>Delete</button>
                 </td>
             </tr>)}
         />

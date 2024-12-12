@@ -33,13 +33,12 @@ export default function AddCourse() {
                 <InputField type={"file"} name={"image"} accept={".jpg,.jpeg.png"} />
 
                 <InputField
-                    type={"hidden"}
-                    name={"user_id"}
-                    value={user.id}
-                />
+                  type={"hidden"}
+                  name={"user_id"}
+                  value={user.id}
+              />
 
-                <SubmitButton name={isLoading(handler, "Add Course")} />
-            </Form>
-        </DashboardPageCompement>
-    );
-}
+        <SubmitButton name={isLoading(handler, "Add Course")} />
+      </Form>
+    </DashboardPageCompement>
+  )};

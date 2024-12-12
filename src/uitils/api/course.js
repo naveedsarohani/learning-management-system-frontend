@@ -23,11 +23,26 @@ async function show(id, token, setCourse, handler) {
     finally { handler.setLoading(loading => !loading); }
 }
 
-function store(token, setCourses, setMessage, setLoading) {
+async function store(token, data, handler) {
+    handler.setLoading(loading=>!loading);
+    try{
+        response(await request.post('/courses',data,token), handler.setValidationErrors);
+
+    }
+    catch(error){
+        toast.error(error.message);
+    }
+    finally { handler.setLoading(loading => !loading); }
 
 }
 
-function update(token, setCourses, setMessage, setLoading) {
+async function update(id, data, token, handler) {
+    handler.setLoading(loading=>!loading);
+    try {
+        response(await request.put(`/courses/${id}`,data,token),handler.setValidationErrors);
+        // handler.navigate('/courses');
+    } catch (error) { toast.error(error.message);}
+    finally { handler.setLoading(loading => !loading); }
 
 }
 

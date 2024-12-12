@@ -32,7 +32,6 @@ async function login(data, handler, user) {
         handler.setLoading(loading => !loading);
     }
 }
-
 // function to logout
 async function logout(token, handler) {
     handler.setLoading(loading => !loading);

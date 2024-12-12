@@ -12,7 +12,13 @@ export default function HandlerProvider({ children }) {
     const location = useLocation();
 
     // return statement
-    return <Handler.Provider value={{ handler: { loading, setLoading, validationErrors, setValidationErrors, navigate, location } }}>
+    return <Handler.Provider value={{
+        handler: {
+            loading, setLoading,
+            validationErrors, setValidationErrors,
+            navigate, location
+        }
+    }}>
         {children}
     </Handler.Provider>
 }

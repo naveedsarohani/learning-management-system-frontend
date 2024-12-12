@@ -32,6 +32,8 @@ export default function AllCourses() {
                 <td>{course.title}</td>
                 <td>{course.description}</td>
                 <td>
+                    <Link to={'./show/' + course.id}>View</Link>
+                    <Link to={'./edit/' + course.id}>Edit</Link>
                     <Link to={'./' + course.id}>View</Link>
                 </td>
             </tr>)}

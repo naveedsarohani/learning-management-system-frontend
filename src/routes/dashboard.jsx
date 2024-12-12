@@ -16,7 +16,7 @@ export default function Dashboard() {
   } = useAuth()
   const { handler } = useHandler()
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
@@ -36,19 +36,15 @@ export default function Dashboard() {
         <div className="flex h-screen">
           {/* Sidebar */}
           <div
-            className={`transition-all ${
-              isSidebarOpen ? "w-30" : "w-0"
-            } flex-shrink-0`}
+            className={`fixed md:static transition-transform z-10 ${
+              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+            } md:translate-x-0`}
           >
             <SideBar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen} />
           </div>
 
           {/* Main Content Area */}
-          <div
-            className={`flex-1 flex flex-col p-4 transition-all ${
-              isSidebarOpen ? "ml-64" : ""
-            }`}
-          >
+          <div className="flex-1 flex flex-col p-4">
             {/* Navbar */}
             <div className="w-full">
               <Navbar />
@@ -61,7 +57,7 @@ export default function Dashboard() {
                 <Route path="/courses/*" element={<Courses />} />
                 <Route path="/update-password" element={<UpdatePassword />} />
 
-                {/* Unknow route */}
+                {/* Unknown Route */}
                 <Route path="*" element={<NotFound404 />} />
               </Routes>
             </div>

@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import { NavLink } from "react-router-dom"
 import { role } from "../../uitils/functions/constants"
 import { useState } from "react"
+import { RiMenuUnfoldFill } from "react-icons/ri"
+import { RiMenuUnfold2Fill } from "react-icons/ri"
 
 export default function SideBar({ toggleSidebar, isOpen, userRole }) {
   return (
@@ -15,15 +17,18 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
         {/* Toggle Button */}
         <button
           onClick={toggleSidebar}
-          className="absolute top-4 left-4 z-10 text-white bg-blue-500 p-2 rounded-md"
+          className="absolute top-4 left-4 z-10 text-white bg-blue-500 p-2 rounded-md md:hidden"
         >
-          {isOpen ? "Close" : "Open"}
+          {isOpen ? <RiMenuUnfold2Fill /> : <RiMenuUnfoldFill />}
         </button>
 
         {/* Sidebar */}
         <div
-          className={`h-screen p-5 bg-white shadow-lg fixed top-0 left-0 transition-all ${
+          className={`h-screen p-5 bg-white shadow-lg fixed top-0 transition-all ${
             isOpen ? "translate-x-0" : "-translate-x-full"
+          } ${
+            // Add width only for screens medium or larger
+            "md:static md:translate-x-0 md:w-64 md:flex-shrink-0"
           }`}
         >
           <div className="p-4">

@@ -8,31 +8,29 @@ import { useHandler } from "../../contexts/Handler";
 import { isLoading } from "../../uitils/functions/global";
 
 export default function AddCourse() {
-  const {
-    credentials: { token, user },
-  } = useAuth();
-  const { handler } = useHandler();
+    const { credentials: { token, user } } = useAuth();
+    const { handler } = useHandler();
 
-  function handleSubmit(data) {
-    course.store(token, data, handler);
-  }
+    function handleSubmit(data) {
+        course.store(token, data, handler);
+    }
 
-  return (
-    <DashboardPageCompement title={"add course"}>
-      <h1>Add a new course</h1>
+    return (
+        <DashboardPageCompement title={"add course"}>
+            <h1>Add a new course</h1>
 
-      <Form {...{ handleSubmit }}>
-        <InputField type={"text"} 
-            name={"title"} 
-            placeholder={"Course title"} />
+            <Form {...{ handleSubmit }}>
+                <InputField type={"text"}
+                    name={"title"}
+                    placeholder={"Course title"} />
 
-        <InputField
-          type={"text"}
-          name={"description"}
-          placeholder={"Course description"}
-        />
+                <InputField
+                    type={"text"}
+                    name={"description"}
+                    placeholder={"Course description"}
+                />
 
-        <InputField type={"file"} name={"image"} accept={".jpg,.jpeg.png"} />
+                <InputField type={"file"} name={"image"} accept={".jpg,.jpeg.png"} />
 
         <InputField
                   type={"hidden"}
@@ -43,5 +41,4 @@ export default function AddCourse() {
         <SubmitButton name={isLoading(handler, "Add Course")} />
       </Form>
     </DashboardPageCompement>
-  );
-}
+  )};

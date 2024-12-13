@@ -37,7 +37,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
               <ul className="space-y-4 pl-4">
                 <li>
                   <NavLink
-                    to="/instructors"
+                    to="/dashboard/instructors"
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
@@ -62,7 +62,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                 </li>
                 <li>
                   <NavLink
-                    to="/students"
+                    to="/dashboard/students"
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
@@ -106,6 +106,131 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                           <i className="fas fa-book text-xs"></i>
                         </span>
                         Courses
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/lessons"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
+                        >
+                          <i className="fas fa-book text-xs"></i>
+                        </span>
+                        Lessons
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/assessments"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
+                        >
+                          <i className="fas fa-book text-xs"></i>
+                        </span>
+                        Assessments
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/questions"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
+                        >
+                          <i className="fas fa-book text-xs"></i>
+                        </span>
+                        Questions
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/answers"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
+                        >
+                          <i className="fas fa-book text-xs"></i>
+                        </span>
+                        Answers
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/submissions"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
+                        >
+                          <i className="fas fa-book text-xs"></i>
+                        </span>
+                        Submissions
                       </>
                     )}
                   </NavLink>

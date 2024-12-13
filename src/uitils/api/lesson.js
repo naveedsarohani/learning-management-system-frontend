@@ -6,7 +6,7 @@ import { response } from "../functions/global";
 async function all(token, set, handler) {
     handler.setLoading(loading => !loading);
     try {
-        const responseData = response(await request.get('/courses', token));
+        const responseData = response(await request.get('/lessons', token));
         responseData && set(responseData.lessons);
     }
     catch (error) { toast.error(error.message); }
@@ -44,4 +44,13 @@ async function update(id, data, token, handler) {
 
 }
 
-export default { all, show, store, update };
+async function courseLesson(courseId, token, set, handler) {
+    handler.setLoading(loading => !loading);
+    try {
+        const responseData = response(await request.get(`/lessons/courses/${courseId}`, token));
+        responseData && set(responseData.lessons);
+    }
+    catch (error) { toast.error(error.message); }
+    finally { handler.setLoading(loading => !loading); }
+}
+export default { all, show, store, update, courseLesson };

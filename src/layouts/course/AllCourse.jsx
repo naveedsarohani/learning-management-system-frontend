@@ -8,13 +8,13 @@ import { Link } from "react-router-dom";
 import { useDelete } from "../../contexts/Delete";
 import blueprint from "../../uitils/blueprint";
 import { formatDate } from "../../uitils/functions/global";
-import request from "../../uitils/functions/request";
+
 
 export default function AllCourses() {
     const { handler } = useHandler();
     const { credentials: { user, token } } = useAuth();
     const [courses, setCourses] = useState([blueprint.course]);
-    const { destory } = useDelete();
+    const { destroy } = useDelete();
 
     useEffect(() => {
         course.all(token, setCourses, handler);
@@ -39,11 +39,11 @@ export default function AllCourses() {
                 <td>{course.title}</td>
                 <td>{course.description.substring(0, 30)}...</td>
                 <td>{formatDate(course.created_at)}</td>
-                <td>{readFile(course.image)}</td>
+                <td>{course.image}</td>
                 <td>
                     <Link to={'./' + course.id}>View</Link>
                     <Link to={'./edit/' + course.id}>Edit</Link>
-                    <button onClick={() => destory('/courses', course.id, course.title + ' course')}>Delete</button>
+                    <button onClick={() => destroy('/courses', course.id, course.title + ' course')}>Delete</button>
                 </td>
             </tr>)}
         />

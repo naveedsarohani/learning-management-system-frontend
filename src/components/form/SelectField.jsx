@@ -1,9 +1,5 @@
 import { useHandler } from "../../contexts/Handler"
-import {
-  capEach,
-  handleInputChange,
-  separateBy,
-} from "../../uitils/functions/global"
+import { capEach, handleInputChange } from "../../uitils/functions/global"
 
 export default function SelectField({
   data = [],

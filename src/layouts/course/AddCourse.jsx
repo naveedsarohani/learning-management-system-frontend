@@ -6,6 +6,7 @@ import course from "../../uitils/api/course";
 import { useAuth } from "../../contexts/Authentication";
 import { useHandler } from "../../contexts/Handler";
 import { isLoading } from "../../uitils/functions/global";
+import TextArea from "../../components/form/TextArea";
 
 export default function AddCourse() {
     const { credentials: { token, user } } = useAuth();
@@ -24,21 +25,26 @@ export default function AddCourse() {
                     name={"title"}
                     placeholder={"Course title"} />
 
-                <InputField
+                <TextArea
                     type={"text"}
                     name={"description"}
-                    placeholder={"Course description"}
+                    placeholder={"Course description..."}
                 />
 
-                <InputField type={"file"} name={"image"} accept={".jpg,.jpeg.png"} />
+                <InputField
+                    type={"file"}
+                    name={"image"}
+                    accept={".jpg,.jpeg.png"}
+                />
 
                 <InputField
-                  type={"hidden"}
-                  name={"user_id"}
-                  value={user.id}
-              />
+                    type={"hidden"}
+                    name={"user_id"}
+                    value={user.id}
+                />
 
-        <SubmitButton name={isLoading(handler, "Add Course")} />
-      </Form>
-    </DashboardPageCompement>
-  )};
+                <SubmitButton name={isLoading(handler, "Add Course")} />
+            </Form>
+        </DashboardPageCompement>
+    )
+};

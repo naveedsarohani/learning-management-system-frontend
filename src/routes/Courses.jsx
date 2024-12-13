@@ -9,9 +9,9 @@ import Lesson from "./Lesson";
 export default function Courses() {
     return <Routes>
         <Route path="/" element={<AllCourses />} />
-        <Route path="/:id/*" element={<Lesson />} />
+        <Route path="/:courseId/*" element={<Lesson />} />
         <Route path="/add" element={<AddCourse />} />
-        <Route path="/edit/:id" element={<EditCourse />} />
+        <Route path="/edit/:courseId" element={<EditCourse />} />
 
         {/* Unknow route */}
         <Route path="*" element={<NotFound404 />} />

@@ -23,7 +23,7 @@ export default function InputField({
       {/* {capEach(separateBy(name, "_"))}{" "} */}
       <input
         className={className ?? "form-control"}
-        type={type ?? ""}
+        type={type ?? "text"}
         name={name}
         onChange={set && ((e) => handleInputChange(e, set))}
         placeholder={placeholder ?? ""}

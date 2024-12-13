@@ -6,6 +6,7 @@ import { useAuth } from "../../contexts/Authentication";
 import lesson from "../../uitils/api/lesson";
 import { Link } from "react-router-dom";
 import blueprint from "../../uitils/blueprint";
+import { formatDate } from "../../uitils/functions/global";
 
 export default function AllLesson() {
     const { handler } = useHandler();
@@ -15,7 +16,7 @@ export default function AllLesson() {
     useEffect(() => {
         lesson.all(token, setLessons, handler);
     }, [handler.navigate, user]);
-    
+
     return <DashboardPageCompement title={'all lessons'}>
         <h1>The all lessons are below in a table form</h1>
         <Table
@@ -31,7 +32,7 @@ export default function AllLesson() {
                 <td>{index + 1}</td>
                 <td>{lesson.title}</td>
                 <td>{lesson.content}</td>
-                <td>{lesson.created_at}</td>
+                <td>{formatDate(lesson.created_at)}</td>
                 <td>
                     <Link to={'./' + lesson.id}>View</Link>
                     <Link to={'./edit/' + lesson.id}>Edit</Link>

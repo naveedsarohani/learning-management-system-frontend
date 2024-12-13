@@ -9,52 +9,49 @@ import { useHandler } from "../../contexts/Handler";
 import SubmitButton from "../../components/form/SubmitButton";
 import { useAuth } from "../../contexts/Authentication";
 import { isLoading } from "../../uitils/functions/global";
+import TextArea from "../../components/form/TextArea";
 
 export default function EditCourse() {
   const [course, setCourse] = useState(blueprint.course);
-  const {
-    credentials: { token ,user },
-  } = useAuth();
+  const { credentials: { token, user } } = useAuth();
   const { handler } = useHandler();
-  const { id } = useParams();
+  const { courseId } = useParams();
 
   function handleSubmit(data) {
-    courseapi.update(id, data, token, handler);
+    courseapi.update(courseId, data, token, handler);
   }
 
   useEffect(() => {
-    courseapi.show(id, token, setCourse, handler);
+    courseapi.show(courseId, token, setCourse, handler);
   }, []);
 
-  return  course.id && <DashboardPageCompement title={"edit course"}>
-      <h1>This is edit course page</h1>
+  return course.id && <DashboardPageCompement title={"edit course"}>
+    <h1>This is edit course page</h1>
 
-      <Form {...{ handleSubmit }}>
-        <InputField
-          type={"text"}
-          name={"title"}
-          value={course.title}
-          set={setCourse}
-          placeholder={"Course title"}
-        />
+    <Form {...{ handleSubmit }}>
+      <InputField
+        name={"title"}
+        value={course.title}
+        set={setCourse}
+        placeholder={"Course title"}
+      />
 
-        <InputField
-          type={"text"}
-          name={"description"}
-          value={course.description}
-          set={setCourse}
-          placeholder={"Course description"}
-        />
+      <TextArea
+        name={"description"}
+        value={course.description}
+        set={setCourse}
+        placeholder={"Course description..."}
+      />
 
-        <InputField
-          type={"hidden"}
-          name={"user_id"}
-          value={user.id}
-        />
+      <InputField
+        type={"hidden"}
+        name={"user_id"}
+        value={user.id}
+      />
 
-        <InputField type={"file"} name={"image"} accept={".jpg,.jpeg.png"} />
+      <InputField type={"file"} name={"image"} accept={".jpg,.jpeg.png"} />
 
-        <SubmitButton name={isLoading(handler, "Edit Course")} />
-      </Form>
-    </DashboardPageCompement>
+      <SubmitButton name={isLoading(handler, "Edit Course")} />
+    </Form>
+  </DashboardPageCompement>
 }

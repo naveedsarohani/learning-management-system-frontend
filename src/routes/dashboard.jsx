@@ -9,6 +9,7 @@ import { role } from "../uitils/functions/constants"
 import DashboardHomePage from "../layouts/dashboards"
 import NotFound404 from "../layouts/404"
 import UpdatePassword from "../layouts/authentication/UpdatePassword"
+import Lesson from "./Lesson"
 
 export default function Dashboard() {
   const {
@@ -55,6 +56,7 @@ export default function Dashboard() {
               <Routes>
                 <Route path="/" element={<DashboardHomePage />} />
                 <Route path="/courses/*" element={<Courses />} />
+                <Route path="/lessons/*" element={<Lesson />} />
                 <Route path="/update-password" element={<UpdatePassword />} />
 
                 {/* Unknown Route */}

@@ -49,14 +49,14 @@ async function destory(route, token = null) {
 }
 
 // read media files
-async function readFile(fileName) {
-    try {
-        const response = response(await axios.get(getURL(`/media/${fileName}`), { responseType: 'blob' }));
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        return { url, fileName };
-    } catch (error) {
-        toast.error(error.message);
-    }
-};
+// async function readFile(fileName) {
+//     try {
+//         const response = response(await axios.get(getURL(`/media/${fileName}`), { responseType: 'blob' }));
+//         const url = window.URL.createObjectURL(new Blob([response.data]));
+//         return { url, fileName };
+//     } catch (error) {
+//         toast.error(error.message);
+//     }
+// };
 
-export default { get, post, put, delete: destory, readFile }
+export default { get, post, put, delete: destory, }

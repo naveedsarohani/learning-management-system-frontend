@@ -39,14 +39,15 @@ export default function Dashboard() {
         <div className="flex h-screen">
           {/* Sidebar */}
           <div
-            className={`fixed md:static transition-transform z-10 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-              } md:translate-x-0`}
+            className={`fixed md:static transition-transform top-0 left-0 z-10 ${
+              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+            } md:translate-x-0`}
           >
             <SideBar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen} />
           </div>
 
           {/* Main Content Area */}
-          <div className="flex-1 flex flex-col p-4">
+          <div className="flex-1 flex flex-col ">
             {/* Navbar */}
             <div className="w-full">
               <Navbar />
@@ -60,7 +61,6 @@ export default function Dashboard() {
                 <Route path="/lessons/*" element={<Lesson />} />
                 <Route path="/assessments/*" element={<Assessment />} />
                 <Route path="/questions/*" element={<Question />} />
-
 
                 <Route path="/update-password" element={<UpdatePassword />} />
 

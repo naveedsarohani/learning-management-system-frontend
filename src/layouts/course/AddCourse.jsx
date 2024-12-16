@@ -1,50 +1,58 @@
-import DashboardPageCompement from "../../components/global/DashboardPage";
-import Form from "../../components/form/Form";
-import InputField from "../../components/form/InputField";
-import SubmitButton from "../../components/form/SubmitButton";
-import course from "../../uitils/api/course";
-import { useAuth } from "../../contexts/Authentication";
-import { useHandler } from "../../contexts/Handler";
-import { isLoading } from "../../uitils/functions/global";
-import TextArea from "../../components/form/TextArea";
+import DashboardPageCompement from "../../components/global/DashboardPage"
+import Form from "../../components/form/Form"
+import InputField from "../../components/form/InputField"
+import SubmitButton from "../../components/form/SubmitButton"
+import course from "../../uitils/api/course"
+import { useAuth } from "../../contexts/Authentication"
+import { useHandler } from "../../contexts/Handler"
+import { isLoading } from "../../uitils/functions/global"
+import TextArea from "../../components/form/TextArea"
 
 export default function AddCourse() {
-    const { credentials: { token, user } } = useAuth();
-    const { handler } = useHandler();
+  const {
+    credentials: { token, user },
+  } = useAuth()
+  const { handler } = useHandler()
 
-    function handleSubmit(data) {
-        course.store(token, data, handler);
-    }
+  function handleSubmit(data) {
+    course.store(token, data, handler)
+  }
 
-    return (
-        <DashboardPageCompement title={"add course"}>
-            <h1>Add a new course</h1>
+  return (
+    <DashboardPageCompement title={"add course"}>
+      <div className=" flex justify-center items-center">
+        <div className="bg-[#e9ecef]  w-[50%] self-center p-5 rounded-lg">
+          <h1 className="text-center text-xl font-semibold">Add Course</h1>
+          <Form {...{ handleSubmit }}>
+            <InputField
+              type={"text"}
+              name={"title"}
+              placeholder={"Course title"}
+            />
+            <InputField
+              type={"file"}
+              name={"image"}
+              accept={".jpg,.jpeg.png"}
+            />
+            <InputField
+              type={"file"}
+              name={"image"}
+              accept={".jpg,.jpeg.png"}
+            />
 
-            <Form {...{ handleSubmit }}>
-                <InputField type={"text"}
-                    name={"title"}
-                    placeholder={"Course title"} />
+            <TextArea
+              type={"text"}
+              name={"description"}
+              placeholder={"Course description..."}
+            />
 
-                <TextArea
-                    type={"text"}
-                    name={"description"}
-                    placeholder={"Course description..."}
-                />
-
-                <InputField
-                    type={"file"}
-                    name={"image"}
-                    accept={".jpg,.jpeg.png"}
-                />
-
-                <InputField
-                    type={"hidden"}
-                    name={"user_id"}
-                    value={user.id}
-                />
-
-                <SubmitButton name={isLoading(handler, "Add Course")} />
-            </Form>
-        </DashboardPageCompement>
-    )
-};
+            <InputField type={"hidden"} name={"user_id"} value={user.id} />
+            <div className="text-center">
+              <SubmitButton name={isLoading(handler, "Add Course")} />
+            </div>
+          </Form>
+        </div>
+      </div>
+    </DashboardPageCompement>
+  )
+}

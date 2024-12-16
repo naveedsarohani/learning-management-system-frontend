@@ -1,3 +1,12 @@
-export default function SubmitButton({ name, color = 'bg-red-300' }) {
-    return <input className={`${color}`} type="submit" value={name} />
+export default function SubmitButton({
+  name,
+  color = "bg-gradient-to-r from-[#21bffd] to-[#217bfe]",
+}) {
+  return (
+    <input
+      className={`${color}  text-white py-2 px-4 rounded-lg cursor-pointer`}
+      type="submit"
+      value={name}
+    />
+  )
 }

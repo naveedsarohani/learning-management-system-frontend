@@ -2,10 +2,10 @@ import DashboardPageCompement from "../../components/global/DashboardPage"
 import { useDelete } from "../../contexts/Delete"
 
 export default function DashboardHomePage() {
-  const {destory} = useDelete();
+  const { destory } = useDelete()
 
-  function handleDelete(){
-    destory('/courses', 59, "Php laravel course");
+  function handleDelete() {
+    destory("/courses", 59, "Php laravel course")
   }
 
   return (

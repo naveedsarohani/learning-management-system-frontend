@@ -24,7 +24,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
 
         {/* Sidebar */}
         <div
-          className={`h-screen p-5 bg-white shadow-lg fixed top-0 transition-all ${
+          className={`h-screen p-5 bg-gradient-to-r from-[#21bffd] to-[#217bfe] shadow-lg fixed top-0 transition-all ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           } ${
             // Add width only for screens medium or larger
@@ -32,7 +32,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
           }`}
         >
           <div className="p-4">
-            <h2 className="text-lg font-bold text-[#6e82a4] mb-6">Dashboard</h2>
+            <h2 className="text-lg font-bold text-white mb-6">Dashboard</h2>
             <nav>
               <ul className="space-y-4 pl-4">
                 <li>
@@ -41,7 +41,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
                     }
                   >
                     {({ isActive }) => (
@@ -66,7 +66,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
                     }
                   >
                     {({ isActive }) => (
@@ -91,7 +91,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
                     }
                   >
                     {({ isActive }) => (
@@ -116,7 +116,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
                     }
                   >
                     {({ isActive }) => (
@@ -141,7 +141,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
                     }
                   >
                     {({ isActive }) => (
@@ -166,7 +166,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
                     }
                   >
                     {({ isActive }) => (
@@ -191,7 +191,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
                     }
                   >
                     {({ isActive }) => (
@@ -216,7 +216,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
                     }
                   >
                     {({ isActive }) => (

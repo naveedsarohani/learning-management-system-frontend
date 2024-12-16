@@ -22,7 +22,10 @@ export default function InputField({
     <label className="block text-sm font-bold text-gray-600 ">
       {/* {capEach(separateBy(name, "_"))}{" "} */}
       <input
-        className={className ?? "form-control"}
+        className={
+          className ??
+          "form-control mb-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 mt-4"
+        }
         type={type ?? "text"}
         name={name}
         onChange={set && ((e) => handleInputChange(e, set))}

@@ -55,4 +55,50 @@ const assessment = Object.freeze({
     }
 });
 
-export default { course, lesson, assessment };
+const question = Object.freeze({
+    id: '',
+    assessment_id: '',
+    question_text: '',
+    type: '',
+    created_at: '',
+    updated_at: '',
+    assessment: {
+        id: '',
+        course_id: '',
+        title: '',
+        type: '',
+        time_limit: '',
+        retakes_allowed: '',
+        created_at: '',
+        updated_at: ''
+    }
+})
+
+const answer = Object.freeze({
+    id: '',
+    question_id: '',
+    answer_text: '',
+    is_correct: '',
+    created_at: '',
+    updated_at: '',
+    question: {
+        id: '',
+        assessment_id: '',
+        question_text: '',
+        type: '',
+        created_at: '',
+        updated_at: '',
+        assessment: {
+            id: '',
+            course_id: '',
+            title: '',
+            type: '',
+            time_limit: '',
+            retakes_allowed: '',
+            created_at: '',
+            updated_at: ''
+        }
+    }
+});
+
+export default { course, lesson, assessment, question, answer };

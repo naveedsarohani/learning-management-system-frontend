@@ -35,4 +35,24 @@ const lesson = Object.freeze({
     }
 });
 
-export default { course, lesson };
+const assessment = Object.freeze({
+    id: '',
+    course_id: '',
+    title: '',
+    type: '',
+    time_limit: '',
+    retakes_allowed: '',
+    created_at: '',
+    updated_at: '',
+    course: {
+        id: '',
+        userId: '',
+        title: '',
+        description: '',
+        image: '',
+        created_at: '',
+        updated_at: ''
+    }
+});
+
+export default { course, lesson, assessment };

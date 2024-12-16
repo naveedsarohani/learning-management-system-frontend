@@ -8,7 +8,7 @@ import { isLoading } from "../../uitils/functions/global";
 import { useParams } from "react-router-dom";
 import lesson from "../../uitils/api/lesson";
 
-export default function AddLesson() {
+export default function AddAssessment() {
   const { credentials: { token } } = useAuth();
   const { handler } = useHandler();
   const { courseId } = useParams();

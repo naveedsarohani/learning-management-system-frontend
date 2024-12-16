@@ -10,6 +10,7 @@ import DashboardHomePage from "../layouts/dashboards"
 import NotFound404 from "../layouts/404"
 import UpdatePassword from "../layouts/authentication/UpdatePassword"
 import Lesson from "./Lesson"
+import Assessment from "./Assessment"
 
 export default function Dashboard() {
   const {
@@ -37,9 +38,8 @@ export default function Dashboard() {
         <div className="flex h-screen">
           {/* Sidebar */}
           <div
-            className={`fixed md:static transition-transform z-10 ${
-              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } md:translate-x-0`}
+            className={`fixed md:static transition-transform z-10 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+              } md:translate-x-0`}
           >
             <SideBar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen} />
           </div>
@@ -57,6 +57,9 @@ export default function Dashboard() {
                 <Route path="/" element={<DashboardHomePage />} />
                 <Route path="/courses/*" element={<Courses />} />
                 <Route path="/lessons/*" element={<Lesson />} />
+                <Route path="/assessments/*" element={<Assessment />} />
+
+
                 <Route path="/update-password" element={<UpdatePassword />} />
 
                 {/* Unknown Route */}

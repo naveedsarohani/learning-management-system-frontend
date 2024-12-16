@@ -15,12 +15,12 @@ export default function ShowCourse() {
   const { credentials: { token } } = useAuth();
   const { handler } = useHandler();
   const [course, setCourse] = useState(blueprint.course);
-  const [lessons, setLessons]=useState([blueprint.lesson]);
-  const {destroy}=useDelete();
+  const [lessons, setLessons] = useState([blueprint.lesson]);
+  const { destroy } = useDelete();
 
   useEffect(() => {
     courseapi.show(courseId, token, setCourse, handler);
-      lesson.courseLesson(courseId,token,setLessons,handler);
+    lesson.courseLesson(courseId, token, setLessons, handler);
   }, [courseId]);
 
   return (
@@ -32,19 +32,20 @@ export default function ShowCourse() {
         <h1>{course.title}</h1>
         <p>{course.description}</p>
       </div>
-      
+
+      {/* lessons */}
       <div>
         <h2>Lessons</h2>
-        {lessons.map(lesson=><div key={lesson.id}>
+        {lessons.map(lesson => <div key={lesson.id}>
           <h3>{lesson.title}</h3>
           <p>{lesson.content}</p>
           <span>{formatDate(lesson.created_at)}</span>
-          <button onClick={()=> destroy('/lessons',lesson.id,lesson.title + " lesson")}>Delete</button>
+          <button onClick={() => destroy('/lessons', lesson.id, lesson.title + " lesson")}>Delete</button>
         </div>)}
       </div>
 
 
-      
+
     </DashboardPageCompement>
   );
 }

@@ -6,9 +6,11 @@ import { useAuth } from "../../contexts/Authentication";
 import lesson from "../../uitils/api/lesson";
 import { Link } from "react-router-dom";
 import blueprint from "../../uitils/blueprint";
-import { formatDate } from "../../uitils/functions/global";
+import { formatDate, isNullOrEmpty } from "../../uitils/functions/global";
+import { useDelete } from "../../contexts/Delete";
 
 export default function AllLesson() {
+    const { destroy } = useDelete();
     const { handler } = useHandler();
     const { credentials: { user, token } } = useAuth();
     const [lessons, setLessons] = useState([blueprint.lesson]);
@@ -28,7 +30,7 @@ export default function AllLesson() {
                 <th>Action</th>
             </>}
 
-            tds={lessons.at(0).id && lessons.map((lesson, index) => <tr key={lesson.id}>
+            tds={!isNullOrEmpty(lessons) && lessons.map((lesson, index) => <tr key={lesson.id}>
                 <td>{index + 1}</td>
                 <td>{lesson.title}</td>
                 <td>{lesson.content}</td>
@@ -36,7 +38,7 @@ export default function AllLesson() {
                 <td>
                     <Link to={'./' + lesson.id}>View</Link>
                     <Link to={'./edit/' + lesson.id}>Edit</Link>
-                    <Link to={'./' + lesson.id}>View</Link>
+                    <button onClick={() => destroy('/lessons', lesson.id, lesson.title + ' lesson')}>Delete</button>
                 </td>
             </tr>)}
         />

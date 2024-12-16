@@ -2,11 +2,16 @@ import { toast } from "react-toastify";
 import { role, status } from "./constants";
 
 // function to get complete URL
-export function getURL(route) {
+export function getURL(route, api = true) {
     if (!import.meta.env.VITE_BASE_URL) {
         throw new Error("VITE_BASE_URL is not defined");
     }
-    return `${import.meta.env.VITE_BASE_URL}${route}`;
+
+    let base_url = import.meta.env.VITE_BASE_URL;
+    if (!api) {
+        base_url = base_url.replace('/api', '');
+    }
+    return `${base_url}${route}`;
 }
 
 // function to handle input change
@@ -99,4 +104,22 @@ export function formatDate(dateString) {
         month: 'short',
         day: 'numeric'
     });
+}
+
+// function to readFile from backend
+export function readFile(path) {
+    return getURL('/' + path, false);
+}
+
+// function to check the data is null or empty 
+export function isNullOrEmpty(data) {
+    if (data === undefined || data === null) return true;
+
+    if (typeof data == 'string' && data.trim() === '') return true;
+
+    if (Array.isArray(data) && data.length === 0) return true;
+
+    if (typeof data == 'object' && (Object.keys(data).length === 0 || Object.values(data)[0].id === '')) return true;
+
+    return false;
 }

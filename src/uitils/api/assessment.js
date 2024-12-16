@@ -6,8 +6,8 @@ import { response } from "../functions/global";
 async function all(token, set, handler) {
     handler.setLoading(loading => !loading);
     try {
-        const responseData = response(await request.get('/lessons', token));
-        responseData && set(responseData.lessons);
+        const responseData = response(await request.get('/assessments', token));
+        responseData && set(responseData.assessments);
     }
     catch (error) { toast.error(error.message); }
     finally { handler.setLoading(loading => !loading); }
@@ -16,8 +16,8 @@ async function all(token, set, handler) {
 async function show(id, token, set, handler) {
     handler.setLoading(loading => !loading);
     try {
-        const responseData = response(await request.get(`/lessons/${id}`, token));
-        responseData && set(responseData.lesson);
+        const responseData = response(await request.get(`/assessments/${id}`, token));
+        responseData && set(responseData.assessment);
     }
     catch (error) { toast.error(error.message); }
     finally { handler.setLoading(loading => !loading); }
@@ -26,7 +26,7 @@ async function show(id, token, set, handler) {
 async function store(token, data, handler) {
     handler.setLoading(loading => !loading);
     try {
-        response(await request.post('/lessons/', data, token), handler.setValidationErrors);
+        response(await request.post('/assessments/', data, token), handler.setValidationErrors);
     }
     catch (error) {
         toast.error(error.message);
@@ -38,19 +38,9 @@ async function store(token, data, handler) {
 async function update(id, data, token, handler) {
     handler.setLoading(loading => !loading);
     try {
-        response(await request.put(`/lessons/${id}`, data, token), handler.setValidationErrors);
+        response(await request.put(`/assessments/${id}`, data, token), handler.setValidationErrors);
     } catch (error) { toast.error(error.message); }
     finally { handler.setLoading(loading => !loading); }
 
 }
-
-async function courseLesson(courseId, token, set, handler) {
-    handler.setLoading(loading => !loading);
-    try {
-        const responseData = response(await request.get(`/lessons/courses/${courseId}`, token));
-        responseData && set(responseData.lessons);
-    }
-    catch (error) { toast.error(error.message); }
-    finally { handler.setLoading(loading => !loading); }
-}
-export default { all, show, store, update, courseLesson };
+export default { all, show, store, update };

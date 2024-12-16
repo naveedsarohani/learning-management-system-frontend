@@ -7,7 +7,7 @@ import course from "../../uitils/api/course";
 import { Link } from "react-router-dom";
 import { useDelete } from "../../contexts/Delete";
 import blueprint from "../../uitils/blueprint";
-import { formatDate } from "../../uitils/functions/global";
+import { formatDate, isNullOrEmpty, readFile } from "../../uitils/functions/global";
 
 
 export default function AllCourses() {
@@ -19,7 +19,7 @@ export default function AllCourses() {
     useEffect(() => {
         course.all(token, setCourses, handler);
     }, [handler.navigate, user]);
-    
+
     return <DashboardPageCompement title={'all courses'}>
         <Link to={'./add'}>Add a new course</Link>
 
@@ -34,12 +34,14 @@ export default function AllCourses() {
                 <th>Action</th>
             </>}
 
-            tds={courses.at(0).id && courses.map((course, index) => <tr key={course.id}>
+            tds={!isNullOrEmpty(courses) && courses.map((course, index) => <tr key={course.id}>
                 <td>{index + 1}</td>
                 <td>{course.title}</td>
                 <td>{course.description.substring(0, 30)}...</td>
                 <td>{formatDate(course.created_at)}</td>
-                <td>{course.image}</td>
+                <td>
+                    <img src={readFile(course.image)} alt="poter" width={50} />
+                </td>
                 <td>
                     <Link to={'./' + course.id}>View</Link>
                     <Link to={'./edit/' + course.id}>Edit</Link>
@@ -49,3 +51,4 @@ export default function AllCourses() {
         />
     </DashboardPageCompement>
 }
+

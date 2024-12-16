@@ -11,6 +11,7 @@ import NotFound404 from "../layouts/404"
 import UpdatePassword from "../layouts/authentication/UpdatePassword"
 import Lesson from "./Lesson"
 import Assessment from "./Assessment"
+import Question from "./Question"
 
 export default function Dashboard() {
   const {
@@ -58,6 +59,7 @@ export default function Dashboard() {
                 <Route path="/courses/*" element={<Courses />} />
                 <Route path="/lessons/*" element={<Lesson />} />
                 <Route path="/assessments/*" element={<Assessment />} />
+                <Route path="/questions/*" element={<Question />} />
 
 
                 <Route path="/update-password" element={<UpdatePassword />} />

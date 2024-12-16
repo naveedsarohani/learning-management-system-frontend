@@ -2,29 +2,29 @@ import { Link, useParams } from "react-router-dom";
 import DashboardPageCompement from "../../components/global/DashboardPage";
 import { useEffect, useState } from "react";
 import blueprint from "../../uitils/blueprint";
-import lessonapi from "../../uitils/api/lesson";
+import questionapi from "../../uitils/api/question";
 import { useAuth } from "../../contexts/Authentication";
 import { useHandler } from "../../contexts/Handler";
 import { formatDate } from "../../uitils/functions/global";
 
-export default function ShowLesson() {
-  const { lessonId } = useParams();
+export default function ShowQuestion() {
+  const { questionId } = useParams();
   const { credentials: { token } } = useAuth();
   const { handler } = useHandler();
-  const [lesson, setLesson] = useState(blueprint.lesson);
+  const [question, setQuestion] = useState(blueprint.question);
 
   useEffect(() => {
-    lessonapi.show(lessonId, token, setLesson, handler);
-  }, [lessonId]);
+    questionapi.show(questionId, token, setQuestion, handler);
+  }, [questionId]);
 
   return (
-    <DashboardPageCompement title={"specified lesson"}>
-      <Link to={'./add-lesson'}>Add a new lesson</Link>
+    <DashboardPageCompement title={"specified question"}>
+      <Link to={'./add-question'}>Add a new question</Link>
 
       <div>
-        <h1>{lesson.title}</h1>
-        <p>{lesson.content}</p>
-        <p>{formatDate(lesson.created_at)}</p>
+        <h1>{question.question_text}</h1>
+        <p>{question.type}</p>
+        <p>{formatDate(question.created_at)}</p>
       </div>
     </DashboardPageCompement>
   );

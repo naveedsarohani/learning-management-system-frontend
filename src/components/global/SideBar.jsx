@@ -24,7 +24,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
 
         {/* Sidebar */}
         <div
-          className={`h-screen p-5 bg-white shadow-lg fixed top-0 transition-all ${
+          className={`h-screen p-5 bg-gradient-to-r from-[#21bffd] to-[#217bfe] shadow-lg fixed top-0 transition-all ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           } ${
             // Add width only for screens medium or larger
@@ -32,16 +32,16 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
           }`}
         >
           <div className="p-4">
-            <h2 className="text-lg font-bold text-[#6e82a4] mb-6">Dashboard</h2>
+            <h2 className="text-lg font-bold text-white mb-6">Dashboard</h2>
             <nav>
               <ul className="space-y-4 pl-4">
                 <li>
                   <NavLink
-                    to="/instructors"
+                    to="/dashboard/instructors"
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
                     }
                   >
                     {({ isActive }) => (
@@ -62,11 +62,11 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                 </li>
                 <li>
                   <NavLink
-                    to="/students"
+                    to="/dashboard/students"
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
                     }
                   >
                     {({ isActive }) => (
@@ -91,7 +91,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     className={({ isActive }) =>
                       isActive
                         ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-[#6e82a4] hover:bg-gray-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
                     }
                   >
                     {({ isActive }) => (
@@ -106,6 +106,131 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                           <i className="fas fa-book text-xs"></i>
                         </span>
                         Courses
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/lessons"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
+                        >
+                          <i className="fas fa-book text-xs"></i>
+                        </span>
+                        Lessons
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/assessments"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
+                        >
+                          <i className="fas fa-book text-xs"></i>
+                        </span>
+                        Assessments
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/questions"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
+                        >
+                          <i className="fas fa-book text-xs"></i>
+                        </span>
+                        Questions
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/answers"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
+                        >
+                          <i className="fas fa-book text-xs"></i>
+                        </span>
+                        Answers
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/submissions"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
+                        >
+                          <i className="fas fa-book text-xs"></i>
+                        </span>
+                        Submissions
                       </>
                     )}
                   </NavLink>

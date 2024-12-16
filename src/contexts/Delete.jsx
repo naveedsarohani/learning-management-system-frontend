@@ -10,7 +10,7 @@ export default function DeleteContextProvider({ children }) {
         identity: ''
     });
 
-    function destory(route, id, identity) {
+    function destroy(route, id, identity) {
         setDeleteCreds({ isBeingDeleted: true, route, id, identity })
     }
 
@@ -23,7 +23,7 @@ export default function DeleteContextProvider({ children }) {
         });
     }
 
-    return <DeleteContext.Provider value={{ deletion: { ...deleteCreds }, destory, setIsDeleting }}>
+    return <DeleteContext.Provider value={{ deletion: { ...deleteCreds }, destroy, setIsDeleting }}>
         {children}
     </DeleteContext.Provider>
 }

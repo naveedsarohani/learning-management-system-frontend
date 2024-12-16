@@ -5,34 +5,29 @@ import {
   separateBy,
 } from "../../uitils/functions/global"
 
-export default function InputField({
-  type,
+export default function TextArea({
   name,
   value = null,
+  set,
   className,
   placeholder,
-  accept,
-  set = null,
 }) {
   const {
     handler: { validationErrors },
   } = useHandler()
 
   return (
-    <label className="block text-sm font-bold text-gray-600 ">
-      {/* {capEach(separateBy(name, "_"))}{" "} */}
-      <input
-        className={
-          className ??
-          "form-control mb-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 mt-4"
-        }
-        type={type ?? "text"}
+    <label>
+      {/* {capEach(separateBy(name, '_'))} */}
+      <textarea
         name={name}
+        className={`${className} w-full mb-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 mt-4`}
         onChange={set && ((e) => handleInputChange(e, set))}
         placeholder={placeholder ?? ""}
-        value={value}
-        accept={accept ?? ""}
-      />
+      >
+        {value ?? ""}
+      </textarea>
+
       {validationErrors && (
         <span className="text-red-500 font-normal">
           {validationErrors[name]}

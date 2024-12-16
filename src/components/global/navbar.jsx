@@ -33,9 +33,9 @@ export default function Navbar() {
             </ol>
         </nav> */}
 
-      <nav className="flex flex-wrap justify-between items-center px-2 sm:px-6 py-4 bg-white shadow-sm rounded-lg">
+      <nav className="bg-gradient-to-r from-[#217bfe] to-[#21bffd] w-full  flex flex-wrap justify-between items-center px-2 sm:px-6 py-2 bg-white shadow-sm ">
         {/* Navbar Left */}
-        <div className="flex items-center space-x-2 text-gray-500">
+        <div className="flex items-center space-x-2 text-white">
           <span>🏠</span>
           <span className="text-sm font-medium">
             <Link to={"/"}>Learning Management System</Link>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getURL } from "./global";
+import { getURL, response } from "./global";
 
 // utility functions
 function setConfig(token = null) {
@@ -47,4 +47,4 @@ async function destory(route, token = null) {
     });
 }
 
-export default { get, post, put, delete: destory }
+export default { get, post, put, delete: destory, }

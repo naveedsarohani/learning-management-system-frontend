@@ -9,6 +9,8 @@ import { role } from "../uitils/functions/constants"
 import DashboardHomePage from "../layouts/dashboards"
 import NotFound404 from "../layouts/404"
 import UpdatePassword from "../layouts/authentication/UpdatePassword"
+import Lesson from "./Lesson"
+import Assessment from "./Assessment"
 
 export default function Dashboard() {
   const {
@@ -36,7 +38,7 @@ export default function Dashboard() {
         <div className="flex h-screen">
           {/* Sidebar */}
           <div
-            className={`fixed md:static transition-transform z-10 ${
+            className={`fixed md:static transition-transform top-0 left-0 z-10 ${
               isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             } md:translate-x-0`}
           >
@@ -44,7 +46,7 @@ export default function Dashboard() {
           </div>
 
           {/* Main Content Area */}
-          <div className="flex-1 flex flex-col p-4">
+          <div className="flex-1 flex flex-col ">
             {/* Navbar */}
             <div className="w-full">
               <Navbar />
@@ -55,6 +57,9 @@ export default function Dashboard() {
               <Routes>
                 <Route path="/" element={<DashboardHomePage />} />
                 <Route path="/courses/*" element={<Courses />} />
+                <Route path="/lessons/*" element={<Lesson />} />
+                <Route path="/assessments/*" element={<Assessment />} />
+
                 <Route path="/update-password" element={<UpdatePassword />} />
 
                 {/* Unknown Route */}

@@ -2,9 +2,11 @@ import { capEach } from "../../uitils/functions/global"
 
 export default function DashboardPageCompement({ children, title }) {
   return (
-    <div>
-      <h3>{capEach(title) ?? "Dashboard"} </h3>
-      {children}
+    <div className="">
+      <h3 className="font-bold mt-4 capitalize">
+        {capEach(title) ?? "Dashboard"}{" "}
+      </h3>
+      <div className="mt-5">{children}</div>
     </div>
   )
 }

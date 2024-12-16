@@ -1,41 +1,62 @@
-import { useEffect, useState } from "react";
-import DashboardPageCompement from "../../components/global/DashboardPage";
-import Table from '../../components/global/Table';
-import { useHandler } from "../../contexts/Handler";
-import { useAuth } from "../../contexts/Authentication";
-import course from "../../uitils/api/course";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react"
+import DashboardPageCompement from "../../components/global/DashboardPage"
+import Table from "../../components/global/Table"
+import { useHandler } from "../../contexts/Handler"
+import { useAuth } from "../../contexts/Authentication"
+import lesson from "../../uitils/api/lesson"
+import { Link } from "react-router-dom"
+import blueprint from "../../uitils/blueprint"
+import { formatDate, isNullOrEmpty } from "../../uitils/functions/global"
+import { useDelete } from "../../contexts/Delete"
 
 export default function AllLesson() {
-    const { handler } = useHandler();
-    const { credentials: { user, token } } = useAuth();
-    const [courses, setCourses] = useState([]);
+  const { destroy } = useDelete()
+  const { handler } = useHandler()
+  const {
+    credentials: { user, token },
+  } = useAuth()
+  const [lessons, setLessons] = useState([blueprint.lesson])
 
-    useEffect(() => {
-        course.all(token, setCourses, handler);
-    }, [handler.navigate, user]);
-    
-    return <DashboardPageCompement title={'all courses'}>
-        <h1>The all courses are below in a table form</h1>
-        <Table
-            ths={<>
-                <th>Sno.</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Created On</th>
-                <th>Action</th>
-            </>}
+  useEffect(() => {
+    lesson.all(token, setLessons, handler)
+  }, [handler.navigate, user])
 
-            tds={courses.map((course, index) => <tr>
-                <td>{index + 1}</td>
-                <td>{course.title}</td>
-                <td>{course.description}</td>
-                <td>
-                    <Link to={'./' + course.id}>View</Link>
-                    <Link to={'./edit/' + course.id}>Edit</Link>
-                    <Link to={'./' + course.id}>View</Link>
-                </td>
-            </tr>)}
-        />
+  return (
+    <DashboardPageCompement title={"all lessons"}>
+      {/* <h1>The all lessons are below in a table form</h1> */}
+      <Table
+        ths={
+          <>
+            <th className="py-3 px-4">Sno.</th>
+            <th>Title</th>
+            <th>Course</th>
+            <th>Created On</th>
+            <th>Action</th>
+          </>
+        }
+        tds={
+          !isNullOrEmpty(lessons) &&
+          lessons.map((lesson, index) => (
+            <tr key={lesson.id}>
+              <td className="p-5">{index + 1}</td>
+              <td>{lesson.title}</td>
+              <td>{lesson.course.title}</td>
+              <td>{formatDate(lesson.created_at)}</td>
+              <td>
+                <Link to={"./" + lesson.id}>View</Link>
+                <Link to={"./edit/" + lesson.id}>Edit</Link>
+                <button
+                  onClick={() =>
+                    destroy("/lessons", lesson.id, lesson.title + " lesson")
+                  }
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))
+        }
+      />
     </DashboardPageCompement>
+  )
 }

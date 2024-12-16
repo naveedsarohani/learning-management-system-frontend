@@ -7,20 +7,20 @@ import { Link } from "react-router-dom";
 import blueprint from "../../uitils/blueprint";
 import { formatDate, isNullOrEmpty } from "../../uitils/functions/global";
 import { useDelete } from "../../contexts/Delete";
-import assessment from "../../uitils/api/assessment";
+import question from "../../uitils/api/question";
 
-export default function Allassessment() {
+export default function Allquestion() {
     const { destroy } = useDelete();
     const { handler } = useHandler();
     const { credentials: { user, token } } = useAuth();
-    const [assessments, setAssessments] = useState([blueprint.assessment]);
+    const [questions, setquestions] = useState([blueprint.question]);
 
     useEffect(() => {
-        assessment.all(token, setAssessments, handler);
+        question.all(token, setquestions, handler);
     }, [handler.navigate, user]);
 
-    return <DashboardPageCompement title={'all assessments'}>
-        <h1>The all assessments are below in a table form</h1>
+    return <DashboardPageCompement title={'all questions'}>
+        <h1>The all questions are below in a table form</h1>
         <Table
             ths={<>
                 <th>Sno.</th>
@@ -32,17 +32,17 @@ export default function Allassessment() {
                 <th>Action</th>
             </>}
 
-            tds={!isNullOrEmpty(assessments) && assessments.map((assessment, index) => <tr key={assessment.id}>
+            tds={!isNullOrEmpty(questions) && questions.map((question, index) => <tr key={question.id}>
                 <td>{index + 1}</td>
-                <td>{assessment.title}</td>
-                <td>{assessment.type}</td>
-                <td>{assessment.time_limit}</td>
-                <td>{assessment.retakes_allowed}</td>
-                <td>{formatDate(assessment.created_at)}</td>
+                <td>{question.title}</td>
+                <td>{question.type}</td>
+                <td>{question.time_limit}</td>
+                <td>{question.retakes_allowed}</td>
+                <td>{formatDate(question.created_at)}</td>
                 <td>
-                    <Link to={'./' + assessment.id}>View</Link>
-                    <Link to={'./edit/' + assessment.id}>Edit</Link>
-                    <button onClick={() => destroy('/assessments', assessment.id, assessment.title + ' assessment')}>Delete</button>
+                    <Link to={'./' + question.id}>View</Link>
+                    <Link to={'./edit/' + question.id}>Edit</Link>
+                    <button onClick={() => destroy('/questions', question.id, question.title + ' question')}>Delete</button>
                 </td>
             </tr>)}
         />

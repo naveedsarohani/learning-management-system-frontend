@@ -3,13 +3,20 @@ import { useAuth } from "../contexts/Authentication";
 import { useHandler } from "../contexts/Handler";
 import NotFound404 from "../layouts/404";
 import { role } from "../uitils/functions/constants";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SideBar from "../components/global/SideBar";
 import Navbar from "../components/global/navbar";
+import StudentProfile from "../layouts/student/StudentProfile";
+import UpdatePassword from "../layouts/authentication/UpdatePassword";
 
 export default function Student() {
     const { credentials: { user } } = useAuth();
     const { handler } = useHandler();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen)
+    }
 
     useEffect(() => {
         if (user) {
@@ -17,16 +24,40 @@ export default function Student() {
         } else handler.navigate('/auth/login', { replace: true });
     }, [handler.navigate, user]);
 
-    return user && user.role == role.STUDENT && <>
-        <Navbar />
-        <div>
-            <SideBar userRole={user.role} />
-            <Routes>
-                <Route path="/" element={<h1>Student Prfile Index Page</h1>} />
+    return (
+        user && role.STUDENT === user.role && (
+            <>
+                <div className="flex h-screen">
+                    {/* Sidebar */}
+                    <div
+                        className={`fixed md:static transition-transform z-10 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+                            } md:translate-x-0`}
+                    >
+                        <SideBar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen} />
+                    </div>
 
-                {/* Unknow route */}
-                <Route path="*" element={<NotFound404 />} />
-            </Routes>
-        </div>
-    </>
+                    {/* Main Content Area */}
+                    <div className="flex-1 flex flex-col p-4">
+                        {/* Navbar */}
+                        <div className="w-full">
+                            <Navbar />
+                        </div>
+
+                        {/* Main Content */}
+                        <div className="flex-1 overflow-y-auto pl-6">
+                            <Routes>
+                                <Route path="/" element={<StudentProfile />} />
+
+
+                                <Route path="/update-password" element={<UpdatePassword />} />
+
+                                {/* Unknown Route */}
+                                <Route path="*" element={<NotFound404 />} />
+                            </Routes>
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
+    )
 }

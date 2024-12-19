@@ -31,7 +31,7 @@ export default function EditCourse() {
     course.id && (
       <DashboardPageCompement title={"edit course"}>
         <div className=" flex justify-center items-center">
-          <div className="bg-[#e9ecef]  w-[50%] self-center p-5 rounded-lg">
+          <div className="bg-[#e9ecef]  w-[80%] self-center p-5 rounded-lg">
             <h1 className="text-center text-xl font-semibold"> Edit Course</h1>
 
             <Form {...{ handleSubmit }}>

@@ -6,6 +6,7 @@ import Form from "../../components/form/Form"
 import InputField from "../../components/form/InputField"
 import SubmitButton from "../../components/form/SubmitButton"
 import sideImage from "../../assets/curved-6.jpg"
+import { Link } from "react-router-dom"
 
 export default function Login() {
   const { handler } = useHandler()
@@ -53,12 +54,12 @@ export default function Login() {
             {/* Footer Message */}
             <p className="text-sm text-gray-600 mt-6 text-center">
               Don't have an account?{" "}
-              <a
-                href="#"
+              <Link
+                to={"/auth/register"}
                 className="bg-gradient-to-r from-[#21bffd] to-[#217bfe] bg-clip-text text-transparent hover:underline font-medium"
               >
                 Sign up
-              </a>
+              </Link>
             </p>
           </div>
         </div>

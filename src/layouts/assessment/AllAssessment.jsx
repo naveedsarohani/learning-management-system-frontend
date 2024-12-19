@@ -30,8 +30,9 @@ export default function Allassessment() {
             <th className="py-3 px-4">Sno.</th>
             <th>Title</th>
             <th>Type</th>
+            <th>Course</th>
             <th>Time Limit</th>
-            <th>Tetakes Allowed</th>
+            <th>Retakes Allowed</th>
             <th>Created On</th>
             <th>Action</th>
           </>
@@ -41,8 +42,9 @@ export default function Allassessment() {
           assessments.map((assessment, index) => (
             <tr key={assessment.id}>
               <td className="py-3 px-4">{index + 1}</td>
-              <td>{assessment.title}</td>
+              <td>{assessment.title.slice(0, 20) + "..."}</td>
               <td>{assessment.type}</td>
+              <td>{assessment.course.title.slice(0, 10) + "..."}</td>
               <td>{assessment.time_limit}</td>
               <td>{assessment.retakes_allowed}</td>
               <td>{formatDate(assessment.created_at)}</td>

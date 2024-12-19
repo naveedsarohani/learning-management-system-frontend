@@ -17,7 +17,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
         {/* Toggle Button */}
         <button
           onClick={toggleSidebar}
-          className="absolute top-4 left-4 z-10 text-white bg-blue-500 p-2 rounded-md md:hidden"
+          className="absolute top-1 left-96 z-10 text-white bg-blue-500 p-2 rounded-md md:hidden"
         >
           {isOpen ? <RiMenuUnfold2Fill /> : <RiMenuUnfoldFill />}
         </button>

@@ -9,6 +9,7 @@ import { role } from "../../uitils/functions/constants"
 import { isLoading } from "../../uitils/functions/global"
 import sideImage from "../../assets/curved-6.jpg"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 export default function Register() {
   const { handler } = useHandler()
@@ -95,12 +96,12 @@ export default function Register() {
           </Form>
           <p className="text-sm text-gray-600 mt-4 text-center">
             Already have an account?
-            <a
-              href="#"
+            <Link
+              to={"/auth/login"}
               className="bg-gradient-to-r from-[#21bffd] to-[#217bfe] bg-clip-text text-transparent hover:underline font-medium"
             >
               Sign In
-            </a>
+            </Link>
           </p>
         </div>
       </div>

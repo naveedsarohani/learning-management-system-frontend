@@ -46,7 +46,6 @@ export default function Dashboard() {
             <SideBar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen} />
           </div>
 
-          {/* Main Content Area */}
           <div className="flex-1 flex flex-col ">
             {/* Navbar */}
             <div className="w-full">

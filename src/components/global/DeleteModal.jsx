@@ -1,9 +1,9 @@
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"
 import { useHandler } from "../../contexts/Handler"
-import { capEach, isLoading, response } from "../../uitils/functions/global";
-import request from "../../uitils/functions/request";
-import { useDelete } from "../../contexts/Delete";
-import { useAuth } from "../../contexts/Authentication";
+import { capEach, isLoading, response } from "../../uitils/functions/global"
+import request from "../../uitils/functions/request"
+import { useDelete } from "../../contexts/Delete"
+import { useAuth } from "../../contexts/Authentication"
 
 export function DeleteModal() {
     const { handler } = useHandler();

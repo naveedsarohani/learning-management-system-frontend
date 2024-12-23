@@ -43,17 +43,29 @@ export default function Allassessment() {
           assessments.map((assessment, index) => (
             <tr key={assessment.id}>
               <td className="py-3 px-4">{index + 1}</td>
-              <td>{assessment.course.title}</td>
-              <td>{assessment.title}</td>
+              <td>{assessment.course.title.slice(0, 10) + "..."}</td>
+              <td>{assessment.title.slice(0, 10) + "..."}</td>
               <td>{assessment.type}</td>
               <td>{assessment.time_limit}</td>
               <td>{assessment.retakes_allowed}</td>
               <td>{formatDate(assessment.created_at)}</td>
-              <td>
-                <ActionButton route={`./${assessment.id}`} name={'View'} />
-                <ActionButton route={`./edit/${assessment.id}`} name={'Edit'} />
-                <ActionButton name={'Delete'}
-                  onClick={() => destroy("/assessments", assessment.id, assessment.title + " assessment")}
+              <td className="flex gap-2">
+                <ActionButton route={`./${assessment.id}`} name={"View"} />
+                <ActionButton
+                  route={`./edit/${assessment.id}`}
+                  name={"Edit"}
+                  color="bg-gradient-to-r from-[#ffcc00] to-[#f57f17]"
+                />
+                <ActionButton
+                  name={"Delete"}
+                  onClick={() =>
+                    destroy(
+                      "/assessments",
+                      assessment.id,
+                      assessment.title + " assessment"
+                    )
+                  }
+                  color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
                 />
               </td>
             </tr>

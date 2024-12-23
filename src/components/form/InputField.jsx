@@ -13,6 +13,7 @@ export default function InputField({
   placeholder,
   accept,
   set = null,
+  customeFunc = null
 }) {
   const {
     handler: { validationErrors },
@@ -28,7 +29,7 @@ export default function InputField({
         }
         type={type ?? "text"}
         name={name}
-        onChange={set && ((e) => handleInputChange(e, set))}
+        onChange={customeFunc ? (e) => customeFunc(e) : set && ((e) => handleInputChange(e, set))}
         placeholder={placeholder ?? ""}
         value={value}
         accept={accept ?? ""}

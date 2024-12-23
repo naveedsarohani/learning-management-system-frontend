@@ -5,9 +5,19 @@ import Student from "./routes/Student";
 import NotFound404 from "./layouts/404";
 import { useDelete } from "./contexts/Delete";
 import { DeleteModal } from "./components/global/DeleteModal";
+import { useEffect } from "react";
+import { useHandler } from "./contexts/Handler";
 
 export default function App() {
-  const { deletion: { isBeingDeleted } } = useDelete();
+  const { deletion: { isBeingDeleted }, isDeleted, setIsDeleted } = useDelete();
+  const { handler: { navigate } } = useHandler();
+
+  useEffect(() => {
+    if (isDeleted) {
+      setIsDeleted(false);
+      navigate(0);
+    }
+  }, [isDeleted]);
 
   return <>
     {isBeingDeleted && <DeleteModal />}

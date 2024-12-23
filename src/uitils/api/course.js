@@ -40,7 +40,7 @@ async function update(id, data, token, handler) {
     handler.setLoading(loading => !loading);
     try {
         response(await request.put(`/courses/${id}`, data, token), handler.setValidationErrors);
-        // handler.navigate('/courses');
+        handler.navigate(-1);
     } catch (error) { toast.error(error.message); }
     finally { handler.setLoading(loading => !loading); }
 

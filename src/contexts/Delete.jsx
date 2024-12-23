@@ -10,6 +10,8 @@ export default function DeleteContextProvider({ children }) {
         identity: ''
     });
 
+    const [isDeleted, setIsDeleted] = useState(false);
+
     function destroy(route, id, identity) {
         setDeleteCreds({ isBeingDeleted: true, route, id, identity })
     }
@@ -23,7 +25,7 @@ export default function DeleteContextProvider({ children }) {
         });
     }
 
-    return <DeleteContext.Provider value={{ deletion: { ...deleteCreds }, destroy, setIsDeleting }}>
+    return <DeleteContext.Provider value={{ deletion: { ...deleteCreds }, destroy, setIsDeleting, isDeleted, setIsDeleted }}>
         {children}
     </DeleteContext.Provider>
 }

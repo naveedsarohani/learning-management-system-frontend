@@ -8,19 +8,21 @@ import { useParams } from "react-router-dom"
 import { useHandler } from "../../contexts/Handler"
 import SubmitButton from "../../components/form/SubmitButton"
 import { useAuth } from "../../contexts/Authentication"
-import { isLoading } from "../../uitils/functions/global"
+import { extractExcept, handleImagePreview, isLoading, isNullOrEmpty } from "../../uitils/functions/global"
 import TextArea from "../../components/form/TextArea"
 import UpdateImagePreview from "../../components/global/UpdateImagePreview"
 
 export default function EditCourse() {
   const [course, setCourse] = useState(blueprint.course)
-  const {
-    credentials: { token, user },
-  } = useAuth()
+  const { credentials: { token, user } } = useAuth()
   const { handler } = useHandler()
   const { courseId } = useParams()
 
   function handleSubmit(data) {
+    if (isNullOrEmpty(data.image.name)) {
+      data = extractExcept(data, ['image']);
+    };
+
     courseapi.update(courseId, data, token, handler)
   }
 
@@ -45,7 +47,8 @@ export default function EditCourse() {
               <InputField
                 type={"file"}
                 name={"image"}
-                accept={".jpg,.jpeg.png"}
+                customeFunc={handleImagePreview}
+                accept={".jpg,.jpeg,.png"}
               />
 
               <TextArea

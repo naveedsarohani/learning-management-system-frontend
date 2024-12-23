@@ -138,3 +138,9 @@ export function where(data = [], relation = {}, operator = '==') {
 export function capitalize(str = '') {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+// function to handle image seelction
+export function handleImagePreview(e) {
+    const updateImage = document.getElementById('updateImagePreview');
+    updateImage.src = window.URL.createObjectURL(e.target.files[0]);
+}

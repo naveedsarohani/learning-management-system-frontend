@@ -43,11 +43,19 @@ export default function AllLesson() {
               <td>{lesson.course.title}</td>
               <td>{lesson.title}</td>
               <td>{formatDate(lesson.created_at)}</td>
-              <td>
-                <ActionButton route={`./${lesson.id}`} name={'View'} />
-                <ActionButton route={`./edit/${lesson.id}`} name={'Edit'} />
-                <ActionButton name={'Delete'}
-                  onClick={() => destroy("/lessons", lesson.id, lesson.title + " lesson")}
+              <td className="flex gap-2 pt-2">
+                <ActionButton route={`./${lesson.id}`} name={"View"} />
+                <ActionButton
+                  route={`./edit/${lesson.id}`}
+                  name={"Edit"}
+                  color="bg-gradient-to-r from-[#ffcc00] to-[#f57f17]"
+                />
+                <ActionButton
+                  name={"Delete"}
+                  onClick={() =>
+                    destroy("/lessons", lesson.id, lesson.title + " lesson")
+                  }
+                  color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
                 />
               </td>
             </tr>

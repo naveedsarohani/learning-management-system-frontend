@@ -57,11 +57,19 @@ export default function AllCourses() {
               <td>
                 <img src={readFile(course.image)} alt="poter" width={50} />
               </td>
-              <td>
-                <ActionButton route={`./${course.id}`} name={'View'} />
-                <ActionButton route={`./edit/${course.id}`} name={'Edit'} />
-                <ActionButton name={'Delete'}
-                  onClick={() => destroy("/courses", course.id, course.title + " course")}
+              <td className="flex  gap-2 pt-2">
+                <ActionButton route={`./${course.id}`} name={"View"} />
+                <ActionButton
+                  route={`./edit/${course.id}`}
+                  name={"Edit"}
+                  color="bg-gradient-to-r from-[#ffcc00] to-[#f57f17]"
+                />
+                <ActionButton
+                  name={"Delete"}
+                  onClick={() =>
+                    destroy("/courses", course.id, course.title + " course")
+                  }
+                  color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
                 />
               </td>
             </tr>

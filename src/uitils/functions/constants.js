@@ -17,3 +17,14 @@ export const role = Object.freeze({
     INSTRUCTOR: 'instructor',
     STUDENT: 'student',
 });
+
+// opertors
+export const operators = Object.freeze({
+    '===': (x, y) => x === y,
+    '==': (x, y) => x == y,
+    '!=': (x, y) => x != y,
+    '>': (x, y) => x > y,
+    '<': (x, y) => x < y,
+    '>=': (x, y) => x >= y,
+    '<=': (x, y) => x <= y,
+});

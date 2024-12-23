@@ -3,6 +3,7 @@ import NotFound404 from "../layouts/404";
 import AllLesson from "../layouts/lesson/AllLesson";
 import ShowLesson from "../layouts/lesson/ShowLesson";
 import EditLesson from "../layouts/lesson/EditLesson";
+import AddAssessment from "../layouts/assessment/AddAssessment";
 
 export default function Lesson() {
     return <Routes>

@@ -6,40 +6,39 @@ import { useAuth } from "../../contexts/Authentication";
 import { useHandler } from "../../contexts/Handler";
 import { isLoading } from "../../uitils/functions/global";
 import { useParams } from "react-router-dom";
-import lesson from "../../uitils/api/lesson";
+import question from "../../uitils/api/question";
+import SelectField from "../../components/form/SelectField";
 
 export default function AddQuestion() {
   const { credentials: { token } } = useAuth();
   const { handler } = useHandler();
-  const { courseId } = useParams();
+  const { assessmentId } = useParams();
 
   function handleSubmit(data) {
-    lesson.store(token, data, handler);
+    question.store(token, data, handler);
   }
 
-  return <DashboardPageCompement title={"add lesson"}>
-    <h1>Add a new lesson </h1>
-
+  return <DashboardPageCompement title={"add question"}>
+    <h1>Add a new question </h1>
+    
     <Form {...{ handleSubmit }}>
       <InputField
-        name={"title"}
-        placeholder={"Lesson title"}
+        name={"question_text"}
+        placeholder={"question text"}
       />
 
-      <InputField
-        type={"file"}
-        name={"content"}
-        placeholder={"Lesson Content"}
-        accept={".pdf,.docx,.xlsx,.txt,.mp4,.3gp,mkv"}
+      <SelectField
+        name={'type'}
+        data={['MCQ', 'true/false']}
       />
 
       <InputField
         type={"hidden"}
-        name={"course_id"}
-        value={courseId}
+        name={"assessment_id"}
+        value={assessmentId}
       />
 
-      <SubmitButton name={isLoading(handler, "Add Lesson")} />
+      <SubmitButton name={isLoading(handler, "Add question")} />
     </Form>
   </DashboardPageCompement>;
 }

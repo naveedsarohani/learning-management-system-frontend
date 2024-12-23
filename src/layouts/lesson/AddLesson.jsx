@@ -30,7 +30,7 @@ export default function AddLesson() {
         type={"file"}
         name={"content"}
         placeholder={"Lesson Content"}
-        accept={".pdf,.docx,.xlsx,.txt,.mp4,.3gp,mkv"}
+        accept={".mp4,.3gp,.mkv"}
       />
 
       <InputField

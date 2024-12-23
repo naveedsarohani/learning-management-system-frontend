@@ -6,39 +6,52 @@ import courseapi from "../../uitils/api/course"
 import { useAuth } from "../../contexts/Authentication"
 import { useHandler } from "../../contexts/Handler"
 import lesson from "../../uitils/api/lesson"
-import { formatDate } from "../../uitils/functions/global"
+import { formatDate, isNullOrEmpty, readFile, where } from "../../uitils/functions/global"
 import { useDelete } from "../../contexts/Delete"
 import { IoIosArrowDown } from "react-icons/io"
 import { IoIosArrowUp } from "react-icons/io"
+import ActionButton from '../../components/global/ActionButton';
+import assessment from "../../uitils/api/assessment"
+import Accordion from "../../components/accordion/Accordion"
+import AccordionContent from "../../components/accordion/AccordionContent"
 
 export default function ShowCourse() {
   const { courseId } = useParams()
-  const {
-    credentials: { token },
-  } = useAuth()
+  const { credentials: { token } } = useAuth()
   const { handler } = useHandler()
   const [course, setCourse] = useState(blueprint.course)
   const [lessons, setLessons] = useState([blueprint.lesson])
+  const [assessments, setAssessments] = useState([blueprint.assessment])
   const { destroy } = useDelete()
   const [activeLesson, setActiveLesson] = useState(null)
+  const [activeAssessment, setActiveAssessment] = useState(null)
 
   const toggleLesson = (lessonId) => {
     setActiveLesson((prev) => (prev === lessonId ? null : lessonId))
   }
+  const toggleAssessment = (assessmentId) => {
+    setActiveAssessment((prev) => (prev === assessmentId ? null : assessmentId))
+  }
 
   useEffect(() => {
     courseapi.show(courseId, token, setCourse, handler)
-    lesson.courseLesson(courseId, token, setLessons, handler)
-  }, [courseId])
+    lesson.all(token, setLessons, handler, { course_id: courseId })
+    assessment.all(token, setAssessments, handler, { course_id: courseId })
+  }, [courseId]);
 
   return (
     <DashboardPageCompement title={"specified course"}>
-      <Link
-        to={"./add-lesson"}
-        className="text-blue-600 underline mb-4 inline-block"
-      >
-        Add a new lesson
-      </Link>
+
+      <ActionButton
+        name={'Add a New Lesson'}
+        route={'./add-lesson'}
+        icon={''}
+      />
+      <ActionButton
+        name={'Add a New Assessment'}
+        route={'./add-assessment'}
+        icon={''}
+      />
 
       {/* Course Title and Description */}
       <div className="bg-white shadow-md rounded-lg p-5 mb-6">
@@ -46,47 +59,48 @@ export default function ShowCourse() {
           {course.title}
         </h1>
         <p className="text-gray-600 mt-2">{course.description}</p>
-        {/* Lessons */}
-        <div className="">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Lessons</h2>
-          <div className="space-y-3">
-            {lessons.map((lesson) => (
-              <div
-                key={lesson.id}
-                className="border border-gray-300 rounded-lg overflow-hidden shadow-sm"
-              >
-                {/* Accordion Header */}
-                <div
-                  className="w-full bg-gradient-to-r   from-[#25bffd] to-[#257bfe]  text-white p-1 text-left font-medium  focus:outline-none"
-                  onClick={() => toggleLesson(lesson.id)}
-                >
-                  <div className="flex p-2 rounded justify-between items-center w-full  order-10">
-                    {lesson.title}
-                    {activeLesson ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                  </div>
-                </div>
 
-                {/* Accordion Content */}
-                {activeLesson === lesson.id && (
-                  <div className="p-4 bg-gray-50">
-                    <p className="text-gray-700 mb-2">{lesson.content}</p>
-                    <span className="text-sm text-gray-500 block mb-4">
-                      {formatDate(lesson.created_at)}
-                    </span>
-                    <button
-                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none"
-                      onClick={() =>
-                        destroy("/lessons", lesson.id, lesson.title + " lesson")
-                      }
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* action buttons */}
+        <ActionButton
+          name={'Delete'}
+          icon={''}
+          onClick={() => destroy('/courses', course.id, course.title + ' course')}
+        />
+
+        <ActionButton
+          name={'Edit'}
+          route={`/dashboard/courses/edit/${course.id}`}
+          icon={''}
+        />
+
+        {/* Lessons */}
+        <Accordion title={'course lessons'}>
+          {!isNullOrEmpty(lessons) && lessons.map(lesson => <AccordionContent
+            itemId={lesson.id}
+            tabTitle={lesson.title}
+            identity={'lesson'}
+          >
+            <video src={readFile(lesson.content)} controls></video>
+            <span className="text-sm text-gray-500 block mb-4">
+              {formatDate(lesson.created_at)}
+            </span>
+          </AccordionContent>)}
+        </Accordion>
+
+        {/* Assessments */}
+        <Accordion title={'course assessments'}>
+          {!isNullOrEmpty(assessments) && assessments.map(assessment => <AccordionContent
+            itemId={assessment.id}
+            tabTitle={assessment.title}
+            identity={'assessment'}
+          >
+            <h1>{assessment.title}</h1>
+            <p>Type: {assessment.type} | Total Retakes: {assessment.retakes_allowed} | Allowed Time: {assessment.time_limit}</p>
+            <span className="text-sm text-gray-500 block mb-4">
+              {formatDate(assessment.created_at)}
+            </span>
+          </AccordionContent>)}
+        </Accordion>
       </div>
     </DashboardPageCompement>
   )

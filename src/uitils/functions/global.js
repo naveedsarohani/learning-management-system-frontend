@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { role, status } from "./constants";
+import { operators, role, status } from "./constants";
 
 // function to get complete URL
 export function getURL(route, api = true) {
@@ -16,30 +16,31 @@ export function getURL(route, api = true) {
 
 // function to handle input change
 export function handleInputChange(e, set) {
+    console.log(e.target.name);
     set(pre => {
         return { ...pre, [e.target.name]: e.target.value }
     });
 }
 
 // function to handle response appropriately
-export function response(response, setValidationErrors = false) {
+export function response(response, setValidationErrors, suppressToast = false) {
     if (!response || !response.data) {
         throw new Error("invalid response");
     }
 
     const { message } = response.data;
-
     switch (response.status) {
         case status.OK:
         case status.CREATED:
-        case status.FOUND:
-            toast.success(message);
+        case status.FOUND: {
+            !suppressToast && toast.success(message ?? 'It was successful');
             break;
+        }
 
-        case status.INVALID_REQUEST:
-            toast.error(message);
+        case status.INVALID_REQUEST: {
             setValidationErrors && setValidationErrors(response.data.errors);
-            break;
+            throw new Error(message ?? 'There was validation failure');
+        }
 
         case status.BAD_REQUEST:
         case status.UNAUTHORIZED:
@@ -47,7 +48,7 @@ export function response(response, setValidationErrors = false) {
         case status.NOT_FOUND:
         case status.INTERNAL_SERVER_ERROR:
         default:
-            toast.error(message);
+            throw new Error(message ?? 'There an error occured');
     }
 
     return extractExcept(response.data, ['status', 'message', 'error', 'errors']);
@@ -122,4 +123,18 @@ export function isNullOrEmpty(data) {
     if (typeof data == 'object' && (Object.keys(data).length === 0 || Object.values(data)[0].id === '')) return true;
 
     return false;
+}
+
+// function to get only records satisfying the condition
+export function where(data = [], relation = {}, operator = '==') {
+    const key = Object.keys(relation)[0];
+    const value = Object.values(relation)[0];
+
+    const extractedData = data.filter(item => operators[operator](item[key], value));
+    return Array.isArray(extractedData) ? extractedData : [extractedData];
+}
+
+// function to capitalize the string
+export function capitalize(str = '') {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }

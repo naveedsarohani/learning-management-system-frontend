@@ -21,7 +21,7 @@ export function DeleteModal() {
         }
     }
 
-    return <div>
+    return <div className="h-screen bg-gray-300 text-center flex justify-center items-center bg-transparent absolute z-200">
         <div className="modal">
             <h3>Are you sure do you want to delete the <strong>{capEach(identity)}</strong>?</h3>
             <button onClick={handleDelete}>{isLoading(handler, "Confirm", "Deleting...")}</button>

@@ -26,26 +26,25 @@ export default function EditLesson() {
     lessonapi.show(lessonId, token, setLesson, handler);
   }, []);
 
-  return  lesson.id && <DashboardPageCompement title={"edit lesson"}>
-      <h1>This is edit Lesson page</h1>
+  return lesson.id && <DashboardPageCompement title={"edit lesson"}>
+    <h1>This is edit Lesson page</h1>
 
-      <Form {...{ handleSubmit }}>
-        <InputField
-          type={"text"}
-          name={"title"}
-          value={lesson.title}
-          set={setLesson}
-          
-        />
+    <Form {...{ handleSubmit }}>
+      <InputField
+        type={"text"}
+        name={"title"}
+        value={lesson.title}
+        set={setLesson}
 
-        <InputField
-            type={"file"}
-            name={"content"}
-            set={setLesson}
-            accept={".pdf,.docx,.xlsx,.txt,.mp4,.3gp,mkv"}
-          />        
+      />
+      <InputField
+        type={"file"}
+        name={"content"}
+        set={setLesson}
+        accept={".mp4,.3gp,mkv"}
+      />
 
-        <SubmitButton name={isLoading(handler, "Edit Lesson")} />
-      </Form>
-    </DashboardPageCompement>
+      <SubmitButton name={isLoading(handler, "Edit Lesson")} />
+    </Form>
+  </DashboardPageCompement>
 }

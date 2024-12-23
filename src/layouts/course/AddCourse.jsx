@@ -15,7 +15,7 @@ export default function AddCourse() {
   const { handler } = useHandler()
 
   function handleSubmit(data) {
-    course.store(token, data, handler)
+    course.store(token, data, handler);
   }
 
   return (
@@ -32,12 +32,7 @@ export default function AddCourse() {
             <InputField
               type={"file"}
               name={"image"}
-              accept={".jpg,.jpeg.png"}
-            />
-            <InputField
-              type={"file"}
-              name={"image"}
-              accept={".jpg,.jpeg.png"}
+              accept={".jpg,.jpeg,.png"}
             />
 
             <TextArea

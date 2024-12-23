@@ -1,6 +1,18 @@
 import { toast } from "react-toastify";
-import { response, roleBaseRedirection } from "../functions/global";
+import { response, roleBaseRedirection, where } from "../functions/global";
 import request from "../functions/request";
+
+// function to fetch all course records
+async function users(token, set, only = false) {
+    try {
+        const responseData = response(await request.get('/auth/users', token), false, true);
+        if (responseData) {
+            if (only) set(where(Object.values(responseData.users), only));
+            else set(Object.values(responseData.users));
+        };
+    }
+    catch (error) { toast.error(error.message); }
+}
 
 // function to login
 async function register(data, handler) {
@@ -32,6 +44,7 @@ async function login(data, handler, user) {
         handler.setLoading(loading => !loading);
     }
 }
+
 // function to logout
 async function logout(token, handler) {
     handler.setLoading(loading => !loading);
@@ -60,4 +73,4 @@ async function updatePassword(data, token, handler) {
     }
 }
 
-export default { register, login, logout, updatePassword }
+export default { users, register, login, logout, updatePassword }

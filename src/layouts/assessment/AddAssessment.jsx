@@ -6,7 +6,8 @@ import { useAuth } from "../../contexts/Authentication";
 import { useHandler } from "../../contexts/Handler";
 import { isLoading } from "../../uitils/functions/global";
 import { useParams } from "react-router-dom";
-import lesson from "../../uitils/api/lesson";
+import SelectField from "../../components/form/SelectField";
+import assessment from "../../uitils/api/assessment";
 
 export default function AddAssessment() {
   const { credentials: { token } } = useAuth();
@@ -14,23 +15,34 @@ export default function AddAssessment() {
   const { courseId } = useParams();
 
   function handleSubmit(data) {
-    lesson.store(token, data, handler);
+    assessment.store(token, data, handler);
   }
 
-  return <DashboardPageCompement title={"add lesson"}>
-    <h1>Add a new lesson </h1>
+  return <DashboardPageCompement title={"add assessment"}>
+    <h1>Add a new assessment</h1>
 
     <Form {...{ handleSubmit }}>
       <InputField
         name={"title"}
-        placeholder={"Lesson title"}
+        placeholder={"asessment title"}
+      />
+
+      <SelectField
+        name={'type'}
+        value={'Choose the assessment type'}
+        data={['quiz', 'test', 'exam']}
       />
 
       <InputField
-        type={"file"}
-        name={"content"}
-        placeholder={"Lesson Content"}
-        accept={".pdf,.docx,.xlsx,.txt,.mp4,.3gp,mkv"}
+        type={"number"}
+        name={"time_limit"}
+        placeholder={"Time limit in minues"}
+      />
+
+      <InputField
+        type={"number"}
+        name={"retakes_allowed"}
+        placeholder={"Total allowed retakes"}
       />
 
       <InputField
@@ -39,7 +51,7 @@ export default function AddAssessment() {
         value={courseId}
       />
 
-      <SubmitButton name={isLoading(handler, "Add Lesson")} />
+      <SubmitButton name={isLoading(handler, "Add assessment")} />
     </Form>
   </DashboardPageCompement>;
 }

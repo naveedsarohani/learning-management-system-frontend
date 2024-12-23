@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/Authentication"
 import { useHandler } from "../contexts/Handler"
 import Navbar from "../components/global/navbar"
 import SideBar from "../components/global/SideBar"
-import Courses from "./Courses"
+import Courses from "./Course"
 import { role } from "../uitils/functions/constants"
 import DashboardHomePage from "../layouts/dashboards"
 import NotFound404 from "../layouts/404"
@@ -12,6 +12,10 @@ import UpdatePassword from "../layouts/authentication/UpdatePassword"
 import Lesson from "./Lesson"
 import Assessment from "./Assessment"
 import Question from "./Question"
+import Answer from "./Answer"
+import AllInstructor from "../layouts/users/AllInstructor"
+import Allstudent from "../layouts/users/AllStudent"
+import Submission from "./Submission"
 
 export default function Dashboard() {
   const {
@@ -39,9 +43,8 @@ export default function Dashboard() {
         <div className="flex h-screen">
           {/* Sidebar */}
           <div
-            className={`fixed md:static transition-transform top-0 left-0 z-10 ${
-              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } md:translate-x-0`}
+            className={`fixed md:static transition-transform top-0 left-0 z-10 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+              } md:translate-x-0`}
           >
             <SideBar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen} />
           </div>
@@ -57,10 +60,14 @@ export default function Dashboard() {
             <div className="flex-1 overflow-y-auto pl-6">
               <Routes>
                 <Route path="/" element={<DashboardHomePage />} />
+                <Route path="/instructors" element={<AllInstructor />} />
+                <Route path="/students" element={<Allstudent />} />
                 <Route path="/courses/*" element={<Courses />} />
                 <Route path="/lessons/*" element={<Lesson />} />
                 <Route path="/assessments/*" element={<Assessment />} />
                 <Route path="/questions/*" element={<Question />} />
+                <Route path="/answers/*" element={<Answer />} />
+                <Route path="/submissions/*" element={<Submission />} />
 
                 <Route path="/update-password" element={<UpdatePassword />} />
 

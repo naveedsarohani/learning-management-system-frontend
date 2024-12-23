@@ -11,7 +11,7 @@ import blueprint from "../../uitils/blueprint";
 import SelectField from "../../components/form/SelectField";
 import { useState } from "react";
 
-export default function AddAnswer() {
+export default function AddSubmission() {
   const { credentials: { token } } = useAuth();
   const { handler } = useHandler();
   const { questionId } = useParams();

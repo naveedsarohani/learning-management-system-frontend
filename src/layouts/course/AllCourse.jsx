@@ -12,6 +12,7 @@ import {
   isNullOrEmpty,
   readFile,
 } from "../../uitils/functions/global"
+import ActionButton from "../../components/global/ActionButton"
 
 export default function AllCourses() {
   const { handler } = useHandler()
@@ -57,15 +58,11 @@ export default function AllCourses() {
                 <img src={readFile(course.image)} alt="poter" width={50} />
               </td>
               <td>
-                <Link to={"./" + course.id}>View</Link>
-                <Link to={"./edit/" + course.id}>Edit</Link>
-                <button
-                  onClick={() =>
-                    destroy("/courses", course.id, course.title + " course")
-                  }
-                >
-                  Delete
-                </button>
+                <ActionButton route={`./${course.id}`} name={'View'} />
+                <ActionButton route={`./edit/${course.id}`} name={'Edit'} />
+                <ActionButton name={'Delete'}
+                  onClick={() => destroy("/courses", course.id, course.title + " course")}
+                />
               </td>
             </tr>
           ))

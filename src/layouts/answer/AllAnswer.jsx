@@ -7,38 +7,40 @@ import { Link } from "react-router-dom";
 import blueprint from "../../uitils/blueprint";
 import { formatDate, isNullOrEmpty } from "../../uitils/functions/global";
 import { useDelete } from "../../contexts/Delete";
-import question from "../../uitils/api/question";
+import answer from "../../uitils/api/answer";
 
-export default function AllQuestion() {
+export default function Allanswer() {
     const { destroy } = useDelete();
     const { handler } = useHandler();
     const { credentials: { user, token } } = useAuth();
-    const [questions, setQuestions] = useState([blueprint.question]);
+    const [answers, setanswers] = useState([blueprint.answer]);
 
     useEffect(() => {
-        question.all(token, setQuestions, handler);
+        answer.all(token, setanswers, handler);
     }, [handler.navigate, user]);
 
-    return <DashboardPageCompement title={'all questions'}>
-        <h1>The all questions are below in a table form</h1>
+    return <DashboardPageCompement title={'all answers'}>
+        <h1>The all answers are below in a table form</h1>
         <Table
             ths={<>
                 <th>Sno.</th>
                 <th>Question</th>
-                <th>Type</th>
+                <th>Answer Text</th>
+                <th>Is Correct</th>
                 <th>Created On</th>
                 <th>Action</th>
             </>}
 
-            tds={!isNullOrEmpty(questions) && questions.map((question, index) => <tr key={question.id}>
+            tds={!isNullOrEmpty(answers) && answers.map((answer, index) => <tr key={answer.id}>
                 <td>{index + 1}</td>
-                <td>{question.question_text}</td>
-                <td>{question.type}</td>
-                <td>{formatDate(question.created_at)}</td>
+                <td>{answer.question.question_text}</td>
+                <td>{answer.answer_text}</td>
+                <td>{answer.is_correct}</td>
+                <td>{formatDate(answer.created_at)}</td>
                 <td>
-                    <Link to={'./' + question.id}>View</Link>
-                    <Link to={'./edit/' + question.id}>Edit</Link>
-                    <button onClick={() => destroy('/questions', question.id, 'question')}>Delete</button>
+                    <Link to={'./' + answer.id}>View</Link>
+                    <Link to={'./edit/' + answer.id}>Edit</Link>
+                    <button onClick={() => destroy('/answers', answer.id, 'answer')}>Delete</button>
                 </td>
             </tr>)}
         />

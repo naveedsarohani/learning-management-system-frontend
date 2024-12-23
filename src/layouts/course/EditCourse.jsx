@@ -10,6 +10,7 @@ import SubmitButton from "../../components/form/SubmitButton"
 import { useAuth } from "../../contexts/Authentication"
 import { isLoading } from "../../uitils/functions/global"
 import TextArea from "../../components/form/TextArea"
+import UpdateImagePreview from "../../components/global/UpdateImagePreview"
 
 export default function EditCourse() {
   const [course, setCourse] = useState(blueprint.course)
@@ -54,11 +55,19 @@ export default function EditCourse() {
                 placeholder={"Course description..."}
               />
 
-              <InputField type={"hidden"} name={"user_id"} value={user.id} />
+              <InputField
+                type={"hidden"}
+                name={"user_id"}
+                value={user.id}
+              />
+
               <div className="text-center">
                 <SubmitButton name={isLoading(handler, "Edit Course")} />
               </div>
             </Form>
+
+            {/* Iamge preview */}
+            <UpdateImagePreview currentImage={course.image} />
           </div>
         </div>
       </DashboardPageCompement>

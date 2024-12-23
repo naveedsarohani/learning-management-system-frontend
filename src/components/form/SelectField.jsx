@@ -18,6 +18,7 @@ export default function SelectField({
       {/* {capEach(separateBy(name, "_"))}:{" "} */}
       <select
         name={name}
+        onChange={set && ((e) => handleInputChange(e, set))}
         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 mt-4"
       >
         <option defaultValue={true} disabled={true}>
@@ -29,7 +30,6 @@ export default function SelectField({
             defaultValue={selected === role}
             key={role}
             value={role}
-            onChange={set && ((e) => handleInputChange(e, set))}
           >
             {capEach(role)}
           </option>

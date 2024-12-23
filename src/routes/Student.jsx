@@ -47,6 +47,7 @@ export default function Student() {
                         <div className="flex-1 overflow-y-auto pl-6">
                             <Routes>
                                 <Route path="/" element={<StudentProfile />} />
+                                <Route path="/courses/:courseId" element={<StudentProfile />} />
 
 
                                 <Route path="/update-password" element={<UpdatePassword />} />

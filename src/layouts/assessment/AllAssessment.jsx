@@ -8,6 +8,7 @@ import blueprint from "../../uitils/blueprint"
 import { formatDate, isNullOrEmpty } from "../../uitils/functions/global"
 import { useDelete } from "../../contexts/Delete"
 import assessment from "../../uitils/api/assessment"
+import ActionButton from "../../components/global/ActionButton"
 
 export default function Allassessment() {
   const { destroy } = useDelete()
@@ -28,6 +29,7 @@ export default function Allassessment() {
         ths={
           <>
             <th className="py-3 px-4">Sno.</th>
+            <th>Course</th>
             <th>Title</th>
             <th>Type</th>
             <th>Time Limit</th>
@@ -41,25 +43,18 @@ export default function Allassessment() {
           assessments.map((assessment, index) => (
             <tr key={assessment.id}>
               <td className="py-3 px-4">{index + 1}</td>
+              <td>{assessment.course.title}</td>
               <td>{assessment.title}</td>
               <td>{assessment.type}</td>
               <td>{assessment.time_limit}</td>
               <td>{assessment.retakes_allowed}</td>
               <td>{formatDate(assessment.created_at)}</td>
               <td>
-                <Link to={"./" + assessment.id}>View</Link>
-                <Link to={"./edit/" + assessment.id}>Edit</Link>
-                <button
-                  onClick={() =>
-                    destroy(
-                      "/assessments",
-                      assessment.id,
-                      assessment.title + " assessment"
-                    )
-                  }
-                >
-                  Delete
-                </button>
+                <ActionButton route={`./${assessment.id}`} name={'View'} />
+                <ActionButton route={`./edit/${assessment.id}`} name={'Edit'} />
+                <ActionButton name={'Delete'}
+                  onClick={() => destroy("/assessments", assessment.id, assessment.title + " assessment")}
+                />
               </td>
             </tr>
           ))

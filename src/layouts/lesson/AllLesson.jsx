@@ -8,6 +8,7 @@ import { Link } from "react-router-dom"
 import blueprint from "../../uitils/blueprint"
 import { formatDate, isNullOrEmpty } from "../../uitils/functions/global"
 import { useDelete } from "../../contexts/Delete"
+import ActionButton from "../../components/global/ActionButton"
 
 export default function AllLesson() {
   const { destroy } = useDelete()
@@ -28,8 +29,8 @@ export default function AllLesson() {
         ths={
           <>
             <th className="py-3 px-4">Sno.</th>
-            <th>Title</th>
             <th>Course</th>
+            <th>Title</th>
             <th>Created On</th>
             <th>Action</th>
           </>
@@ -39,19 +40,15 @@ export default function AllLesson() {
           lessons.map((lesson, index) => (
             <tr key={lesson.id}>
               <td className="p-5">{index + 1}</td>
-              <td>{lesson.title}</td>
               <td>{lesson.course.title}</td>
+              <td>{lesson.title}</td>
               <td>{formatDate(lesson.created_at)}</td>
               <td>
-                <Link to={"./" + lesson.id}>View</Link>
-                <Link to={"./edit/" + lesson.id}>Edit</Link>
-                <button
-                  onClick={() =>
-                    destroy("/lessons", lesson.id, lesson.title + " lesson")
-                  }
-                >
-                  Delete
-                </button>
+                <ActionButton route={`./${lesson.id}`} name={'View'} />
+                <ActionButton route={`./edit/${lesson.id}`} name={'Edit'} />
+                <ActionButton name={'Delete'}
+                  onClick={() => destroy("/lessons", lesson.id, lesson.title + " lesson")}
+                />
               </td>
             </tr>
           ))

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/Authentication"
 import { useHandler } from "../../contexts/Handler";
-import { capEach } from "../../uitils/functions/global";
 import DashboardPageCompement from "../../components/global/DashboardPage";
 import course from "../../uitils/api/course";
 import blueprint from "../../uitils/blueprint";

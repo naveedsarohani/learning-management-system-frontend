@@ -1,3 +1,13 @@
+const user = Object.freeze({
+    id: '',
+    name: '',
+    email: '',
+    role: '',
+    image: '',
+    created_at: '',
+    updated_at: ''
+});
+
 const course = Object.freeze({
     id: '',
     user_id: '',
@@ -101,4 +111,32 @@ const answer = Object.freeze({
     }
 });
 
-export default { course, lesson, assessment, question, answer };
+const submission = Object.freeze({
+    id: '',
+    assessment_id: '',
+    student_id: '',
+    score: '',
+    retake_count: '',
+    submitted_at: '',
+    student: {
+        id: '',
+        name: '',
+        email: '',
+        role: '',
+        image: '',
+        created_at: '',
+        updated_at: ''
+    },
+    assessment: {
+        id: '',
+        course_id: '',
+        title: '',
+        type: '',
+        time_limit: '',
+        retakes_allowed: '',
+        created_at: '',
+        updated_at: ''
+    }
+});
+
+export default { user, course, lesson, assessment, question, answer, submission };

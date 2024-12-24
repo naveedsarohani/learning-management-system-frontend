@@ -8,11 +8,9 @@ import Courses from "./Course"
 import { role } from "../uitils/functions/constants"
 import DashboardHomePage from "../layouts/dashboards"
 import NotFound404 from "../layouts/404"
-import UpdatePassword from "../layouts/authentication/UpdatePassword"
 import Lesson from "./Lesson"
 import Assessment from "./Assessment"
 import Question from "./Question"
-import Answer from "./Answer"
 import AllInstructor from "../layouts/users/AllInstructor"
 import Allstudent from "../layouts/users/AllStudent"
 import Submission from "./Submission"
@@ -66,10 +64,7 @@ export default function Dashboard() {
                 <Route path="/lessons/*" element={<Lesson />} />
                 <Route path="/assessments/*" element={<Assessment />} />
                 <Route path="/questions/*" element={<Question />} />
-                <Route path="/answers/*" element={<Answer />} />
                 <Route path="/submissions/*" element={<Submission />} />
-
-                <Route path="/update-password" element={<UpdatePassword />} />
 
                 {/* Unknown Route */}
                 <Route path="*" element={<NotFound404 />} />

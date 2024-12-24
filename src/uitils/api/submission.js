@@ -16,7 +16,7 @@ async function all(token, set, handler) {
 async function show(id, token, set, handler) {
     handler.setLoading(loading => !loading);
     try {
-        const responseData = response(await request.get(`/submissions/${id}`, token));
+        const responseData = response(await request.get(`/submissions/${id}`, token), false, true);
         responseData && set(responseData.submission);
     }
     catch (error) { toast.error(error.message); }

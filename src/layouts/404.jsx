@@ -1,5 +1,5 @@
+import BackButton from "../components/global/BackButton"
 import { useHandler } from "../contexts/Handler"
-import { FaArrowLeft } from "react-icons/fa6"
 
 export default function NotFound404() {
   const {
@@ -16,13 +16,7 @@ export default function NotFound404() {
         </span>
         <span className="font-bold">NOT FOUND</span>
       </h2>
-      <button
-        onClick={() => navigate(-1)}
-        className=" py-2 px-4 rounded-lg bg-gradient-to-r from-[#21bffd] to-[#217bfe] text-white flex justify-center items-center gap-2"
-      >
-        <FaArrowLeft />
-        Go Back
-      </button>
+      <BackButton />
     </div>
   )
 }

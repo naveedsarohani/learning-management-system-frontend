@@ -5,7 +5,7 @@ import blueprint from "../../uitils/blueprint"
 import lessonapi from "../../uitils/api/lesson"
 import { useAuth } from "../../contexts/Authentication"
 import { useHandler } from "../../contexts/Handler"
-import { formatDate } from "../../uitils/functions/global"
+import { formatDate, readFile } from "../../uitils/functions/global"
 import ActionButton from "../../components/global/ActionButton"
 import { useDelete } from "../../contexts/Delete"
 
@@ -29,11 +29,12 @@ export default function ShowLesson() {
         <h1 className="text-3xl font-bold text-gray-800 mb-4">
           {lesson.title}
         </h1>
+        <p>
+          {lesson.course.description}
+        </p>
 
         {/* Lesson Content */}
-        <p className="text-gray-700 text-lg leading-relaxed mb-6">
-          {lesson.content}
-        </p>
+        <video src={readFile(lesson.content)} controls></video>
 
         {/* Last Updated */}
         <p className="text-sm text-gray-500 italic">

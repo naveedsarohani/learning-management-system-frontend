@@ -54,7 +54,7 @@ export default function Login() {
             <p className="text-sm text-gray-600 mt-6 text-center">
               Don't have an account?{" "}
               <a
-                href="#"
+                href="/auth/register"
                 className="bg-gradient-to-r from-[#21bffd] to-[#217bfe] bg-clip-text text-transparent hover:underline font-medium"
               >
                 Sign up

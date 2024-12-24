@@ -96,7 +96,7 @@ export default function Register() {
           <p className="text-sm text-gray-600 mt-4 text-center">
             Already have an account?
             <a
-              href="#"
+              href="/auth/login"
               className="bg-gradient-to-r from-[#21bffd] to-[#217bfe] bg-clip-text text-transparent hover:underline font-medium"
             >
               Sign In

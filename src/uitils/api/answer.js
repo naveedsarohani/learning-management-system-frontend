@@ -1,13 +1,16 @@
 import { toast } from "react-toastify";
 import request from "../functions/request";
-import { response } from "../functions/global";
+import { response, where } from "../functions/global";
 
 // function to fetch all course records
-async function all(token, set, handler) {
+async function all(token, set, handler, only = false) {
     handler.setLoading(loading => !loading);
     try {
         const responseData = response(await request.get('/answers', token), false, true);
-        responseData && set(responseData.answers);
+        if (responseData) {
+            if (only) set(where(responseData.answers, only)[0]);
+            else set(responseData.answers);
+        };
     }
     catch (error) { toast.error(error.message); }
     finally { handler.setLoading(loading => !loading); }

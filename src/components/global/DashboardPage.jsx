@@ -1,4 +1,5 @@
 import { capEach } from "../../uitils/functions/global"
+import BackButton from "./BackButton"
 
 export default function DashboardPageCompement({ children, title }) {
   return (

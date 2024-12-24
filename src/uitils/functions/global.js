@@ -16,7 +16,6 @@ export function getURL(route, api = true) {
 
 // function to handle input change
 export function handleInputChange(e, set) {
-    console.log(e.target.name);
     set(pre => {
         return { ...pre, [e.target.name]: e.target.value }
     });
@@ -143,4 +142,24 @@ export function capitalize(str = '') {
 export function handleImagePreview(e) {
     const updateImage = document.getElementById('updateImagePreview');
     updateImage.src = window.URL.createObjectURL(e.target.files[0]);
+}
+
+// function to handle image seelction
+export function handleVideoPreview(e) {
+    const updateVideo = document.getElementById('updateVideoPreview');
+    updateVideo.src = window.URL.createObjectURL(e.target.files[0]);
+}
+
+// function to find any valueusing specific string the return filtered data
+export function has(data = [], searchValue) {
+    const foundItem = data.find((item) => item.includes(searchValue));
+
+    if (foundItem) {
+        const filteredData = data.filter((item) => item !== foundItem);
+        const replacedItem = foundItem.replace(searchValue, '');
+
+        return { items: filteredData, option: replacedItem };
+    }
+
+    return { items: data, option: null };
 }

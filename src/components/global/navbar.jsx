@@ -67,12 +67,12 @@ export default function Navbar() {
               </div>
               <ul className="py-2">
                 <li>
-                  <button
+                  <Link
                     className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm text-gray-700"
-                    onClick={() => alert("Go to Profile")}
+                    to={'/profile'}
                   >
                     Profile
-                  </button>
+                  </Link>
                 </li>
                 <li>
                   {user ? (

@@ -4,10 +4,8 @@ import { useHandler } from "../contexts/Handler";
 import NotFound404 from "../layouts/404";
 import { role } from "../uitils/functions/constants";
 import { useEffect, useState } from "react";
-import SideBar from "../components/global/SideBar";
 import Navbar from "../components/global/navbar";
 import StudentProfile from "../layouts/student/StudentProfile";
-import UpdatePassword from "../layouts/authentication/UpdatePassword";
 
 export default function Student() {
     const { credentials: { user } } = useAuth();
@@ -33,7 +31,7 @@ export default function Student() {
                         className={`fixed md:static transition-transform z-10 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
                             } md:translate-x-0`}
                     >
-                        <SideBar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen} />
+                        {/* <SideBar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen} /> */}
                     </div>
 
                     {/* Main Content Area */}
@@ -48,9 +46,6 @@ export default function Student() {
                             <Routes>
                                 <Route path="/" element={<StudentProfile />} />
                                 <Route path="/courses/:courseId" element={<StudentProfile />} />
-
-
-                                <Route path="/update-password" element={<UpdatePassword />} />
 
                                 {/* Unknown Route */}
                                 <Route path="*" element={<NotFound404 />} />

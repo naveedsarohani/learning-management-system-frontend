@@ -50,11 +50,6 @@ export default function AllSubmission() {
               <td className="flex gap-2 pt-2">
                 <ActionButton route={`./${submission.id}`} name={"View"} />
                 <ActionButton
-                  route={`./edit/${submission.id}`}
-                  name={"Edit"}
-                  color="bg-gradient-to-r from-[#ffcc00] to-[#f57f17]"
-                />
-                <ActionButton
                   name={"Delete"}
                   onClick={() =>
                     destroy("/submissions", submission.id, "submission")

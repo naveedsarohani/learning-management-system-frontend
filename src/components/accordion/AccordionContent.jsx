@@ -4,7 +4,7 @@ import { useDelete } from "../../contexts/Delete";
 import ActionButton from "../global/ActionButton";
 import { capitalize } from "../../uitils/functions/global";
 
-export default function AccordionContent({ tabTitle, itemId, children, identity }) {
+export default function AccordionContent({ tabTitle, itemId, children, identity, noEdit = false }) {
     const [activeTab, setActiveTab] = useState(null);
     const { destroy } = useDelete()
 
@@ -29,16 +29,18 @@ export default function AccordionContent({ tabTitle, itemId, children, identity 
                 icon={''}
             />
 
-            <ActionButton
+            {!noEdit && <ActionButton
                 name={'Edit'}
                 route={`./edit-${identity}/${itemId}`}
                 icon={''}
-            />
+                color="bg-gradient-to-r from-[#ffcc00] to-[#f57f17]"
+            />}
 
             <ActionButton
                 name={'Delete'}
                 icon={''}
                 onClick={() => destroy(`/${identity}s`, itemId, tabTitle + ` ${identity}`)}
+                color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
             />
         </div>}
     </div>

@@ -7,8 +7,9 @@ import { useParams } from "react-router-dom";
 import { useHandler } from "../../contexts/Handler";
 import SubmitButton from "../../components/form/SubmitButton";
 import { useAuth } from "../../contexts/Authentication";
-import { isLoading } from "../../uitils/functions/global";
+import { extractExcept, handleVideoPreview, isLoading, isNullOrEmpty } from "../../uitils/functions/global";
 import lessonapi from "../../uitils/api/lesson";
+import UpdateVideoPreview from "../../components/global/UpdatevideoPreview";
 
 export default function EditLesson() {
   const [lesson, setLesson] = useState(blueprint.lesson);
@@ -19,6 +20,10 @@ export default function EditLesson() {
   const { lessonId } = useParams();
 
   function handleSubmit(data) {
+    if (isNullOrEmpty(data.content.name)) {
+      data = extractExcept(data, ['content']);
+    }
+
     lessonapi.update(lessonId, data, token, handler);
   }
 
@@ -41,10 +46,15 @@ export default function EditLesson() {
         type={"file"}
         name={"content"}
         set={setLesson}
+        customeFunc={handleVideoPreview}
         accept={".mp4,.3gp,mkv"}
       />
 
       <SubmitButton name={isLoading(handler, "Edit Lesson")} />
     </Form>
+
+    <div>
+      <UpdateVideoPreview currentVideo={lesson.content} />
+    </div>
   </DashboardPageCompement>
 }

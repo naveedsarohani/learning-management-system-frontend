@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { response, roleBaseRedirection, where } from "../functions/global";
+import { isNullOrEmpty, response, roleBaseRedirection, where } from "../functions/global";
 import request from "../functions/request";
 
 // function to fetch all course records
@@ -20,6 +20,7 @@ async function register(data, handler) {
 
     try {
         response(await request.post('/auth/register', data), handler.setValidationErrors);
+        handler.navigate('/auth/login');
     } catch (error) {
         toast.error(error.message);
     } finally {
@@ -60,12 +61,27 @@ async function logout(token, handler) {
     }
 }
 
+// function to update details
+async function update(data, token, handler, options = {}) {
+    handler.setLoading(loading => !loading);
+    try {
+        const responseData = response(await request.put('/auth/update', data, token), handler.setValidationErrors);
+        if (!isNullOrEmpty(responseData.user)) {
+            options.user.save(responseData.user, options.token);
+        }
+
+        options.setHelper(pre => ({ ...pre, [options.target]: false, }));
+    } catch (error) { toast.error(error.message); }
+    finally { handler.setLoading(loading => !loading); }
+}
+
 // function to login
-async function updatePassword(data, token, handler) {
+async function updatePassword(data, token, handler, setHelper) {
     handler.setLoading(loading => !loading);
 
     try {
         response(await request.post('/auth/update-password', data, token), handler.setValidationErrors);
+        setHelper(pre => ({ ...pre, isPassUpdate: false, }))
     } catch (error) {
         toast.error(error.message);
     } finally {
@@ -73,4 +89,4 @@ async function updatePassword(data, token, handler) {
     }
 }
 
-export default { users, register, login, logout, updatePassword }
+export default { users, register, login, logout, update, updatePassword }

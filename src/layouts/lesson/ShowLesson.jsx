@@ -5,7 +5,7 @@ import blueprint from "../../uitils/blueprint"
 import lessonapi from "../../uitils/api/lesson"
 import { useAuth } from "../../contexts/Authentication"
 import { useHandler } from "../../contexts/Handler"
-import { formatDate, readFile } from "../../uitils/functions/global"
+import { capitalize, formatDate, readFile } from "../../uitils/functions/global"
 import ActionButton from "../../components/global/ActionButton"
 import { useDelete } from "../../contexts/Delete"
 
@@ -32,7 +32,7 @@ export default function ShowLesson() {
 
         {/* Lesson Title */}
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
-          {lesson.title}
+          {capitalize(lesson.title)}
         </h1>
 
         {/* Lesson Content */}

@@ -4,7 +4,8 @@ import { Link } from "react-router-dom"
 import auth from "../../uitils/api/auth"
 import { BsPersonCircle } from "react-icons/bs"
 import { useState } from "react"
-import { isNullOrEmpty } from "../../uitils/functions/global"
+import { capEach, isNullOrEmpty, readFile } from "../../uitils/functions/global"
+import ActionButton from "./ActionButton"
 
 export default function Navbar() {
   const { handler } = useHandler()
@@ -53,18 +54,21 @@ export default function Navbar() {
           />
 
           {/* Profile Icon */}
-          {!isNullOrEmpty(user) && <button
+          {!isNullOrEmpty(user.id) ? <button
             className="text-gray-500 hover:text-gray-800 focus:outline-none"
             onClick={handleDropdownToggle}
           >
-            <BsPersonCircle size={24} />
-          </button>}
+            <img src={readFile(user.image)} className="w-10 rounded-full" />
+          </button> : <>
+            <ActionButton name='login' route='/auth/login' />
+            <ActionButton name='register' route='/auth/register' />
+          </>}
 
           {/* Dropdown Menu */}
           {!isNullOrEmpty(user) && isDropdownOpen && (
             <div className="absolute top-12 right-0 mt-2 w-56 sm:w-48 bg-white border rounded-lg shadow-lg z-10">
               <div className="p-4 border-b text-gray-700 font-medium">
-                <p>{user.name}</p>
+                <p>{capEach(user.name)}</p>
               </div>
               <ul className="py-2">
                 <li>
@@ -93,7 +97,7 @@ export default function Navbar() {
           )}
 
           {/* Notification Icon */}
-          <span className="text-gray-500 hover:text-gray-800">🔔</span>
+          {/* <span className="text-gray-500 hover:text-gray-800">🔔</span> */}
         </div>
       </nav>
     </header>

@@ -47,7 +47,7 @@ export default function ShowAssessment() {
           {/* Assessment Details */}
           <div className="p-6 border-b border-gray-200">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              {assessment.title}
+              {capitalize(assessment.title)}
             </h1>
             <p className="text-sm text-gray-600 mb-2">
               <strong>Type:</strong> {assessment.type}

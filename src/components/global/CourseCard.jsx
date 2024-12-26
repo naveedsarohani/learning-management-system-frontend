@@ -1,5 +1,5 @@
 import blueprint from "../../uitils/blueprint"
-import { formatDate, readFile } from "../../uitils/functions/global"
+import { capEach, formatDate, readFile } from "../../uitils/functions/global"
 import ActionButton from "./ActionButton"
 
 export default function CourseCard({ course = blueprint.course }) {
@@ -22,10 +22,16 @@ export default function CourseCard({ course = blueprint.course }) {
         <p className="text-sm text-gray-600 mt-1 line-clamp-2">
           {course.description}
         </p>
-        <span className="text-xs text-gray-500 mt-3 flex gap-1 items-center">
-          <p>Last Update</p>
-          {formatDate(course.updated_at)}
-        </span>
+        <div>
+          <span className="text-xs text-gray-500 mt-3 flex gap-1 items-center">
+            <p>Last Update</p>
+            {formatDate(course.updated_at)}
+          </span>
+          <span className="text-xs text-gray-500 mt-3 flex gap-1 items-center">
+            <p>By</p>
+            {capEach(course.user.name)}
+          </span>
+        </div>
 
         <ActionButton
           name={'see course'}

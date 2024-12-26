@@ -8,6 +8,7 @@ import { DeleteModal } from "./components/global/DeleteModal";
 import { useEffect } from "react";
 import { useHandler } from "./contexts/Handler";
 import Profile from "./routes/Profile";
+import Public from "./routes/Public";
 
 export default function App() {
   const { deletion: { isBeingDeleted }, isDeleted, setIsDeleted } = useDelete();
@@ -24,12 +25,12 @@ export default function App() {
     {isBeingDeleted && <DeleteModal />}
 
     <Routes>
-      <Route path="/" element={<h1>Home Page</h1>} />
+      <Route path="/*" element={<Public />} />
 
       <Route path="/auth/*" element={<Authentication />} />
       <Route path="/profile/*" element={<Profile />} />
       <Route path="/dashboard/*" element={<Dashboard />} />
-      <Route path="/student-profile/*" element={<Student />} />
+      {/* <Route path="/student-profile/*" element={<Student />} /> */}
 
       {/* Unknow route */}
       <Route path="*" element={<NotFound404 />} />

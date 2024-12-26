@@ -24,6 +24,8 @@ export default function TextArea({
         className={`${className} w-full mb-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 mt-4`}
         onChange={set && ((e) => handleInputChange(e, set))}
         placeholder={placeholder ?? ""}
+        rows={5}
+        cols={5}
       >
         {value ?? ""}
       </textarea>

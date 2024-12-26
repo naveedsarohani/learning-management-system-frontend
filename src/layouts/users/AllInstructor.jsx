@@ -61,6 +61,7 @@ export default function AllInstructor() {
               <td>
                 <ActionButton
                   name={"Delete"}
+                  color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
                   onClick={() =>
                     destroy(
                       "/auth/delete",

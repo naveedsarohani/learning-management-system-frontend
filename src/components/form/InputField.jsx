@@ -1,6 +1,7 @@
 import { useHandler } from "../../contexts/Handler"
 import {
   capEach,
+  capitalize,
   handleInputChange,
   separateBy,
 } from "../../uitils/functions/global"
@@ -20,7 +21,7 @@ export default function InputField({
   } = useHandler()
 
   return (
-    <label className="block text-sm font-bold text-gray-600 ">
+    <label className="block text-sm">
       {/* {capEach(separateBy(name, "_"))}{" "} */}
       <input
         className={
@@ -34,7 +35,7 @@ export default function InputField({
             ? (e) => customeFunc(e)
             : set && ((e) => handleInputChange(e, set))
         }
-        placeholder={placeholder ?? ""}
+        placeholder={capitalize(placeholder) ?? ""}
         value={value}
         accept={accept ?? ""}
       />

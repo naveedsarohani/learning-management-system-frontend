@@ -56,7 +56,7 @@ export default function SelectField({
   const defaultOption = (has(data, ':disabled')).option ?? (value ?? "Please choose one of the following");
 
   return (
-    <label>
+    <label className="text-sm">
       {/* {capEach(separateBy(name, "_"))}:{" "} */}
       <select
         name={name}
@@ -78,7 +78,7 @@ export default function SelectField({
           </option>
         ))}
       </select>
-      {validationErrors && <span>{validationErrors[name]}</span>}
+      {validationErrors && <span className="text-red-500 font-normal">{validationErrors[name]}</span>}
     </label>
   )
 }

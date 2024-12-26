@@ -86,12 +86,11 @@ export default function Register() {
               />
             </div>
 
-            <button
-              type="submit"
-              className="font-bold w-full bg-gradient-to-r from-[#21bffd] to-[#217bfe] mt-2  text-white py-2 rounded-md hover:bg-indigo-700 transition-colors"
-            >
-              <SubmitButton name={isLoading(handler, "Finish Registration")} />
-            </button>
+
+            <SubmitButton
+              color="font-bold mt-3 w-full bg-gradient-to-r from-[#21bffd] to-[#217bfe]  text-white py-2 rounded-md hover:bg-indigo-700 transition-colors"
+              name={isLoading(handler, "Finish Registration")}
+            />
           </Form>
           <p className="text-sm text-gray-600 mt-4 text-center">
             Already have an account?

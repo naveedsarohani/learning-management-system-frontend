@@ -21,9 +21,12 @@ export default function Home() {
     return <div>
 
         {/* courses */}
-        <div>
-            <h1>All Course</h1>
-            {courses.map(course => <CourseCard course={course} />)}
+
+        <div className="p-5">
+            <h1 className="text-center text-2xl font-bold mb-5">All Course</h1>
+            <div className="flex justify-between">
+                {courses.map(course => <CourseCard course={course} />)}
+            </div>
         </div>
 
         <hr />

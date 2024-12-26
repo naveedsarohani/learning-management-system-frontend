@@ -43,12 +43,10 @@ export default function Login() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 mt-4"
                 />
               </div>
-              <button
-                type="submit"
-                className="font-bold w-full bg-gradient-to-r from-[#21bffd] to-[#217bfe]  text-white py-2 rounded-md hover:bg-indigo-700 transition-colors"
-              >
-                <SubmitButton name={isLoading(handler, "SIGN IN")} />
-              </button>
+              <SubmitButton
+                color="font-bold w-full bg-gradient-to-r from-[#21bffd] to-[#217bfe]  text-white py-2 rounded-md hover:bg-indigo-700 transition-colors"
+                name={isLoading(handler, "SIGN IN")}
+              />
             </Form>
             {/* Footer Message */}
             <p className="text-sm text-gray-600 mt-6 text-center">

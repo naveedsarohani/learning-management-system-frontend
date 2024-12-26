@@ -1,5 +1,6 @@
 import blueprint from "../../uitils/blueprint"
 import { formatDate, readFile } from "../../uitils/functions/global"
+import ActionButton from "./ActionButton"
 
 export default function CourseCard({ course = blueprint.course }) {
   return (
@@ -25,9 +26,12 @@ export default function CourseCard({ course = blueprint.course }) {
           <p>Last Update</p>
           {formatDate(course.updated_at)}
         </span>
-        <button className="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 rounded mt-3 shadow-md hover:shadow-lg">
-          Go to Course
-        </button>
+
+        <ActionButton
+          name={'see course'}
+          route={'/courses'}
+          color="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 rounded mt-3 shadow-md hover:shadow-lg"
+        />
       </div>
     </div>
   )

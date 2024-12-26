@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import auth from "../../uitils/api/auth"
 import { BsPersonCircle } from "react-icons/bs"
 import { useState } from "react"
+import { isNullOrEmpty } from "../../uitils/functions/global"
 
 export default function Navbar() {
   const { handler } = useHandler()
@@ -52,18 +53,18 @@ export default function Navbar() {
           />
 
           {/* Profile Icon */}
-          <button
+          {!isNullOrEmpty(user) && <button
             className="text-gray-500 hover:text-gray-800 focus:outline-none"
             onClick={handleDropdownToggle}
           >
             <BsPersonCircle size={24} />
-          </button>
+          </button>}
 
           {/* Dropdown Menu */}
-          {isDropdownOpen && (
+          {!isNullOrEmpty(user) && isDropdownOpen && (
             <div className="absolute top-12 right-0 mt-2 w-56 sm:w-48 bg-white border rounded-lg shadow-lg z-10">
               <div className="p-4 border-b text-gray-700 font-medium">
-                <p>John Doe</p>
+                <p>{user.name}</p>
               </div>
               <ul className="py-2">
                 <li>

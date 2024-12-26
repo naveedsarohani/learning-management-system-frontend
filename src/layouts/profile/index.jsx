@@ -59,7 +59,7 @@ export default function ProfilePage() {
                     <InputField
                         type={'file'}
                         name={'image'}
-                        accept={'.jpb,.png,.jpeg'}
+                        accept={'.jpg,.png,.jpeg'}
                         customeFunc={handleImagePreview}
                     />
 

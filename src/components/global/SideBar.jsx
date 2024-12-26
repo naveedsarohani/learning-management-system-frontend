@@ -1,9 +1,13 @@
 import { NavLink } from "react-router-dom"
 import { RiMenuUnfoldFill } from "react-icons/ri"
 import { RiMenuUnfold2Fill } from "react-icons/ri"
+import { MdAssignment } from "react-icons/md"
+import { BsQuestionSquareFill } from "react-icons/bs"
+import { MdQuestionAnswer } from "react-icons/md"
+import { MdTask } from "react-icons/md"
+import { MdPlayLesson } from "react-icons/md"
 
 export default function SideBar({ toggleSidebar, isOpen, userRole }) {
-
   return (
     <aside>
       {/* <div>LMS</div>
@@ -22,11 +26,12 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
 
         {/* Sidebar */}
         <div
-          className={`h-screen p-5 bg-gradient-to-r from-[#21bffd] to-[#217bfe] shadow-lg fixed top-0 transition-all ${isOpen ? "translate-x-0" : "-translate-x-full"
-            } ${
+          className={`h-screen p-5 bg-gradient-to-r from-[#21bffd] to-[#217bfe] shadow-lg fixed top-0 transition-all ${
+            isOpen ? "translate-x-0" : "-translate-x-full"
+          } ${
             // Add width only for screens medium or larger
             "md:static md:translate-x-0 md:w-64 md:flex-shrink-0"
-            }`}
+          }`}
         >
           <div className="p-4">
             <h2 className="text-lg font-bold text-white mb-6">Dashboard</h2>
@@ -44,10 +49,11 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
-                            ? "bg-[#17c1e8] text-white"
-                            : "bg-[#e9ecef] text-[#3a416f]"
-                            }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
                         >
                           <i className="fas fa-chalkboard-teacher text-xs"></i>
                         </span>
@@ -68,10 +74,11 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
-                            ? "bg-[#17c1e8] text-white"
-                            : "bg-[#e9ecef] text-[#3a416f]"
-                            }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
                         >
                           <i className="fas fa-user-graduate text-xs"></i>
                         </span>
@@ -92,10 +99,11 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
-                            ? "bg-[#17c1e8] text-white"
-                            : "bg-[#e9ecef] text-[#3a416f]"
-                            }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
                         >
                           <i className="fas fa-book text-xs"></i>
                         </span>
@@ -116,12 +124,13 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
-                            ? "bg-[#17c1e8] text-white"
-                            : "bg-[#e9ecef] text-[#3a416f]"
-                            }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
                         >
-                          <i className="fas fa-book text-xs"></i>
+                          <MdPlayLesson />
                         </span>
                         Lessons
                       </>
@@ -140,12 +149,13 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
-                            ? "bg-[#17c1e8] text-white"
-                            : "bg-[#e9ecef] text-[#3a416f]"
-                            }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
                         >
-                          <i className="fas fa-book text-xs"></i>
+                          <MdAssignment />
                         </span>
                         Assessments
                       </>
@@ -164,12 +174,13 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
-                            ? "bg-[#17c1e8] text-white"
-                            : "bg-[#e9ecef] text-[#3a416f]"
-                            }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
                         >
-                          <i className="fas fa-book text-xs"></i>
+                          <BsQuestionSquareFill />
                         </span>
                         Questions
                       </>
@@ -188,12 +199,13 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
-                            ? "bg-[#17c1e8] text-white"
-                            : "bg-[#e9ecef] text-[#3a416f]"
-                            }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
                         >
-                          <i className="fas fa-book text-xs"></i>
+                          <MdQuestionAnswer />
                         </span>
                         Answers
                       </>
@@ -212,12 +224,13 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
-                            ? "bg-[#17c1e8] text-white"
-                            : "bg-[#e9ecef] text-[#3a416f]"
-                            }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
+                            isActive
+                              ? "bg-[#17c1e8] text-white"
+                              : "bg-[#e9ecef] text-[#3a416f]"
+                          }`}
                         >
-                          <i className="fas fa-book text-xs"></i>
+                          <MdTask />
                         </span>
                         Submissions
                       </>

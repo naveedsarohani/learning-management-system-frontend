@@ -15,13 +15,13 @@ export default function AddCourse() {
   const { handler } = useHandler()
 
   function handleSubmit(data) {
-    course.store(token, data, handler);
+    course.store(token, data, handler)
   }
 
   return (
     <DashboardPageCompement title={"add course"}>
-      <div className=" flex justify-center items-center">
-        <div className="bg-[#e9ecef]  w-[50%] self-center p-5 rounded-lg">
+      <div className="p-6 bg-gray-50  flex justify-center items-center">
+        <div className=" w-full bg-white shadow-lg rounded-lg p-8">
           <h1 className="text-center text-xl font-semibold">Add Course</h1>
           <Form {...{ handleSubmit }}>
             <InputField

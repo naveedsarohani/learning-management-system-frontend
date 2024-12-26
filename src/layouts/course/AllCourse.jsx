@@ -42,7 +42,7 @@ export default function AllCourses() {
             <th>Title</th>
             <th>Description</th>
             <th>Created On</th>
-            <th>Poster</th>
+            {/* <th>Poster</th> */}
             <th>Action</th>
           </>
         }
@@ -51,12 +51,19 @@ export default function AllCourses() {
           courses.map((course, index) => (
             <tr key={course.id}>
               <td className="p-5">{index + 1}</td>
-              <td>{course.title}</td>
+              <td className="flex items-center pt-1 gap-2">
+                <td>
+                  <img
+                    src={readFile(course.image)}
+                    alt="poster"
+                    className="rounded-full w-10 h-10 border-blue-400 border-[1px]"
+                  />
+                </td>
+                {course.title.substring(0, 10)}...
+              </td>
               <td>{course.description.substring(0, 30)}...</td>
               <td>{formatDate(course.created_at)}</td>
-              <td>
-                <img src={readFile(course.image)} alt="poter" width={50} />
-              </td>
+
               <td className="flex  gap-2 pt-2">
                 <ActionButton route={`./${course.id}`} name={"View"} />
                 <ActionButton

@@ -1,6 +1,7 @@
 import DashboardPageCompement from "../../components/global/DashboardPage"
 import Header from "../../components/global/Header"
 import CoursesGraph from "../../components/graphs/CoursesGraph"
+import ExamGraph from "../../components/graphs/ExamGraph"
 import UsersGraph from "../../components/graphs/UsersGraph"
 import { useDelete } from "../../contexts/Delete"
 
@@ -13,30 +14,27 @@ export default function DashboardHomePage() {
 
   return (
     <DashboardPageCompement title={""}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Header
-          title={`Total Instructors`}
-          total={"5550"}
-          icon={<i className="fas fa-chalkboard-teacher text-white"></i>}
-        />
-        <Header
-          title={`Total Students`}
-          total={"5550"}
-          icon={<i className="fas fa-user-graduate text-white "></i>}
-        />
-        <Header
-          title={`Total Courses`}
-          total={"5550"}
-          icon={<i className="fas fa-book text-white"></i>}
-        />
-        <Header
-          title={`Total Instructors`}
-          total={"5550"}
-          icon={<i className="fas fa-chalkboard-teacher text-white "></i>}
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1  gap-6 p-10">
+        <div>
+          <Header
+            title={`Total Instructors`}
+            total={"5550"}
+            icon={<i className="fas fa-chalkboard-teacher text-white"></i>}
+          />
+          <Header
+            title={`Total Students`}
+            total={"5550"}
+            icon={<i className="fas fa-user-graduate text-white "></i>}
+          />
+          <Header
+            title={`Total Courses`}
+            total={"5550"}
+            icon={<i className="fas fa-book text-white"></i>}
+          />
+        </div>
         <div className="flex justify-between w-full flex-col sm:flex-row">
-          <UsersGraph />
           <CoursesGraph />
+          <ExamGraph />
         </div>
       </div>
     </DashboardPageCompement>

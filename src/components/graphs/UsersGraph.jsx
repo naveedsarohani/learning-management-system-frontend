@@ -10,7 +10,7 @@ const UsersGraph = () => {
     datasets: [
       {
         data: [75, 25], // 75% Students, 25% Instructors
-        backgroundColor: ["#217bfe", "#32CD32"], // Tailwind colors (green & blue)
+        backgroundColor: ["#217bfe", "#32CD32"],
         borderWidth: 0,
       },
     ],

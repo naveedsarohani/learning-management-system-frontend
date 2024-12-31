@@ -32,7 +32,7 @@ const CoursesGraph = () => {
       {
         label: "Top Courses",
         data: dataValues,
-        backgroundColor: "#32CD32", // Lighter green color
+        backgroundColor: "#217bfe", // Lighter green color
         borderColor: "#217bfe", // Add border color for better visual effect
         borderWidth: 1,
       },

@@ -152,7 +152,10 @@ export function handleVideoPreview(e) {
 
 // function to find any valueusing specific string the return filtered data
 export function has(data = [], searchValue) {
-    const foundItem = data.find((item) => item.includes(searchValue));
+    const foundItem = data.find(item => {
+        if (typeof item == 'string') return item.includes(searchValue)
+        return false;
+    });
 
     if (foundItem) {
         const filteredData = data.filter((item) => item !== foundItem);

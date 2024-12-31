@@ -5,7 +5,11 @@ const user = Object.freeze({
     role: '',
     image: '',
     created_at: '',
-    updated_at: ''
+    updated_at: '',
+    city: {
+        id: '',
+        name: ''
+    }
 });
 
 const course = Object.freeze({
@@ -138,5 +142,9 @@ const submission = Object.freeze({
         updated_at: ''
     }
 });
+const city = Object.freeze({
+    id: '',
+    name: ''
+});
 
-export default { user, course, lesson, assessment, question, answer, submission };
+export default { user, course, lesson, assessment, question, answer, submission, city };

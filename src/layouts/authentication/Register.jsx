@@ -8,15 +8,23 @@ import SelectField from "../../components/form/SelectField"
 import { role } from "../../uitils/functions/constants"
 import { isLoading } from "../../uitils/functions/global"
 import sideImage from "../../assets/curved-6.jpg"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import blueprint from '../../uitils/blueprint';
+import city from '../../uitils/api/city';
 
 export default function Register() {
   const { handler } = useHandler()
   const { user } = useAuth()
+  const [cities, setCities] = useState([blueprint.city])
+  const [isStudent, setIsStudent] = useState(false);
 
   function handleSubmit(creds) {
     auth.register(creds, handler, user)
   }
+
+  useEffect(() => {
+    city.all(setCities, handler);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
@@ -57,7 +65,15 @@ export default function Register() {
             <div className="mb-1">
               <SelectField
                 name={"role"}
-                data={[role.INSTRUCTOR, role.STUDENT]}
+                data={["choose your role:disabled", role.INSTRUCTOR, role.STUDENT]}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 mt-4"
+              />
+            </div>
+            <div className="mb-1">
+              <SelectField
+                name={"city_id"}
+                value="Choose your city"
+                data={cities}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 mt-4"
               />
             </div>

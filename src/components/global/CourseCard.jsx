@@ -6,13 +6,13 @@ export default function CourseCard({ course = blueprint.course }) {
   return (
     <div
       key={course.id}
-      className="max-w-xs cursor-pointer rounded-lg overflow-hidden shadow-md border bg-white hover:shadow-2xl transition-shadow duration-300 transform "
+      className="w-80 cursor-pointer rounded-lg overflow-hidden shadow-md border bg-white hover:shadow-2xl transition-shadow duration-300 transform "
     >
-      <div className="relative ">
+      <div className="relative p-2 ">
         <img
           src={readFile(course.image)}
           alt="poster"
-          className="w-full h-40 object-cover"
+          className="w-full h-40 object-cover border-[1px] border-blue-200 rounded "
         />
       </div>
       <div className="p-4">
@@ -34,8 +34,8 @@ export default function CourseCard({ course = blueprint.course }) {
         </div>
 
         <ActionButton
-          name={'see course'}
-          route={'/courses'}
+          name={"see course"}
+          route={"/courses"}
           color="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 rounded mt-3 shadow-md hover:shadow-lg"
         />
       </div>

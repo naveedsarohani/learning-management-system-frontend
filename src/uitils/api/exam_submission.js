@@ -6,21 +6,21 @@ import { response, where } from "../functions/global";
 async function all(token, set, handler, only = false) {
     handler.setLoading(loading => !loading);
     try {
-        const responseData = response(await request.get('/courses', token), false, true);
+        const responseData = response(await request.get('/exam-submissions', token), false, true);
         if (responseData) {
-            if (only) set(where(responseData[1], only));
-            else set(responseData[1]);
+            if (only) set(where(responseData.examSubmissions, only));
+            else set(responseData.examSubmissions);
         }
     }
     catch (error) { toast.error(error.message); }
     finally { handler.setLoading(loading => !loading); }
 }
 
-async function show(id, token, setCourse, handler) {
+async function show(id, token, set, handler) {
     handler.setLoading(loading => !loading);
     try {
-        const responseData = response(await request.get(`/courses/${id}`, token), false, true);
-        responseData && setCourse(responseData.course);
+        const responseData = response(await request.get(`/exam-submissions/${id}`, token), false, true);
+        responseData && set(responseData.examSubmission);
     }
     catch (error) { toast.error(error.message); }
     finally { handler.setLoading(loading => !loading); }
@@ -29,7 +29,7 @@ async function show(id, token, setCourse, handler) {
 async function store(token, data, handler) {
     handler.setLoading(loading => !loading);
     try {
-        response(await request.post('/courses', data, token), handler.setValidationErrors);
+        response(await request.post('/exam-submissions/', data, token), handler.setValidationErrors);
         handler.navigate(-1);
     }
     catch (error) {
@@ -42,11 +42,10 @@ async function store(token, data, handler) {
 async function update(id, data, token, handler) {
     handler.setLoading(loading => !loading);
     try {
-        response(await request.put(`/courses/${id}`, data, token), handler.setValidationErrors);
+        response(await request.put(`/exam-submissions/${id}`, data, token), handler.setValidationErrors);
         handler.navigate(-1);
     } catch (error) { toast.error(error.message); }
     finally { handler.setLoading(loading => !loading); }
 
 }
-
 export default { all, show, store, update };

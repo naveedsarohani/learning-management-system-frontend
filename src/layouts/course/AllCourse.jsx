@@ -23,7 +23,7 @@ export default function AllCourses() {
   const { destroy } = useDelete()
 
   useEffect(() => {
-    course.all(token, setCourses, handler)
+    course.all(token, setCourses, handler, { user_id: user.id })
   }, [handler.navigate, user])
 
   return (

@@ -142,9 +142,127 @@ const submission = Object.freeze({
         updated_at: ''
     }
 });
+
 const city = Object.freeze({
     id: '',
     name: ''
 });
 
-export default { user, course, lesson, assessment, question, answer, submission, city };
+const exam = Object.freeze({
+    id: '',
+    instructor_id: '',
+    title: '',
+    description: '',
+    passing_percentage: '',
+    time_allowed: '',
+    total_retakes: '',
+    created_at: '',
+    updated_at: '',
+    instructor: {
+        id: '',
+        name: '',
+        email: '',
+        role: '',
+        image: '',
+        city_id: '',
+        created_at: '',
+        updated_at: '',
+    },
+});
+
+const examQuestion = Object.freeze({
+    id: '',
+    exam_id: '',
+    question_text: '',
+    answers: {
+        A: '',
+        B: '',
+        C: '',
+        D: '',
+    } ?? '',
+    correct_option: '',
+    carry_marks: '',
+    created_at: '',
+    updated_at: '',
+    exam: {
+        id: '',
+        instructor_id: '',
+        title: '',
+        description: '',
+        passing_percentage: '',
+        time_allowed: '',
+        total_retakes: '',
+        created_at: '',
+        updated_at: '',
+        instructor: {
+            id: '',
+            name: '',
+            email: '',
+            role: '',
+            image: '',
+            city_id: '',
+            created_at: '',
+            updated_at: '',
+        },
+    },
+});
+
+const examSubmission = Object.freeze({
+    id: '',
+    exam_id: '',
+    student_id: '',
+    obtained_marks: '',
+    retakes_count: '',
+    is_passed: '',
+    created_at: '',
+    updated_at: '',
+    exam: {
+        id: '',
+        instructor_id: '',
+        title: '',
+        description: '',
+        passing_percentage: '',
+        time_allowed: '',
+        total_retakes: '',
+        created_at: '',
+        updated_at: '',
+        instructor: {
+            id: '',
+            name: '',
+            email: '',
+            role: '',
+            image: '',
+            city_id: '',
+            created_at: '',
+            updated_at: '',
+        },
+    },
+    student: {
+        id: '',
+        name: '',
+        email: '',
+        role: '',
+        image: '',
+        city_id: '',
+        created_at: '',
+        updated_at: '',
+        city: {
+            id: '',
+            name: '',
+        },
+    },
+});
+
+export default {
+    user,
+    course,
+    lesson,
+    assessment,
+    question,
+    answer,
+    submission,
+    city,
+    exam,
+    examQuestion,
+    examSubmission
+};

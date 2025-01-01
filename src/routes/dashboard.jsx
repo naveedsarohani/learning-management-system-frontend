@@ -10,15 +10,14 @@ import DashboardHomePage from "../layouts/dashboards"
 import NotFound404 from "../layouts/404"
 import Lesson from "./Lesson"
 import Assessment from "./Assessment"
-import Question from "./Question"
 import AllInstructor from "../layouts/users/AllInstructor"
 import Allstudent from "../layouts/users/AllStudent"
 import Submission from "./Submission"
+import Exam from "./Exam"
+import Result from "./Result"
 
 export default function Dashboard() {
-  const {
-    credentials: { user },
-  } = useAuth()
+  const { credentials: { user } } = useAuth()
   const { handler } = useHandler()
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -48,7 +47,7 @@ export default function Dashboard() {
           </div>
 
           {/* Main Content Area */}
-          <div className="flex-1 flex flex-col ">
+          <div className="flex-1 flex flex-col">
             {/* Navbar */}
             <div className="w-full">
               <Navbar />
@@ -61,9 +60,10 @@ export default function Dashboard() {
                 <Route path="/instructors" element={<AllInstructor />} />
                 <Route path="/students" element={<Allstudent />} />
                 <Route path="/courses/*" element={<Courses />} />
+                <Route path="/exams/*" element={<Exam />} />
+                <Route path="/results/*" element={<Result />} />
                 <Route path="/lessons/*" element={<Lesson />} />
                 <Route path="/assessments/*" element={<Assessment />} />
-                <Route path="/questions/*" element={<Question />} />
                 <Route path="/submissions/*" element={<Submission />} />
 
                 {/* Unknown Route */}

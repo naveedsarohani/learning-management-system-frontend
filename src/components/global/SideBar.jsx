@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import { RiMenuUnfoldFill } from "react-icons/ri"
 import { RiMenuUnfold2Fill } from "react-icons/ri"
 import { MdAssignment } from "react-icons/md"
@@ -26,15 +26,15 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
 
         {/* Sidebar */}
         <div
-          className={`h-screen p-5 bg-gradient-to-r from-[#21bffd] to-[#217bfe] shadow-lg fixed top-0 transition-all ${
-            isOpen ? "translate-x-0" : "-translate-x-full"
-          } ${
+          className={`h-screen p-5 bg-gradient-to-r from-[#21bffd] to-[#217bfe] shadow-lg fixed top-0 transition-all ${isOpen ? "translate-x-0" : "-translate-x-full"
+            } ${
             // Add width only for screens medium or larger
             "md:static md:translate-x-0 md:w-64 md:flex-shrink-0"
-          }`}
+            }`}
         >
           <div className="p-4">
-            <h2 className="text-lg font-bold text-white mb-6">Dashboard</h2>
+            <Link to='/dashboard'>
+              <h2 className="text-lg font-bold text-white mb-6">Dashboard</h2></Link>
             <nav>
               <ul className="space-y-4 pl-4">
                 <li>
@@ -49,11 +49,10 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
-                            isActive
-                              ? "bg-[#17c1e8] text-white"
-                              : "bg-[#e9ecef] text-[#3a416f]"
-                          }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
+                            ? "bg-[#17c1e8] text-white"
+                            : "bg-[#e9ecef] text-[#3a416f]"
+                            }`}
                         >
                           <i className="fas fa-chalkboard-teacher text-xs"></i>
                         </span>
@@ -74,11 +73,10 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
-                            isActive
-                              ? "bg-[#17c1e8] text-white"
-                              : "bg-[#e9ecef] text-[#3a416f]"
-                          }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
+                            ? "bg-[#17c1e8] text-white"
+                            : "bg-[#e9ecef] text-[#3a416f]"
+                            }`}
                         >
                           <i className="fas fa-user-graduate text-xs"></i>
                         </span>
@@ -99,11 +97,10 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
-                            isActive
-                              ? "bg-[#17c1e8] text-white"
-                              : "bg-[#e9ecef] text-[#3a416f]"
-                          }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
+                            ? "bg-[#17c1e8] text-white"
+                            : "bg-[#e9ecef] text-[#3a416f]"
+                            }`}
                         >
                           <i className="fas fa-book text-xs"></i>
                         </span>
@@ -124,11 +121,10 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
-                            isActive
-                              ? "bg-[#17c1e8] text-white"
-                              : "bg-[#e9ecef] text-[#3a416f]"
-                          }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
+                            ? "bg-[#17c1e8] text-white"
+                            : "bg-[#e9ecef] text-[#3a416f]"
+                            }`}
                         >
                           <MdPlayLesson />
                         </span>
@@ -137,6 +133,56 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     )}
                   </NavLink>
                 </li>
+
+                <li>
+                  <NavLink
+                    to="/dashboard/exams"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
+                            ? "bg-[#17c1e8] text-white"
+                            : "bg-[#e9ecef] text-[#3a416f]"
+                            }`}
+                        >
+                          <MdQuestionAnswer />
+                        </span>
+                        Exams
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/results"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
+                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <span
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
+                            ? "bg-[#17c1e8] text-white"
+                            : "bg-[#e9ecef] text-[#3a416f]"
+                            }`}
+                        >
+                          <BsQuestionSquareFill />
+                        </span>
+                        Exams Result
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+
                 <li>
                   <NavLink
                     to="/dashboard/assessments"
@@ -149,65 +195,14 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
-                            isActive
-                              ? "bg-[#17c1e8] text-white"
-                              : "bg-[#e9ecef] text-[#3a416f]"
-                          }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
+                            ? "bg-[#17c1e8] text-white"
+                            : "bg-[#e9ecef] text-[#3a416f]"
+                            }`}
                         >
                           <MdAssignment />
                         </span>
                         Assessments
-                      </>
-                    )}
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/questions"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
-                    }
-                  >
-                    {({ isActive }) => (
-                      <>
-                        <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
-                            isActive
-                              ? "bg-[#17c1e8] text-white"
-                              : "bg-[#e9ecef] text-[#3a416f]"
-                          }`}
-                        >
-                          <BsQuestionSquareFill />
-                        </span>
-                        Questions
-                      </>
-                    )}
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/answers"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "flex items-center px-4 py-2 text-[#424767] bg-blue-100 rounded-lg"
-                        : "flex items-center px-4 py-2 text-white hover:bg-gray-100 hover:text-[#424767] rounded-lg"
-                    }
-                  >
-                    {({ isActive }) => (
-                      <>
-                        <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
-                            isActive
-                              ? "bg-[#17c1e8] text-white"
-                              : "bg-[#e9ecef] text-[#3a416f]"
-                          }`}
-                        >
-                          <MdQuestionAnswer />
-                        </span>
-                        Answers
                       </>
                     )}
                   </NavLink>
@@ -224,11 +219,10 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                     {({ isActive }) => (
                       <>
                         <span
-                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${
-                            isActive
-                              ? "bg-[#17c1e8] text-white"
-                              : "bg-[#e9ecef] text-[#3a416f]"
-                          }`}
+                          className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 ${isActive
+                            ? "bg-[#17c1e8] text-white"
+                            : "bg-[#e9ecef] text-[#3a416f]"
+                            }`}
                         >
                           <MdTask />
                         </span>

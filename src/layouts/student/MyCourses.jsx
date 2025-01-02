@@ -16,6 +16,13 @@ export default function MyCourses() {
         course.all(token, setCourses, handler);
     }, [location.pathname, user]);
 
+    function filterRecords(data = [], options = {}) {
+        const key = Object.entries(options)[0] ?? null;
+        const values = Objcet.values(options)[1] ?? [];
+
+        return data.filter(item => values.includes(item[key]));
+    }
+
     return <div>
         <h1>All Courses</h1>
         {!isNullOrEmpty(courses[0].id)

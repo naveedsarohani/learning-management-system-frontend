@@ -8,21 +8,29 @@ import { useHandler } from '../../contexts/Handler'
 import { capEach, capitalize, formatDate, isNullOrEmpty, readFile } from '../../uitils/functions/global'
 import NoContent from '../../components/global/NoContent'
 import LessonCard from '../../components/global/LessonCard'
+import EnrollmentForm from '../../components/global/EnrollmentForm'
 
 const Course = () => {
     const { courseId } = useParams();
-    const { credentials: { token } } = useAuth();
+    const { credentials: { token, user } } = useAuth();
     const { handler } = useHandler();
     const [course, setCourse] = useState(blueprint.course);
     const [lessons, setLessons] = useState([blueprint.lesson]);
+    const [showEnrollmentForm, setShowEnrollmentForm] = useState(false);
 
     useEffect(() => {
         courseapi.show(courseId, token, setCourse, handler);
         lesson.all(token, setLessons, handler, { course_id: courseId })
     }, []);
 
+    return <>
+        {showEnrollmentForm && <EnrollmentForm
+            course={course}
+            userId={user.id}
+            set={setShowEnrollmentForm}
+            handler={handler}
+        />}
 
-    return (
         <div className="course-page">
             <div className="course-header">
                 <img src={readFile(course.image)} alt={course.title} />
@@ -56,11 +64,11 @@ const Course = () => {
                         : <NoContent message='There are not lessons for this course' />}
                 </div>
             </div>
-            <div className="enroll-button">
-                <button>Enroll Now</button>
+            <div className="enroll-button" >
+                <button onClick={() => setShowEnrollmentForm(true)}>Enroll Now</button>
             </div>
         </div>
-    );
+    </>
 };
 
 export default Course;

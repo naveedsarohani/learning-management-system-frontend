@@ -12,6 +12,36 @@ const user = Object.freeze({
     }
 });
 
+const enrollment = Object.freeze({
+    id: '',
+    course_id: '',
+    user_id: '',
+    created_at: '',
+    course: {
+        id: '',
+        user_id: '',
+        title: '',
+        description: '',
+        image: '',
+        created_at: '',
+        updated_at: ''
+    },
+    student: {
+        id: '',
+        name: '',
+        email: '',
+        role: '',
+        image: '',
+        city_id: '',
+        created_at: '',
+        updated_at: '',
+        city: {
+            id: '',
+            name: ''
+        }
+    }
+});
+
 const course = Object.freeze({
     id: '',
     user_id: '',
@@ -255,6 +285,7 @@ const examSubmission = Object.freeze({
 
 export default {
     user,
+    enrollment,
     course,
     lesson,
     assessment,

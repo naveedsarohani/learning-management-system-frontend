@@ -1,5 +1,6 @@
 import DashboardPageCompement from "../../components/global/DashboardPage"
 import Header from "../../components/global/Header"
+import CityPassRatioGraph from "../../components/graphs/CityPassRatioGraph"
 import CoursesGraph from "../../components/graphs/CoursesGraph"
 import ExamGraph from "../../components/graphs/ExamGraph"
 import UsersGraph from "../../components/graphs/UsersGraph"
@@ -36,6 +37,7 @@ export default function DashboardHomePage() {
           <CoursesGraph />
           <ExamGraph />
         </div>
+        <CityPassRatioGraph />
       </div>
     </DashboardPageCompement>
   )

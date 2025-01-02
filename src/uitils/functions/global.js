@@ -81,7 +81,7 @@ export function roleBaseRedirection(userRole, navigate) {
             break;
 
         case role.STUDENT:
-            navigate('/student-profile', { replace: true });
+            navigate('/me', { replace: true });
             break;
 
         default:

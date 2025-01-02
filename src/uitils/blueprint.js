@@ -179,7 +179,7 @@ const examQuestion = Object.freeze({
         B: '',
         C: '',
         D: '',
-    } ?? '',
+    },
     correct_option: '',
     carry_marks: '',
     created_at: '',

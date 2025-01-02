@@ -2,7 +2,7 @@ import blueprint from "../../uitils/blueprint"
 import { capEach, formatDate, readFile } from "../../uitils/functions/global"
 import ActionButton from "./ActionButton"
 
-export default function CourseCard({ course = blueprint.course }) {
+export default function CourseCard({ course = blueprint.course, routePrefix = '' }) {
   return (
     <div
       key={course.id}
@@ -35,7 +35,7 @@ export default function CourseCard({ course = blueprint.course }) {
 
         <ActionButton
           name={"see course"}
-          route={"/courses"}
+          route={`${routePrefix}/courses/${course.id}`}
           color="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 rounded mt-3 shadow-md hover:shadow-lg"
         />
       </div>

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/Authentication"
 import { useHandler } from "../../contexts/Handler";
-import DashboardPageCompement from "../../components/global/DashboardPage";
 import course from "../../uitils/api/course";
 import blueprint from "../../uitils/blueprint";
 import CourseCard from "../../components/global/CourseCard";
+import { isNullOrEmpty } from "../../uitils/functions/global";
+import NoContent from "../../components/global/NoContent";
 
-export default function StudentProfile() {
-    const { credentials: { user, token }, user: { revoke } } = useAuth();
+export default function MyCourses() {
+    const { credentials: { user, token } } = useAuth();
     const [courses, setCourses] = useState([blueprint.course]);
     const { handler } = useHandler();
 
@@ -15,10 +16,11 @@ export default function StudentProfile() {
         course.all(token, setCourses, handler);
     }, [location.pathname, user]);
 
-    return <DashboardPageCompement title={'student prifle'}>
-        <div>
-            {/* courses */}
-            {courses.map(course => <CourseCard course={course} />)}
-        </div>
-    </DashboardPageCompement>
+    return <div>
+        <h1>All Courses</h1>
+        {!isNullOrEmpty(courses[0].id)
+            ? courses.map(course => <CourseCard routePrefix="/me" course={course} />)
+            : <NoContent message="you have not enrolled in any course yet" />
+        }
+    </div>
 }

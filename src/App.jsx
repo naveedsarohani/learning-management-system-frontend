@@ -30,7 +30,7 @@ export default function App() {
       <Route path="/auth/*" element={<Authentication />} />
       <Route path="/profile/*" element={<Profile />} />
       <Route path="/dashboard/*" element={<Dashboard />} />
-      {/* <Route path="/student-profile/*" element={<Student />} /> */}
+      <Route path="/me/*" element={<Student />} />
 
       {/* Unknow route */}
       <Route path="*" element={<NotFound404 />} />

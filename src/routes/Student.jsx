@@ -5,16 +5,17 @@ import NotFound404 from "../layouts/404";
 import { role } from "../uitils/functions/constants";
 import { useEffect, useState } from "react";
 import Navbar from "../components/global/navbar";
-import StudentProfile from "../layouts/student/StudentProfile";
+import StudentProfile from "../layouts/student";
+import Home from "../layouts/student";
+import Menu from "../components/global/Menu";
+import MyCourses from "../layouts/student/MyCourses";
+import MyExams from "../layouts/student/MyExams";
+import MyAssessments from "../layouts/student/MyAssessments";
+import Course from "../layouts/student/Course";
 
 export default function Student() {
     const { credentials: { user } } = useAuth();
     const { handler } = useHandler();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen)
-    }
 
     useEffect(() => {
         if (user) {
@@ -26,26 +27,27 @@ export default function Student() {
         user && role.STUDENT === user.role && (
             <>
                 <div className="flex h-screen">
-                    {/* Sidebar */}
-                    <div
-                        className={`fixed md:static transition-transform z-10 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-                            } md:translate-x-0`}
-                    >
-                        {/* <SideBar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen} /> */}
-                    </div>
 
                     {/* Main Content Area */}
-                    <div className="flex-1 flex flex-col p-4">
+                    <div className="flex-1 flex flex-col">
                         {/* Navbar */}
                         <div className="w-full">
                             <Navbar />
                         </div>
 
+                        {/* navigational links */}
+                        <div>
+                            <Menu />
+                        </div>
+
                         {/* Main Content */}
                         <div className="flex-1 overflow-y-auto pl-6">
                             <Routes>
-                                <Route path="/" element={<StudentProfile />} />
-                                <Route path="/courses/:courseId" element={<StudentProfile />} />
+                                <Route path="/" element={<Home />} />
+                                <Route path="/courses" element={<MyCourses />} />
+                                <Route path="/courses/:courseId" element={<Course />} />
+                                <Route path="/exams" element={<MyExams />} />
+                                <Route path="/assessments" element={<MyAssessments />} />
 
                                 {/* Unknown Route */}
                                 <Route path="*" element={<NotFound404 />} />

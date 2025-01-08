@@ -36,7 +36,7 @@ export default function ShowLesson() {
         </h1>
 
         {/* Lesson Content */}
-        <div className="relative overflow-hidden rounded-lg shadow-md mb-6">
+        <div className="relative overflow-hidden rounded-lg shadow-md mb-6 ">
           <video
             src={readFile(lesson.content)}
             controls

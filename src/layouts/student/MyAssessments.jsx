@@ -18,20 +18,18 @@ export default function MyAssessments() {
     assessment.all(token, setAssessments, handler)
   }, [location.pathname, user])
 
-  return (
-    <div className=" py-6 bg-gray-50 min-h-screen px-14">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">All Assessments</h1>
-      {!isNullOrEmpty(assessments[0].id) ? (
-        <div className="flex justify-start flex-wrap gap-6">
-          {assessments.map((assessment) => (
-            <AssessmentCard assessment={assessment} key={assessment.id} />
-          ))}
-        </div>
-      ) : (
-        <div className="flex justify-center items-center h-64 bg-white shadow rounded-lg">
-          <NoContent message="There is not any course assessment for you" />
-        </div>
-      )}
-    </div>
-  )
+  return handler.componentLoaded && <div className=" py-6 bg-gray-50 min-h-screen px-14">
+    <h1 className="text-2xl font-bold text-gray-900 mb-6">All Assessments</h1>
+    {!isNullOrEmpty(assessments[0].id) ? (
+      <div className="flex justify-start flex-wrap gap-6">
+        {assessments.map((assessment) => (
+          <AssessmentCard assessment={assessment} key={assessment.id} />
+        ))}
+      </div>
+    ) : (
+      <div className="flex justify-center items-center h-64 bg-white shadow rounded-lg">
+        <NoContent message="There is not any course assessment for you" />
+      </div>
+    )}
+  </div>
 }

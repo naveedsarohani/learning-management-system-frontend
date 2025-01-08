@@ -8,6 +8,7 @@ export default function HandlerProvider({ children }) {
     // state
     const [loading, setLoading] = useState(false);
     const [validationErrors, setValidationErrors] = useState(false);
+    const [componentLoaded, setComponentLoaded] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -16,7 +17,8 @@ export default function HandlerProvider({ children }) {
         handler: {
             loading, setLoading,
             validationErrors, setValidationErrors,
-            navigate, location
+            componentLoaded, setComponentLoaded,
+            navigate, location,
         }
     }}>
         {children}

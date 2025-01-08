@@ -20,6 +20,11 @@ export default function AllResult() {
     result.all(token, setResults, handler)
   }, [handler.navigate, user])
 
+  function isPass({ obtained_marks, total_marks, exam: { passing_percentage } }) {
+    const percentage = (parseFloat(obtained_marks) / parseFloat(total_marks)) * 100
+    return parseFloat(passing_percentage) <= percentage;
+  }
+
   return (
     <DashboardPageCompement title={"all results"}>
       <h1>The all results of conducted exams</h1>
@@ -30,8 +35,11 @@ export default function AllResult() {
             <th>Student</th>
             <th>Exam/Test</th>
             <th>Conducted By</th>
+            <th>Total Questions</th>
+            <th>Total Marks</th>
             <th>Obtained Marks</th>
-            <th>Retakes</th>
+            <th>Total Correct Answers</th>
+            <th>Total Wrong Answers</th>
             <th>Status</th>
             <th>Submitted At</th>
             <th>Action</th>
@@ -41,12 +49,15 @@ export default function AllResult() {
           <td>{index + 1}</td>
           <td>{capEach(result.student.name)}</td>
           <td>
-            <Link className="hover:text-blue-500" to={`/dashboard/exams/${result.exam.id}`}>{capitalize(result.exam.title)}</Link>
+            <Link className="hover:text-blue-500 hover:underline" to={`/dashboard/exams/${result.exam.id}`}>{capitalize(result.exam.title)}</Link>
           </td>
           <td>{capEach(result.exam.instructor.name)}</td>
+          <td>{result.total_questions}</td>
+          <td>{result.total_marks}</td>
           <td>{result.obtained_marks}</td>
-          <td>{result.retakes_count}</td>
-          <td>{result.is_passed ? 'Pass' : 'Fail'}</td>
+          <td>{result.total_correct}</td>
+          <td>{result.total_wrong}</td>
+          <td>{isPass(result) ? 'Pass' : 'Fail'}</td>
           <td>{formatDate(result.created_at)}</td>
           <td className="flex gap-2 pt-2">
             <ActionButton route={`./${result.id}`} name={"View"} />

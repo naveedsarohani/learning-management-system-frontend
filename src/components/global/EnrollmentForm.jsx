@@ -5,12 +5,14 @@ import Form from "../form/Form";
 import InputField from "../form/InputField";
 import SubmitButton from "../form/SubmitButton";
 import ActionButton from "./ActionButton";
+import enrollment from "../../uitils/api/enrollment";
 
-export default function EnrollmentForm({ course = blueprint.course, userId, handler, set }) {
-
-    const handleSubmit = (data) => {
+export default function EnrollmentForm({ course = blueprint.course, userId, token, handler, set, setEnrolled }) {
+    const handleSubmit = async (data) => {
         data = extractExcept(data, ['feedback_text']);
-        console.log(data);
+        await enrollment.enroll(token, data, handler);
+        set(false);
+        setEnrolled(true);
     }
 
     return <div>

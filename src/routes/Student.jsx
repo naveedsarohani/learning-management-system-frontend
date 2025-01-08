@@ -12,6 +12,9 @@ import MyCourses from "../layouts/student/MyCourses";
 import MyExams from "../layouts/student/MyExams";
 import MyAssessments from "../layouts/student/MyAssessments";
 import Course from "../layouts/student/Course";
+import Loader from "../components/global/Loader";
+import AttemptExam from "../layouts/student/AttemptExam";
+import AttemptAssessment from "../layouts/student/AttemptAssessment";
 
 export default function Student() {
     const { credentials: { user } } = useAuth();
@@ -39,15 +42,24 @@ export default function Student() {
                         <div>
                             <Menu />
                         </div>
+                        <div className="relative top-[30%]">
+                            {!handler.componentLoaded && <Loader />}
+                        </div>
 
                         {/* Main Content */}
-                        <div className="flex-1 overflow-y-auto pl-6">
+                        <div className="flex-1 overflow-y-auto">
                             <Routes>
                                 <Route path="/" element={<Home />} />
                                 <Route path="/courses" element={<MyCourses />} />
                                 <Route path="/courses/:courseId" element={<Course />} />
                                 <Route path="/exams" element={<MyExams />} />
+                                <Route path="/exams" element={<MyExams />} />
                                 <Route path="/assessments" element={<MyAssessments />} />
+                                <Route path="/assessments" element={<MyAssessments />} />
+
+
+                                <Route path="/exams/:examId/attempt" element={<AttemptExam />} />
+                                <Route path="/courses/:courseId/attempt-assessment/:assessmentId" element={<AttemptAssessment />} />
 
                                 {/* Unknown Route */}
                                 <Route path="*" element={<NotFound404 />} />

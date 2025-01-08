@@ -1,10 +1,11 @@
 import { toast } from "react-toastify";
 import request from "../functions/request";
-import { response, where } from "../functions/global";
+import { capitalize, response, where } from "../functions/global";
 
 // function to fetch all course records
 async function all(token, set, handler, only = false) {
     handler.setLoading(loading => !loading);
+    handler.setComponentLoaded(false);
     try {
         const responseData = response(await request.get('/exams', token), false, true);
         if (responseData) {
@@ -12,8 +13,9 @@ async function all(token, set, handler, only = false) {
             else set(responseData.exams);
         }
     }
-    catch (error) { toast.error(error.message); }
-    finally { handler.setLoading(loading => !loading); }
+    catch (error) { toast.error(capitalize(error.message)); }
+    finally { handler.setLoading(loading => !loading); 
+        handler.setComponentLoaded(true);}
 }
 
 async function show(id, token, set, handler) {
@@ -22,7 +24,7 @@ async function show(id, token, set, handler) {
         const responseData = response(await request.get(`/exams/${id}`, token), false, true);
         responseData && set(responseData.exam);
     }
-    catch (error) { toast.error(error.message); }
+    catch (error) { toast.error(capitalize(error.message)); }
     finally { handler.setLoading(loading => !loading); }
 }
 
@@ -33,7 +35,7 @@ async function store(token, data, handler) {
         handler.navigate(-1);
     }
     catch (error) {
-        toast.error(error.message);
+        toast.error(capitalize(error.message));
     }
     finally { handler.setLoading(loading => !loading); }
 
@@ -44,7 +46,7 @@ async function update(id, data, token, handler) {
     try {
         response(await request.put(`/exams/${id}`, data, token), handler.setValidationErrors);
         handler.navigate(-1);
-    } catch (error) { toast.error(error.message); }
+    } catch (error) { toast.error(capitalize(error.message)); }
     finally { handler.setLoading(loading => !loading); }
 
 }

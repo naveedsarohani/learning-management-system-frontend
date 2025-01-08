@@ -33,8 +33,8 @@ export default function AllExam() {
             <th>Title</th>
             <th>Description</th>
             <th>Time Limit</th>
-            <th>Tetakes Allowed</th>
             <th>Passing Percentage</th>
+            <th>Starts At</th>
             <th>Created On</th>
             <th>Action</th>
           </>
@@ -44,11 +44,13 @@ export default function AllExam() {
             <tr key={exam.id}>
               <td className="py-3 px-4">{index + 1}</td>
               <td>{exam.instructor.name}</td>
-              <td>{exam.title}</td>
-              <td>{exam.description}</td>
-              <td>{exam.time_allowed}</td>
-              <td>{exam.total_retakes}</td>
+              <td>
+                <Link className="hover:text-blue-500 hover:underline" to={`./${exam.id}`}>{exam.title.substring(0, 30)}</Link>
+              </td>
+              <td>{exam.description.substring(0, 50)}</td>
+              <td>{exam.time_allowed}mins</td>
               <td>{exam.passing_percentage}%</td>
+              <td>{formatDate(exam.starts_at, true)}</td>
               <td>{formatDate(exam.created_at)}</td>
               <td className="flex gap-2">
                 <ActionButton route={`./${exam.id}`} name={"View"} />

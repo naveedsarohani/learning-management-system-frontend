@@ -26,7 +26,7 @@ export default function ShowExam() {
 
   useEffect(() => {
     examapi.show(examId, token, setExam, handler)
-    examQuestion.all(token, setQuestions, handler, { exam_id: examId })
+    examQuestion.all(token, setQuestions, handler, { exam_id: parseInt(examId) })
   }, [examId])
 
   return <DashboardPageCompement title={"specified exam"}>
@@ -34,7 +34,7 @@ export default function ShowExam() {
 
     {isNullOrEmpty(exam.id) ? <BlankExamCard /> : <div className="p-6 bg-gray-50 min-h-screen">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-        {/* exam Details */}
+        
         <div className="p-6 border-b border-gray-200">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
             {capitalize(exam.title)}
@@ -53,7 +53,7 @@ export default function ShowExam() {
           </p>
         </div>
 
-        {/* Questions Accordion */}
+       
         <Accordion title="All Questions" className="p-6">
           {!isNullOrEmpty(questions) && questions.map((question) => (
             <AccordionContent

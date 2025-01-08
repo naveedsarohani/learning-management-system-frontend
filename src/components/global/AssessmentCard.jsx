@@ -1,5 +1,6 @@
 import React from "react"
 import blueprint from "../../uitils/blueprint"
+import ActionButton from "./ActionButton"
 
 const AssessmentCard = ({ assessment = blueprint.assessment }) => {
   return (
@@ -21,12 +22,11 @@ const AssessmentCard = ({ assessment = blueprint.assessment }) => {
           <span className="font-bold">Course:</span> {assessment.course.title}
         </p>
         <div className="mt-4 flex justify-center">
-          <button
-            className="w-full py-2 px-4 bg-gradient-to-r from-[#21bffd] to-[#217bfe] text-white font-bold rounded "
-            // onClick={handleAttempt}
-          >
-            Attempt Assessment
-          </button>
+          <ActionButton
+            // color?: string | undefined;
+            name='attempt now'
+            route={`./attempt-assessment/${assessment.id}`}
+          />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { FaLock } from "react-icons/fa";
 import { useDelete } from "../../contexts/Delete"
 import ActionButton from "../global/ActionButton"
 import { capitalize } from "../../uitils/functions/global"
@@ -10,8 +10,10 @@ export default function AccordionContent({
   children,
   identity,
   noEdit = false,
+  noAction = false,
+  isLocked = false,
+  currentTab
 }) {
-  const [activeTab, setActiveTab] = useState(null)
   const { destroy } = useDelete()
 
   return (
@@ -21,19 +23,18 @@ export default function AccordionContent({
     >
       <div
         className="w-full bg-gradient-to-r from-[#25bffd] to-[#257bfe] text-white p-1 text-left font-medium  focus:outline-none"
-        onClick={() => setActiveTab((pre) => (pre ? null : itemId))}
+        onClick={!isLocked && (() => currentTab.set(currentId => currentId === itemId ? null : itemId))}
       >
         <div className="flex p-2 rounded justify-between items-center w-full order-10">
           {capitalize(tabTitle)}
-          {activeTab ? <IoIosArrowUp /> : <IoIosArrowDown />}
+          {isLocked ? <FaLock /> : (currentTab.value ? <IoIosArrowUp /> : <IoIosArrowDown />)}
         </div>
       </div>
-
       {/* Accordion Content */}
-      {activeTab === itemId && (
+      {currentTab.value === itemId && (
         <div className="p-4 bg-gray-50">
           {children}
-          <div className="flex gap-2">
+          {!noAction && <div className="flex gap-2">
             <ActionButton
               name={"View"}
               route={`./view-${identity}/${itemId}`}
@@ -57,7 +58,7 @@ export default function AccordionContent({
               }
               color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
             />
-          </div>
+          </div>}
         </div>
       )}
     </div>

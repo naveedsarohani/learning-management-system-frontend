@@ -24,7 +24,17 @@ const enrollment = Object.freeze({
         description: '',
         image: '',
         created_at: '',
-        updated_at: ''
+        updated_at: '',
+        user: {
+            id: '',
+            name: '',
+            email: '',
+            role: '',
+            image: '',
+            city_id: '',
+            created_at: '',
+            updated_at: '',
+        }
     },
     student: {
         id: '',
@@ -185,7 +195,7 @@ const exam = Object.freeze({
     description: '',
     passing_percentage: '',
     time_allowed: '',
-    total_retakes: '',
+    starts_at: '',
     created_at: '',
     updated_at: '',
     instructor: {
@@ -221,7 +231,7 @@ const examQuestion = Object.freeze({
         description: '',
         passing_percentage: '',
         time_allowed: '',
-        total_retakes: '',
+        starts_at: '',
         created_at: '',
         updated_at: '',
         instructor: {
@@ -241,9 +251,11 @@ const examSubmission = Object.freeze({
     id: '',
     exam_id: '',
     student_id: '',
+    total_questions: '',
     obtained_marks: '',
-    retakes_count: '',
-    is_passed: '',
+    total_marks: '',
+    total_correct: '',
+    total_wrong: '',
     created_at: '',
     updated_at: '',
     exam: {
@@ -253,7 +265,7 @@ const examSubmission = Object.freeze({
         description: '',
         passing_percentage: '',
         time_allowed: '',
-        total_retakes: '',
+        starts_at: '',
         created_at: '',
         updated_at: '',
         instructor: {

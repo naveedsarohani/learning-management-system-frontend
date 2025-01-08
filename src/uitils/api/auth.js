@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { isNullOrEmpty, response, roleBaseRedirection, where } from "../functions/global";
+import { capitalize, isNullOrEmpty, response, roleBaseRedirection, where } from "../functions/global";
 import request from "../functions/request";
 
 // function to fetch all course records
@@ -11,7 +11,7 @@ async function users(token, set, only = false) {
             else set(Object.values(responseData.users));
         };
     }
-    catch (error) { toast.error(error.message); }
+    catch (error) { toast.error(capitalize(error.message)); }
 }
 
 // function to login
@@ -22,7 +22,7 @@ async function register(data, handler) {
         response(await request.post('/auth/register', data), handler.setValidationErrors);
         handler.navigate('/auth/login');
     } catch (error) {
-        toast.error(error.message);
+        toast.error(capitalize(error.message));
     } finally {
         handler.setLoading(loading => !loading);
     }
@@ -40,7 +40,7 @@ async function login(data, handler, user) {
             roleBaseRedirection(responseData.user.role, handler.navigate);
         }
     } catch (error) {
-        toast.error(error.message);
+        toast.error(capitalize(error.message));
     } finally {
         handler.setLoading(loading => !loading);
     }
@@ -55,7 +55,7 @@ async function logout(token, handler) {
         handler.revoke();
         handler.navigate('auth/login', { replace: true });
     } catch (error) {
-        toast.error(error.message);
+        toast.error(capitalize(error.message));
     } finally {
         handler.setLoading(loading => !loading);
     }
@@ -71,7 +71,7 @@ async function update(data, token, handler, options = {}) {
         }
 
         options.setHelper(pre => ({ ...pre, [options.target]: false, }));
-    } catch (error) { toast.error(error.message); }
+    } catch (error) { toast.error(capitalize(error.message)); }
     finally { handler.setLoading(loading => !loading); }
 }
 
@@ -83,7 +83,7 @@ async function updatePassword(data, token, handler, setHelper) {
         response(await request.post('/auth/update-password', data, token), handler.setValidationErrors);
         setHelper(pre => ({ ...pre, isPassUpdate: false, }))
     } catch (error) {
-        toast.error(error.message);
+        toast.error(capitalize(error.message));
     } finally {
         handler.setLoading(loading => !loading);
     }

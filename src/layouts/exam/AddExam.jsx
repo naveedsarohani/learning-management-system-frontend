@@ -45,14 +45,14 @@ export default function AddExam() {
 
             <InputField
               type={"number"}
-              name={"total_retakes"}
-              placeholder={"Total allowed retakes"}
+              name={"passing_percentage"}
+              placeholder={"the passing percentage out of 100"}
             />
 
             <InputField
-              type={"number"}
-              name={"passing_percentage"}
-              placeholder={"the passing percentage out of 100"}
+              type={"datetime-local"}
+              name={"starts_at"}
+              placeholder={"select the data and time to strt the exam at"}
             />
 
             <SubmitButton name={isLoading(handler, "Add exam")} />

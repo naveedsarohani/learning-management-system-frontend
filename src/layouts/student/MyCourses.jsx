@@ -6,47 +6,40 @@ import blueprint from "../../uitils/blueprint"
 import CourseCard from "../../components/global/CourseCard"
 import { isNullOrEmpty } from "../../uitils/functions/global"
 import NoContent from "../../components/global/NoContent"
+import enrollment from "../../uitils/api/enrollment"
 
 export default function MyCourses() {
-    const {
-        credentials: { user, token },
-    } = useAuth()
-    const [courses, setCourses] = useState([blueprint.course])
+    const { credentials: { user, token } } = useAuth()
     const { handler } = useHandler()
+    const [courses, setCourses] = useState([blueprint.course])
 
     useEffect(() => {
-        course.all(token, setCourses, handler)
+        enrollment.all(token, setCourses, handler, { user_id: user.id, getOnlyProperty: 'course' });
     }, [location.pathname, user])
 
-    function filterRecords(data = [], options = {}) {
-        const key = Object.entries(options)[0] ?? null;
-        const values = Objcet.values(options)[1] ?? [];
 
-        return data.filter(item => values.includes(item[key]));
-    }
+    console.log(courses);
 
-    return (
-        <div className="bg-gray-50 min-h-screen p-6 px-14">
-            <h1 className="text-2xl font-bold text-gray-800 mb-6">All Courses</h1>
-            {!isNullOrEmpty(courses[0].id) ? (
-                <div className="flex justify-start flex-wrap gap-6">
-                    {courses.map((course) => (
-                        <CourseCard
-                            key={course.id}
-                            routePrefix="/me"
-                            course={course}
-                            className="shadow-md hover:shadow-lg transition-shadow"
-                        />
-                    ))}
-                </div>
-            ) : (
-                <div className="flex items-center justify-center mt-12">
-                    <NoContent
-                        message="There is no course for you"
-                        className="text-gray-500 text-center"
+    return handler.componentLoaded && <div className="bg-gray-50 min-h-screen p-6 px-14">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">My Enrolled Courses</h1>
+        {!isNullOrEmpty(courses[0]) ? (
+            <div className="flex justify-start flex-wrap gap-6">
+                {courses.map(course => (
+                    <CourseCard
+                        key={course.id}
+                        routePrefix="/me"
+                        course={course}
+                        className="shadow-md hover:shadow-lg transition-shadow"
                     />
-                </div>
-            )}
-        </div>
-    )
+                ))}
+            </div>
+        ) : (
+            <div className="flex items-center justify-center mt-12">
+                <NoContent
+                    message="There is no course for you"
+                    className="text-gray-500 text-center"
+                />
+            </div>
+        )}
+    </div>
 }

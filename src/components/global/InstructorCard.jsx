@@ -38,7 +38,7 @@ export default function InstructorCard({ instructor = blueprint.user }) {
 
                 <ActionButton
                     name={'view profile'}
-                    route={'/instructors'}
+                    route={`/instructor/${instructor.id}`}
                     color="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 rounded mt-3 shadow-md hover:shadow-lg"
                 />
             </div>

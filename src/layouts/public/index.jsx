@@ -17,7 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     course.all(token, setCourses, handler)
-    // auth.users(token, setInstructors, { role: "instructor" })
+    auth.users(token, setInstructors, handler, { role: "instructor" })
   }, [location.pathname, user])
 
 

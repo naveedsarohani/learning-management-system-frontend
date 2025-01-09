@@ -3,7 +3,7 @@ import blueprint from "../../uitils/blueprint"
 import courseapi from "../../uitils/api/course"
 import assessment from "../../uitils/api/assessment"
 import lesson from "../../uitils/api/lesson"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useAuth } from "../../contexts/Authentication"
 import { useHandler } from "../../contexts/Handler"
 import {
@@ -70,7 +70,7 @@ const Course = () => {
                         />
                     </div>
                     <p className="text-gray-700 mb-4">{capitalize(course.description)}</p>
-                    <p className="text-gray-600 mb-4 flex items-center">
+                    <Link to={`/instructor/${course.user.id}`} className="text-gray-600 mb-4 flex items-center">
                         <img
                             className="w-12 h-12 rounded-full"
                             src={readFile(course.user.image)}
@@ -79,7 +79,7 @@ const Course = () => {
                         <span className="font-semibold text-gray-800">
                             {capEach(course.user.name)} ({capitalize(course.user.role)})
                         </span>
-                    </p>
+                    </Link>
                     <div className="course-meta">
                         <p className="text-sm text-gray-600 mb-1">
                             <strong>Created at:</strong> {formatDate(course.updated_at)}
@@ -147,7 +147,7 @@ const Course = () => {
                                     <AssessmentCard assessment={assessment} />
                                 </AccordionContent>)
                                 : <div className="flex justify-center items-center h-32 bg-gray-100 rounded-lg">
-                                    <NoContent message="There are no lessons for this course" />
+                                    <NoContent message="There are no assessments for this course" />
                                 </div>
                             }
                         </Accordion>

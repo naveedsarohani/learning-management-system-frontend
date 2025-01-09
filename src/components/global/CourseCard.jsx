@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import blueprint from "../../uitils/blueprint"
 import { capEach, formatDate, readFile } from "../../uitils/functions/global"
 import ActionButton from "./ActionButton"
@@ -32,7 +33,7 @@ export default function CourseCard({
           </span>
           <span className="text-xs text-gray-500 flex gap-1 items-center mt-1">
             <p>By:</p>
-            {capEach(course.user.name)}
+            <Link to={`/instructor/${course.user.id}`}>{capEach(course.user.name)}</Link>
           </span>
           <ActionButton
             name={"See Course"}

@@ -125,6 +125,9 @@ export default function ProfilePage() {
             <strong>Email:</strong> {authUser.email}
           </p>
           <p className="text-sm text-gray-600">
+            <strong>City:</strong> {authUser.city.name}
+          </p>
+          <p className="text-sm text-gray-600">
             <strong>Role:</strong> {authUser.role}
           </p>
         </div>

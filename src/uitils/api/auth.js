@@ -3,7 +3,9 @@ import { capitalize, isNullOrEmpty, response, roleBaseRedirection, where } from 
 import request from "../functions/request";
 
 // function to fetch all course records
-async function users(token, set, only = false) {
+async function users(token, set, handler, only = false) {
+    handler.setLoading(loading => !loading);
+    handler.setComponentLoaded(false);
     try {
         const responseData = response(await request.get('/auth/users', token), false, true);
         if (responseData) {
@@ -12,7 +14,29 @@ async function users(token, set, only = false) {
         };
     }
     catch (error) { toast.error(capitalize(error.message)); }
+    finally {
+        handler.setLoading(loading => !loading);
+        handler.setComponentLoaded(true);
+    }
 }
+
+// async function show(id, token, set, handler) {
+//     handler.setLoading(loading => !loading);
+//     handler.setComponentLoaded(false);
+//     try {
+//         const responseData = response(await request.get('/auth/users/', token), false, true);
+//         if (responseData) {
+//             if (only) set(where(Object.values(responseData.users), only));
+//             else set(Object.values(responseData.users));
+//         };
+//     }
+//     catch (error) { toast.error(capitalize(error.message)); }
+//     finally {
+//         handler.setLoading(loading => !loading);
+//         handler.setComponentLoaded(true);
+//     }
+// }
+
 
 // function to login
 async function register(data, handler) {

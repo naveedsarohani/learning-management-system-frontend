@@ -10,11 +10,11 @@ import DashboardHomePage from "../layouts/dashboards"
 import NotFound404 from "../layouts/404"
 import Lesson from "./Lesson"
 import Assessment from "./Assessment"
-import AllInstructor from "../layouts/users/AllInstructor"
-import Allstudent from "../layouts/users/AllStudent"
+import Users from "../layouts/users/Users"
 import Submission from "./Submission"
 import Exam from "./Exam"
 import Result from "./Result"
+import Loader from "../components/global/Loader"
 
 export default function Dashboard() {
   const { credentials: { user } } = useAuth()
@@ -53,12 +53,16 @@ export default function Dashboard() {
               <Navbar />
             </div>
 
+            <div className="relative top-[35%]">
+              {!handler.componentLoaded && <Loader />}
+            </div>
+
             {/* Main Content */}
             <div className="flex-1 overflow-y-auto pl-6">
               <Routes>
                 <Route path="/" element={<DashboardHomePage />} />
-                <Route path="/instructors" element={<AllInstructor />} />
-                <Route path="/students" element={<Allstudent />} />
+                <Route path="/instructors" key='instructors' element={<Users role='instructor' />} />
+                <Route path="/students" key='student' element={<Users role='student' />} />
                 <Route path="/courses/*" element={<Courses />} />
                 <Route path="/exams/*" element={<Exam />} />
                 <Route path="/results/*" element={<Result />} />

@@ -79,6 +79,14 @@ export default function Navbar() {
                     Profile
                   </Link>
                 </li>
+                {user.role && user.role === 'student' && <li>
+                  <Link
+                    className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm text-gray-700"
+                    to={'/me'}
+                  >
+                    My Page
+                  </Link>
+                </li>}
                 <li>
                   {user ? (
                     <li onClick={handleLogout}>

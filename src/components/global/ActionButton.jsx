@@ -6,7 +6,8 @@ export default function ActionButton({
   name,
   route = null,
   onClick,
-  icon = null
+  icon = null,
+  noCap = false
 }) {
   return (
     <button
@@ -14,7 +15,7 @@ export default function ActionButton({
       onClick={onClick}
     >
       {icon && <i className={`fas ${icon} text-xs`}></i>}
-      {route ? <Link to={route}>{capEach(name)}</Link> : capEach(name)}
+      {route ? <Link to={route}>{noCap ? name : capEach(name)}</Link> : noCap ? name : capEach(name)}
     </button>
   )
 }

@@ -59,18 +59,18 @@ export default function EditExam() {
 
               <InputField
                 type={"number"}
-                name={"total_retakes"}
-                value={exam.total_retakes}
-                set={setExam}
-                placeholder={"Total allowed retakes"}
-              />
-
-              <InputField
-                type={"number"}
                 name={"passing_percentage"}
                 value={exam.passing_percentage}
                 set={setExam}
                 placeholder={"the passing percentage out of 100"}
+              />
+
+              <InputField
+                type={"datetime-local"}
+                name={"starts_at"}
+                value={exam.starts_at}
+                set={setExam}
+                placeholder={"select the data and time to strt the exam at"}
               />
 
               <SubmitButton name={isLoading(handler, "save changes")} />

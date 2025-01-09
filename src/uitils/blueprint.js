@@ -12,6 +12,46 @@ const user = Object.freeze({
     }
 });
 
+const enrollment = Object.freeze({
+    id: '',
+    course_id: '',
+    user_id: '',
+    created_at: '',
+    course: {
+        id: '',
+        user_id: '',
+        title: '',
+        description: '',
+        image: '',
+        created_at: '',
+        updated_at: '',
+        user: {
+            id: '',
+            name: '',
+            email: '',
+            role: '',
+            image: '',
+            city_id: '',
+            created_at: '',
+            updated_at: '',
+        }
+    },
+    student: {
+        id: '',
+        name: '',
+        email: '',
+        role: '',
+        image: '',
+        city_id: '',
+        created_at: '',
+        updated_at: '',
+        city: {
+            id: '',
+            name: ''
+        }
+    }
+});
+
 const course = Object.freeze({
     id: '',
     user_id: '',
@@ -155,7 +195,7 @@ const exam = Object.freeze({
     description: '',
     passing_percentage: '',
     time_allowed: '',
-    total_retakes: '',
+    starts_at: '',
     created_at: '',
     updated_at: '',
     instructor: {
@@ -191,7 +231,7 @@ const examQuestion = Object.freeze({
         description: '',
         passing_percentage: '',
         time_allowed: '',
-        total_retakes: '',
+        starts_at: '',
         created_at: '',
         updated_at: '',
         instructor: {
@@ -211,9 +251,11 @@ const examSubmission = Object.freeze({
     id: '',
     exam_id: '',
     student_id: '',
+    total_questions: '',
     obtained_marks: '',
-    retakes_count: '',
-    is_passed: '',
+    total_marks: '',
+    total_correct: '',
+    total_wrong: '',
     created_at: '',
     updated_at: '',
     exam: {
@@ -223,7 +265,7 @@ const examSubmission = Object.freeze({
         description: '',
         passing_percentage: '',
         time_allowed: '',
-        total_retakes: '',
+        starts_at: '',
         created_at: '',
         updated_at: '',
         instructor: {
@@ -255,6 +297,7 @@ const examSubmission = Object.freeze({
 
 export default {
     user,
+    enrollment,
     course,
     lesson,
     assessment,

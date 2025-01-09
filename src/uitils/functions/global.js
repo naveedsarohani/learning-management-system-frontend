@@ -32,7 +32,7 @@ export function response(response, setValidationErrors, suppressToast = false) {
         case status.OK:
         case status.CREATED:
         case status.FOUND: {
-            !suppressToast && toast.success(message ?? 'It was successful');
+            !suppressToast && toast.success(capitalize(message) ?? 'It was successful');
             break;
         }
 
@@ -95,15 +95,23 @@ export function isLoading(handler, nonLoadingState, loadingState = 'Loading...')
 }
 
 // function to formatdate date
-export function formatDate(dateString) {
+export function formatDate(dateString, hasTime = false) {
     const date = new Date(dateString);
 
-    return date.toLocaleDateString('en-US', {
+    const options = {
         weekday: 'long',
         year: 'numeric',
         month: 'short',
         day: 'numeric'
-    });
+    }
+
+    if (hasTime) {
+        options.hour = '2-digit';
+        options.minute = '2-digit';
+        options.hour12 = true;
+    }
+
+    return date.toLocaleDateString('en-US', options);
 }
 
 // function to readFile from backend
@@ -125,12 +133,13 @@ export function isNullOrEmpty(data) {
 }
 
 // function to get only records satisfying the condition
-export function where(data = [], relation = {}, operator = '==') {
-    const key = Object.keys(relation)[0];
-    const value = Object.values(relation)[0];
+export function where(data = [], relation = {}) {
+    const keys = Object.keys(relation);
+    const filters = keys.filter(key => key !== 'getOnlyProperty');
+    const getOnlyProperty = keys.find(key => key === 'getOnlyProperty');
 
-    const extractedData = data.filter(item => operators[operator](item[key], value));
-    return Array.isArray(extractedData) ? extractedData : [extractedData];
+    const filteredData = data.filter(item => filters.every(filter => item[filter] === relation[filter]));
+    return getOnlyProperty ? filteredData.map(item => item[relation[getOnlyProperty]]) : filteredData;
 }
 
 // function to capitalize the string
@@ -166,3 +175,58 @@ export function has(data = [], searchValue) {
 
     return { items: data, option: null };
 }
+
+export const getCountDown = (datetime, callback, addMinutes = null) => {
+    const targetDate = new Date(datetime);
+    const currentTime = new Date();
+    let timeDifference = targetDate.getTime() - currentTime.getTime();
+    addMinutes && (timeDifference += (parseInt(addMinutes) * 60 * 1000));
+
+    if (timeDifference >= 1) {
+        const intervalId = setInterval(() => {
+            const targetDate = new Date(datetime);
+            const currentTime = new Date();
+            let timeDifference = targetDate.getTime() - currentTime.getTime();
+            addMinutes && (timeDifference += (parseInt(addMinutes) * 60 * 1000));
+
+            if (timeDifference <= 0) {
+                clearInterval(intervalId);
+                callback({ remainingTime: 0, formattedTime: { days: 0, hours: '00', minutes: '00', seconds: '00' } });
+            } else {
+                callback({ remainingTime: timeDifference, formattedTime: calculateMiliseconds(timeDifference) });
+            }
+        }, 1000);
+    } else {
+        callback({ remainingTime: 0, formattedTime: { days: 0, hours: '00', minutes: '00', seconds: '00' } });
+    }
+};
+
+// function to generate time formate from miliseconds
+export function calculateMiliseconds(miliseconds) {
+    const days = Math.floor(miliseconds / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((miliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((miliseconds % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((miliseconds % (1000 * 60)) / 1000);
+
+    return {
+        days,
+        hours: hours.toString().padStart(2, '0'),
+        minutes: minutes.toString().padStart(2, '0'),
+        seconds: seconds.toString().padStart(2, '0'),
+    };
+}
+
+// function to evaluate time
+// export function evaluateTime(time, set) {
+//     let remainingSeconds = parseInt(time) * 60;
+//     const intervalId = setInterval(() => {
+//         if (remainingSeconds <= 0) {
+//             clearInterval(intervalId);
+//         } else {
+//             set(`${Math.floor(remainingSeconds / 60)} minutes ${remainingSeconds % 60} seconds`);
+//             remainingSeconds -= 1;
+//         }
+//     }, 1000);
+
+//     return () => clearInterval(intervalId);
+// }

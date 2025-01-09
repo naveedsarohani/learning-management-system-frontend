@@ -30,15 +30,6 @@ const Menu = () => {
         </Link>
         <div className="absolute left-0 bottom-0 h-[2px] w-0 bg-black group-hover:w-full transition-all"></div>
       </li>
-      <li className="relative group">
-        <Link
-          to={"/me/assessments"}
-          className="text-gray-700 hover:text-black transition-colors"
-        >
-          Assessments
-        </Link>
-        <div className="absolute left-0 bottom-0 h-[2px] w-0 bg-black group-hover:w-full transition-all"></div>
-      </li>
     </ul>
   )
 }

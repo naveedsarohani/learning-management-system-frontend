@@ -86,7 +86,7 @@ const Course = () => {
               <Link
                 to={`/instructor/${course.user.id}`}
                 className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-md transition hover:shadow-lg"
-              >
+                >
                 <img
                   className="w-16 h-16 rounded-full border-2 border-indigo-500 object-cover"
                   src={readFile(course.user.image)}

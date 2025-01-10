@@ -54,15 +54,19 @@ export default function Navbar() {
           />
 
           {/* Profile Icon */}
-          {!isNullOrEmpty(user.id) ? <button
-            className="text-gray-500 hover:text-gray-800 focus:outline-none"
-            onClick={handleDropdownToggle}
-          >
-            <img src={readFile(user.image)} className="w-10 rounded-full" />
-          </button> : <>
-            <ActionButton name='login' route='/auth/login' />
-            <ActionButton name='register' route='/auth/register' />
-          </>}
+          {!isNullOrEmpty(user.id) ? (
+            <button
+              className="text-gray-500 hover:text-gray-800 focus:outline-none"
+              onClick={handleDropdownToggle}
+            >
+              <img src={readFile(user.image)} className="w-10 rounded-full" />
+            </button>
+          ) : (
+            <>
+              <ActionButton name="login" route="/auth/login" />
+              <ActionButton name="register" route="/auth/register" />
+            </>
+          )}
 
           {/* Dropdown Menu */}
           {!isNullOrEmpty(user) && isDropdownOpen && (
@@ -72,21 +76,21 @@ export default function Navbar() {
               </div>
               <ul className="py-2">
                 <li>
-                  <Link
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm text-gray-700"
-                    to={'/profile'}
-                  >
-                    Profile
+                  <Link to={"/profile"}>
+                    <button className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm text-gray-700">
+                      Profile
+                    </button>
                   </Link>
                 </li>
-                {user.role && user.role === 'student' && <li>
-                  <Link
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm text-gray-700"
-                    to={'/me'}
-                  >
-                    My Page
-                  </Link>
-                </li>}
+                {user.role && user.role === "student" && (
+                  <li>
+                    <Link to={"/me"}>
+                      <button className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm text-gray-700">
+                        My page
+                      </button>
+                    </Link>
+                  </li>
+                )}
                 <li>
                   {user ? (
                     <li onClick={handleLogout}>

@@ -20,27 +20,43 @@ export default function Home() {
     auth.users(token, setInstructors, handler, { role: "instructor" })
   }, [location.pathname, user])
 
+  return (
+    handler.componentLoaded && (
+      <div className="bg-gray-50 min-h-screen">
+        {/* Courses Section */}
+        <div className="p-10">
+          <h1 className="text-center text-3xl font-extrabold bg-gradient-to-r from-[#21bffd] to-[#217bfe] bg-clip-text text-transparent  mb-8">
+            Explore Our Top-Rated Courses
+          </h1>
+          <p className="text-center text-gray-600 mb-10 text-lg">
+            Unlock your potential with our expertly crafted courses. Find the
+            perfect one for your goals!
+          </p>
+          <div className="flex justify-center flex-wrap gap-10">
+            {courses.map((course) => (
+              <CourseCard key={course.id} course={course} />
+            ))}
+          </div>
+        </div>
 
+        <hr className="border-t-2 border-gray-200 my-10" />
 
-  return handler.componentLoaded && <div>
-    {/* courses */}
-    <div className="p-5 ">
-      <h1 className="text-center text-2xl font-bold mb-5">All Course</h1>
-      <div className="flex justify-center flex-wrap gap-8 ">
-        {courses.map((course) => (
-          <CourseCard course={course} />
-        ))}
+        {/* Instructors Section */}
+        <div className="p-10 bg-white shadow-lg rounded-lg">
+          <h1 className="text-center text-3xl font-extrabold bg-gradient-to-r from-[#21bffd] to-[#217bfe] bg-clip-text text-transparent mb-8">
+            Meet Our Expert Instructors 🌟
+          </h1>
+          <p className="text-center text-gray-600 mb-10 text-lg">
+            Learn from the best! Our instructors are industry leaders dedicated
+            to your success.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {instructors.map((instructor) => (
+              <InstructorCard key={instructor.id} instructor={instructor} />
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
-
-    <hr />
-
-    {/* instructors */}
-    <div>
-      <h1>All Instructors</h1>
-      {instructors.map((instructor) => (
-        <InstructorCard instructor={instructor} />
-      ))}
-    </div>
-  </div>
+    )
+  )
 }

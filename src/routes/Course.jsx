@@ -10,6 +10,7 @@ import AddAssessment from "../layouts/assessment/AddAssessment";
 import EditAssessment from "../layouts/assessment/EditAssessment";
 import ShowAssessment from "../layouts/assessment/ShowAssessment";
 import ShowLesson from "../layouts/lesson/ShowLesson";
+import AddQuestion from '../layouts/question/AddQuestion';
 
 export default function Courses() {
     return <Routes>
@@ -24,12 +25,12 @@ export default function Courses() {
         <Route path="/:courseId/edit-lesson/:lessonId" element={<EditLesson />} />
         <Route path="/:courseId/view-lesson/:lessonId" element={<ShowLesson />} />
         <Route path="/:courseId/view-lesson/:lessonId/add-lesson" element={<AddLesson />} />
-
+        
         {/* assessment */}
         <Route path="/:courseId/add-assessment" element={<AddAssessment />} />
         <Route path="/:courseId/edit-assessment/:assessmentId" element={<EditAssessment />} />
         <Route path="/:courseId/view-assessment/:assessmentId" element={<ShowAssessment />} />
-        <Route path="/:courseId/view-assessment/:assessmentId/add-assessment" element={<AddAssessment />} />
+        <Route path="/:courseId/view-assessment/:assessmentId/add-question" element={<AddQuestion />} />
 
         {/* Unknow route */}
         <Route path="*" element={<NotFound404 />} />

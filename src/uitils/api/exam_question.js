@@ -22,12 +22,16 @@ async function all(token, set, handler, only = false) {
 
 async function show(id, token, set, handler) {
     handler.setLoading(loading => !loading);
+    handler.setComponentLoaded(false);
     try {
         const responseData = response(await request.get(`/exam-questions/${id}`, token), false, true);
         responseData && set(responseData.examQuestion);
     }
     catch (error) { toast.error(capitalize(error.message)); }
-    finally { handler.setLoading(loading => !loading); }
+    finally {
+        handler.setLoading(loading => !loading);
+        handler.setComponentLoaded(true);
+    }
 }
 
 async function store(token, data, handler) {

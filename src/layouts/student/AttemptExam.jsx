@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import question from "../../uitils/api/exam_question"
-// import '../../uitils/functions/check_before_reload'
 import blueprint from "../../uitils/blueprint"
 import { useAuth } from "../../contexts/Authentication"
 import { useHandler } from "../../contexts/Handler"

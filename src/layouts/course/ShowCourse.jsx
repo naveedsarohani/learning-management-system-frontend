@@ -16,6 +16,7 @@ import ActionButton from "../../components/global/ActionButton"
 import assessment from "../../uitils/api/assessment"
 import Accordion from "../../components/accordion/Accordion"
 import AccordionContent from "../../components/accordion/AccordionContent"
+import NoContent from "../../components/global/NoContent"
 
 export default function ShowCourse() {
   const { courseId } = useParams()
@@ -33,8 +34,8 @@ export default function ShowCourse() {
 
   useEffect(() => {
     courseapi.show(courseId, token, setCourse, handler)
-    lesson.all(token, setLessons, handler, { course_id: parseInt(courseId) })
-    assessment.all(token, setAssessments, handler, { course_id: parseInt(courseId) })
+    lesson.all(token, setLessons, handler, { course_id: courseId })
+    assessment.all(token, setAssessments, handler, { course_id: courseId })
   }, [courseId])
 
   return handler.componentLoaded && <DashboardPageCompement title={"specified course"}>
@@ -69,20 +70,21 @@ export default function ShowCourse() {
           icon={""}
           color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
           onClick={() =>
-            destroy("/courses", course.id, course.title + " course")
+            destroy("/courses", course.id, "course", -1)
           }
         />
       </div>
 
       {/* Lessons */}
       <Accordion title={"course lessons"}>
-        {!isNullOrEmpty(lessons) &&
+        {!isNullOrEmpty(lessons) ?
           lessons.map((lesson) => (
             <AccordionContent
               itemId={lesson.id}
               tabTitle={lesson.title}
               currentTab={{ value: currentLessonId, set: setCurrentLessonId }}
               identity={"lesson"}
+              del={setLessons}
             >
               <video
                 src={readFile(lesson.content)}
@@ -93,18 +95,19 @@ export default function ShowCourse() {
                 {formatDate(lesson.created_at)}
               </span>
             </AccordionContent>
-          ))}
+          )) : <NoContent message="no lessons have been added for this course" />}
       </Accordion>
 
       {/* Assessments */}
       <Accordion title={"course assessments"}>
-        {!isNullOrEmpty(assessments) &&
+        {!isNullOrEmpty(assessments) ?
           assessments.map((assessment) => (
             <AccordionContent
               itemId={assessment.id}
               tabTitle={assessment.title}
               currentTab={{ value: currentAssId, set: setCurrentAssId }}
               identity={"assessment"}
+              del={setAssessments}
             >
               <div className="p-4 border border-gray-300 rounded-md bg-white shadow-sm mb-4">
                 {/* Title */}
@@ -113,7 +116,7 @@ export default function ShowCourse() {
                 </h1>
 
                 {/* Information */}
-                <div className="text-gray-600 text-sm grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="text-gray-600 text-sm grid grid-cols-1 sm:grid-cols-4 gap-4">
                   <p>
                     <span className="font-medium text-gray-700">Type:</span>{" "}
                     {assessment.type}
@@ -130,6 +133,12 @@ export default function ShowCourse() {
                     </span>{" "}
                     {assessment.time_limit}
                   </p>
+                  <p>
+                    <span className="font-medium text-gray-700">
+                      Gets Unlocked At:
+                    </span>{" "}
+                    {assessment.unlocks_at}%
+                  </p>
                 </div>
 
                 {/* Date */}
@@ -138,7 +147,7 @@ export default function ShowCourse() {
                 </span>
               </div>
             </AccordionContent>
-          ))}
+          )) : <NoContent message="no assessments have been added for this course" />}
       </Accordion>
     </div>
   </DashboardPageCompement>

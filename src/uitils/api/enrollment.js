@@ -33,7 +33,7 @@ async function show(id, token, set, handler) {
 async function enroll(token, data, handler) {
     handler.setLoading(loading => !loading);
     try {
-        response(await request.post('/enrollments', data, token), handler.setValidationErrors);
+        response(await request.post('/enrollments', data, token), handler.setValidationErrors, true);
         return true;
     }
     catch (error) {

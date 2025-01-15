@@ -1,6 +1,8 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Doughnut } from "react-chartjs-2"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js"
+import blueprint from "../../uitils/blueprint"
+import { isPass } from "../../layouts/result/AllResult"
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -27,39 +29,45 @@ const percentagePlugin = {
   },
 }
 
-const ExamGraph = () => {
-  const pass = 60 // Number of students who passed
-  const fail = 40 // Number of students who failed
-  const total = pass + fail
+const ExamGraph = ({ results = [blueprint.examSubmission] }) => {
+  const [resultData, setResultData] = useState({ pass: 0, fail: 0, total: 0 });
+
+  useEffect(() => {
+    const total = results.length;
+    const pass = results.filter(isPass).length;
+    const fail = total - pass;
+
+    setResultData({ pass, fail, total });
+  }, [results]);
 
   const data = {
     labels: ["Pass", "Fail"],
     datasets: [
       {
-        data: [pass, fail],
-        backgroundColor: ["#32CD32", "#FF6347"], // Green for Pass, Red for Fail
+        data: [resultData.pass, resultData.fail],
+        backgroundColor: ["#32CD32", "#FF6347"],
         borderWidth: 0,
       },
     ],
   }
 
   const options = {
-    cutout: "70%", // Empty center
+    cutout: "70%",
     plugins: {
       tooltip: {
         callbacks: {
           label: (context) =>
-            `${context.label}: ${((context.raw / total) * 100).toFixed(1)}%`, // Show percentage
+            `${context.label}: ${((context.raw / resultData.total) * 100).toFixed(1)}%`,
         },
       },
       legend: {
-        display: false, // Hide legend for cleaner UI
+        display: false,
       },
     },
   }
 
   return (
-    <div className="flex items-center justify-center flex-col bg-gray-100 p-4 rounded-lg shadow-md w-96">
+    <div className="flex items-center justify-center flex-col p-4 rounded-lg shadow-md w-96">
       <h2 className="text-xl font-bold text-gray-900 mb-4">Exam Results</h2>{" "}
       {/* Heading */}
       <div className="relative">
@@ -72,17 +80,17 @@ const ExamGraph = () => {
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <p className="text-lg font-semibold text-gray-700">Total Students</p>
-          <p className="text-2xl font-bold text-gray-900">{total}</p>
+          <p className="text-2xl font-bold text-gray-900">{resultData.total}</p>
         </div>
       </div>
       <div className="mt-4 flex justify-between w-full text-sm">
         <div className="flex items-center">
           <div className="w-3 h-3 bg-[#32CD32] rounded-full mr-2"></div>
-          <p>Pass: {pass}</p>
+          <p>Pass: {resultData.pass}</p>
         </div>
         <div className="flex items-center">
           <div className="w-3 h-3 bg-[#FF6347] rounded-full mr-2"></div>
-          <p>Fail: {fail}</p>
+          <p>Fail: {resultData.fail}</p>
         </div>
       </div>
     </div>

@@ -13,17 +13,21 @@ import {
   readFile,
 } from "../../uitils/functions/global"
 import ActionButton from "../../components/global/ActionButton"
+import NoContent from "../../components/global/NoContent"
+import { role } from "../../uitils/functions/constants"
 
 export default function AllCourses() {
   const { handler } = useHandler()
-  const {
-    credentials: { user, token },
-  } = useAuth()
+  const { credentials: { user, token } } = useAuth()
   const [courses, setCourses] = useState([blueprint.course])
   const { destroy } = useDelete()
 
+  // const handlerDelete = () => {
+  //   setCourses(pre => pre.filter(item => item.id != id));
+  // }
+
   useEffect(() => {
-    course.all(token, setCourses, handler, { user_id: user.id })
+    course.all(token, setCourses, handler, user.role !== role.ADMIN && { user_id: user.id })
   }, [handler.navigate, user])
 
   return handler.componentLoaded && <DashboardPageCompement title={"all courses"}>
@@ -34,14 +38,13 @@ export default function AllCourses() {
     </Link>
 
     {/* <h1>The all courses are below in a table form</h1> */}
-    <Table
+    {!isNullOrEmpty(courses) ? <Table
       ths={
         <>
           <th className="py-3 px-4">Sno.</th>
           <th>Title</th>
           <th>Description</th>
           <th>Created On</th>
-          {/* <th>Poster</th> */}
           <th>Action</th>
         </>
       }
@@ -73,7 +76,7 @@ export default function AllCourses() {
               <ActionButton
                 name={"Delete"}
                 onClick={() =>
-                  destroy("/courses", course.id, course.title + " course")
+                  destroy("/courses", course.id, "course", setCourses)
                 }
                 color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
               />
@@ -81,6 +84,6 @@ export default function AllCourses() {
           </tr>
         ))
       }
-    />
+    /> : <NoContent message="No courses found. Please try adding some." />}
   </DashboardPageCompement>
 }

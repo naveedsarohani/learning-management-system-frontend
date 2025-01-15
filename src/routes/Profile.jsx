@@ -18,7 +18,7 @@ export default function Profile() {
 
     return !isNullOrEmpty(user) && <div className="flex h-screen">
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col p-4">
+        <div className="flex-1 flex flex-col">
             {/* Navbar */}
             <div className="w-full">
                 <Navbar />

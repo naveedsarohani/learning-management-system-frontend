@@ -11,7 +11,7 @@ export function DeleteModal() {
     credentials: { token },
   } = useAuth()
   const {
-    deletion: { route, id, identity },
+    deletion: { route, id, identity, set },
     setIsDeleting,
   } = useDelete()
 
@@ -19,6 +19,10 @@ export function DeleteModal() {
     handler.setLoading(true)
     try {
       response(await request.delete(`${route}/${id}`, token))
+      if (set) {
+        if (set == -1) window.history.back();
+        else set(pre => pre.filter(item => item.id != id));
+      }
     } catch (error) {
       toast.error(error.message)
     } finally {

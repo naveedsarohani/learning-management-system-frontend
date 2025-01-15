@@ -6,11 +6,16 @@ import InputField from "../form/InputField";
 import SubmitButton from "../form/SubmitButton";
 import ActionButton from "./ActionButton";
 import enrollment from "../../uitils/api/enrollment";
+import progress from "../../uitils/api/progress";
 
 export default function EnrollmentForm({ course = blueprint.course, userId, token, handler, set, setEnrolled }) {
     const handleSubmit = async (data) => {
         data = extractExcept(data, ['feedback_text']);
         await enrollment.enroll(token, data, handler);
+        await progress.initiate(token, {
+            user_id: userId,
+            course_id: course.id,
+        }, handler);
         set(false);
         setEnrolled(true);
     }

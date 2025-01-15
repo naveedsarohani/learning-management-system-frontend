@@ -20,6 +20,9 @@ import enrollment from "../../uitils/api/enrollment"
 import Accordion from "../../components/accordion/Accordion"
 import AccordionContent from "../../components/accordion/AccordionContent"
 import AssessmentCard from "../../components/global/AssessmentCard"
+import progressapi from "../../uitils/api/progress"
+import ProgressBar from "../../components/global/ProgressBar"
+import question from "../../uitils/api/question"
 
 const Course = () => {
   const { courseId } = useParams()
@@ -29,28 +32,47 @@ const Course = () => {
   const { handler } = useHandler()
   const [course, setCourse] = useState(blueprint.course)
   const [assessments, setAssessments] = useState([blueprint.assessment])
+  const [questions, setQuestions] = useState([blueprint.question])
   const [lessons, setLessons] = useState([blueprint.lesson])
+  const [progress, setProgress] = useState(blueprint.progress)
   const [enrolledUsers, setEnrolledUsers] = useState([])
   const [showEnrollmentForm, setShowEnrollmentForm] = useState(false)
   const [isEnrolled, setIsEnrolled] = useState(false)
   const [currentLessonId, setCurrentLessonId] = useState(null)
   const [currentAssId, setCurrentAssId] = useState(null)
+  const [videoEnded, setVideoEnded] = useState(false)
+
+  const setUnlockNext = async index => {
+
+    const newProgress = {
+      completion_percentage: calcPercetage(lessons.length, index),
+      lesson_index: index + 1
+    };
+
+    await progressapi.update(courseId, newProgress, token, handler).then(() => {
+      setVideoEnded(pre => !pre);
+    });
+  };
+
+  const calcPercetage = (total, given, option = null) => {
+    return (given / total) * 100;
+  };
 
   useEffect(() => {
-    enrollment.all(token, setEnrolledUsers, handler, {
-      course_id: parseInt(courseId),
-      getOnlyProperty: "user_id",
-    })
+    enrollment.all(token, setEnrolledUsers, handler, { course_id: parseInt(courseId), getOnlyProperty: "user_id" })
     courseapi.show(courseId, token, setCourse, handler)
-    assessment.all(token, setAssessments, handler, {
-      course_id: parseInt(courseId),
-    })
+    assessment.all(token, setAssessments, handler, { course_id: parseInt(courseId) })
     lesson.all(token, setLessons, handler, { course_id: parseInt(courseId) })
+    question.all(token, setQuestions, handler, { getOnlyProperty: 'assessment_id' })
   }, [])
 
   useEffect(() => {
     setIsEnrolled(enrolledUsers.includes(user.id))
   }, [enrolledUsers])
+
+  useEffect(() => {
+    progressapi.show(courseId, token, setProgress, handler);
+  }, [isEnrolled, videoEnded])
 
   return (
     handler.componentLoaded && (
@@ -70,6 +92,7 @@ const Course = () => {
           <div className="container mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Container: Course Details */}
             <div className="course-details bg-white shadow-md rounded-lg p-6 lg:col-span-2">
+              {isEnrolled && <ProgressBar progress={progress} />}
               <h1 className="text-3xl font-bold text-gray-900 mb-4 text-center lg:text-left">
                 {capitalize(course.title)}
               </h1>
@@ -86,7 +109,7 @@ const Course = () => {
               <Link
                 to={`/instructor/${course.user.id}`}
                 className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-md transition hover:shadow-lg"
-                >
+              >
                 <img
                   className="w-16 h-16 rounded-full border-2 border-indigo-500 object-cover"
                   src={readFile(course.user.image)}
@@ -123,87 +146,89 @@ const Course = () => {
               )}
             </div>
 
-            {isEnrolled && (
-              <div className="course-content bg-white shadow-md rounded-lg p-6">
-                <div>
-                  <Accordion title="Course Content">
-                    {!isNullOrEmpty(lessons[0]) ? (
-                      lessons.map((lesson) => (
-                        <AccordionContent
-                          tabTitle={capitalize(lesson.title)}
-                          itemId={lesson.id}
-                          currentTab={{
-                            value: currentLessonId,
-                            set: setCurrentLessonId,
-                          }}
-                          noAction={true}
-                        >
-                          <LessonCard
-                            key={lesson.id}
-                            showTitle={false}
-                            lesson={lesson}
-                          />
-                        </AccordionContent>
-                      ))
-                    ) : (
-                      <div className="flex justify-center items-center h-32 bg-gray-100 rounded-lg">
-                        <NoContent message="There are no lessons for this course" />
-                      </div>
-                    )}
-                  </Accordion>
-                </div>
-              </div>
-            )}
+            {<div className="course-content bg-white shadow-md rounded-lg p-6">
+              <div>
+                <Accordion title="Course Content">
+                  {!isNullOrEmpty(lessons[0]) ? (
+                    lessons.map((lesson, index) => (
 
-            {!isEnrolled && (
+                      <AccordionContent
+                        tabTitle={capitalize(lesson.title)}
+                        itemId={lesson.id}
+                        currentTab={{
+                          value: currentLessonId,
+                          set: setCurrentLessonId,
+                        }}
+                        noAction={true}
+                        isLocked={!isEnrolled || index > progress.lesson_index}
+                      >
+                        {isEnrolled && index <= progress.lesson_index && <LessonCard
+                          key={lesson.id}
+                          showTitle={false}
+                          lesson={lesson}
+                          next={() => setUnlockNext(index + 1)}
+                          showControls={true}
+                        />}
+                      </AccordionContent>
+                    ))
+                  ) : (
+                    <div className="flex justify-center items-center h-32 bg-gray-100 rounded-lg">
+                      <NoContent message="There are no lessons for this course" />
+                    </div>
+                  )}
+                </Accordion>
+              </div>
+            </div>}
+
+            {/* {!isEnrolled && (
               <div className="course-content bg-white shadow-md rounded-lg p-6">
                 <div>
                   <Accordion title="Course Content">
                     {!isNullOrEmpty(lessons[0]) ? (
-                      lessons.map((lesson) => (
-                        <AccordionContent
-                          tabTitle={capitalize(lesson.title)}
-                          itemId={lesson.id}
-                          currentTab={{
-                            value: currentLessonId,
-                            set: setCurrentLessonId,
-                          }}
-                          noAction={true}
-                        ></AccordionContent>
+                      lessons.map((lesson, index) => <AccordionContent
+                        tabTitle={capitalize(lesson.title)}
+                        itemId={lesson.id}
+                        currentTab={{
+                          value: currentLessonId,
+                          set: setCurrentLessonId,
+                        }}
+                        isLocked={true}
+                      ></AccordionContent>
                       ))
-                    ) : (
-                      <div className="flex justify-center items-center h-32 bg-gray-100 rounded-lg">
-                        <NoContent message="There are no lessons for this course" />
-                      </div>
-                    )}
+                      : (
+                        <div className="flex justify-center items-center h-32 bg-gray-100 rounded-lg">
+                          <NoContent message="There are no lessons for this course" />
+                        </div>
+                      )}
                   </Accordion>
                 </div>
               </div>
-            )}
+            )} */}
 
             {isEnrolled && (
               <div className="course-content bg-white shadow-md rounded-lg p-6">
                 <div>
                   <Accordion title="course assessments">
                     {!isNullOrEmpty(assessments[0]) ? (
-                      assessments.map((assessment) => (
-                        <AccordionContent
-                          tabTitle={capitalize(assessment.title)}
-                          itemId={assessment.id}
-                          currentTab={{
-                            value: currentAssId,
-                            set: setCurrentAssId,
-                          }}
-                          noAction={true}
-                        >
-                          <AssessmentCard assessment={assessment} />
-                        </AccordionContent>
+                      assessments.map((assessment) => questions.includes(assessment.id) && <AccordionContent
+                        tabTitle={capitalize(assessment.title)}
+                        hoverTitle={`The assessment will be unlocked at ${assessment.unlocks_at}% of course completion`}
+                        itemId={assessment.id}
+                        currentTab={{
+                          value: currentAssId,
+                          set: setCurrentAssId,
+                        }}
+                        noAction={true}
+                        isLocked={parseFloat(progress.completion_percentage) < parseFloat(assessment.unlocks_at)}
+                      >
+                        {(parseFloat(progress.completion_percentage) >= parseFloat(assessment.unlocks_at)) && <AssessmentCard assessment={assessment} />}
+                      </AccordionContent>
                       ))
-                    ) : (
-                      <div className="flex justify-center items-center h-32 bg-gray-100 rounded-lg">
-                        <NoContent message="There are no assessments for this course" />
-                      </div>
-                    )}
+                      : (
+                        <div className="flex justify-center items-center h-32 bg-gray-100 rounded-lg">
+                          <NoContent message="There are no assessments for this course" />
+                        </div>
+                      )}
                   </Accordion>
                 </div>
               </div>

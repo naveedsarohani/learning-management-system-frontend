@@ -6,13 +6,16 @@ import { capitalize } from "../../uitils/functions/global"
 
 export default function AccordionContent({
   tabTitle,
+  hoverTitle,
   itemId,
   children,
   identity,
   noEdit = false,
+  noView = false,
   noAction = false,
   isLocked = false,
   currentTab,
+  del,
 }) {
   const { destroy } = useDelete()
 
@@ -20,6 +23,7 @@ export default function AccordionContent({
     <div
       key={itemId}
       className=" bg-gradient-to-r from-[#25bffd] to-[#257bfe] overflow-hidden shadow-sm"
+      title={capitalize(hoverTitle)}
     >
       <div
         className="w-full bg-gradient-to-r border-b-[1px] border-gray-500 from-[#25bffd] to-[#257bfe] text-white p-1 text-left font-medium  focus:outline-none"
@@ -35,7 +39,7 @@ export default function AccordionContent({
           {capitalize(tabTitle)}
           {isLocked ? (
             <FaLock />
-          ) : currentTab.value ? (
+          ) : currentTab.value == itemId ? (
             <IoIosArrowUp />
           ) : (
             <IoIosArrowDown />
@@ -48,11 +52,11 @@ export default function AccordionContent({
           {children}
           {!noAction && (
             <div className="flex gap-2">
-              <ActionButton
+              {!noView && <ActionButton
                 name={"View"}
                 route={`./view-${identity}/${itemId}`}
                 icon={""}
-              />
+              />}
 
               {!noEdit && (
                 <ActionButton
@@ -67,7 +71,7 @@ export default function AccordionContent({
                 name={"Delete"}
                 icon={""}
                 onClick={() =>
-                  destroy(`/${identity}s`, itemId, tabTitle + ` ${identity}`)
+                  destroy(`/${identity}s`, itemId, identity, del ?? null)
                 }
                 color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
               />

@@ -14,18 +14,24 @@ async function all(token, set, handler, only = false) {
         }
     }
     catch (error) { toast.error(capitalize(error.message)); }
-    finally { handler.setLoading(loading => !loading); 
-        handler.setComponentLoaded(true);}
+    finally {
+        handler.setLoading(loading => !loading);
+        handler.setComponentLoaded(true);
+    }
 }
 
 async function show(id, token, set, handler) {
     handler.setLoading(loading => !loading);
+    handler.setComponentLoaded(false);
     try {
         const responseData = response(await request.get(`/exams/${id}`, token), false, true);
         responseData && set(responseData.exam);
     }
     catch (error) { toast.error(capitalize(error.message)); }
-    finally { handler.setLoading(loading => !loading); }
+    finally {
+        handler.setLoading(loading => !loading);
+        handler.setComponentLoaded(true);
+    }
 }
 
 async function store(token, data, handler) {

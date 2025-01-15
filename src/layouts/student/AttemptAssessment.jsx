@@ -7,7 +7,7 @@ import blueprint from "../../uitils/blueprint";
 import { useAuth } from "../../contexts/Authentication";
 import { useHandler } from "../../contexts/Handler";
 import { useParams } from "react-router-dom";
-import { capEach, capitalize, getCountDown, isLoading, isNullOrEmpty, readFile } from "../../uitils/functions/global";
+import { capEach, capitalize, getCountDown, isLoading, readFile } from "../../uitils/functions/global";
 
 export default function AttemptAssessment() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

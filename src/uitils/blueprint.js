@@ -1,3 +1,8 @@
+const city = Object.freeze({
+    id: '',
+    name: ''
+});
+
 const user = Object.freeze({
     id: '',
     name: '',
@@ -6,50 +11,7 @@ const user = Object.freeze({
     image: '',
     created_at: '',
     updated_at: '',
-    city: {
-        id: '',
-        name: ''
-    }
-});
-
-const enrollment = Object.freeze({
-    id: '',
-    course_id: '',
-    user_id: '',
-    created_at: '',
-    course: {
-        id: '',
-        user_id: '',
-        title: '',
-        description: '',
-        image: '',
-        created_at: '',
-        updated_at: '',
-        user: {
-            id: '',
-            name: '',
-            email: '',
-            role: '',
-            image: '',
-            city_id: '',
-            created_at: '',
-            updated_at: '',
-        }
-    },
-    student: {
-        id: '',
-        name: '',
-        email: '',
-        role: '',
-        image: '',
-        city_id: '',
-        created_at: '',
-        updated_at: '',
-        city: {
-            id: '',
-            name: ''
-        }
-    }
+    city: city
 });
 
 const course = Object.freeze({
@@ -60,15 +22,16 @@ const course = Object.freeze({
     image: '',
     created_at: '',
     updated_at: '',
-    user: {
-        id: '',
-        name: '',
-        email: '',
-        role: '',
-        image: '',
-        created_at: '',
-        updated_at: '',
-    }
+    user: user
+});
+
+const enrollment = Object.freeze({
+    id: '',
+    course_id: '',
+    user_id: '',
+    created_at: '',
+    course: course,
+    student: user
 });
 
 const lesson = Object.freeze({
@@ -78,15 +41,7 @@ const lesson = Object.freeze({
     content: '',
     created_at: '',
     updated_at: '',
-    course: {
-        id: '',
-        user_id: '',
-        title: '',
-        description: '',
-        image: '',
-        created_at: '',
-        updated_at: '',
-    }
+    course: course
 });
 
 const assessment = Object.freeze({
@@ -96,17 +51,10 @@ const assessment = Object.freeze({
     type: '',
     time_limit: '',
     retakes_allowed: '',
+    unlocks_at: '',
     created_at: '',
     updated_at: '',
-    course: {
-        id: '',
-        userId: '',
-        title: '',
-        description: '',
-        image: '',
-        created_at: '',
-        updated_at: ''
-    }
+    course: course
 });
 
 const question = Object.freeze({
@@ -116,16 +64,7 @@ const question = Object.freeze({
     type: '',
     created_at: '',
     updated_at: '',
-    assessment: {
-        id: '',
-        course_id: '',
-        title: '',
-        type: '',
-        time_limit: '',
-        retakes_allowed: '',
-        created_at: '',
-        updated_at: ''
-    }
+    assessment: assessment
 })
 
 const answer = Object.freeze({
@@ -135,24 +74,7 @@ const answer = Object.freeze({
     is_correct: '',
     created_at: '',
     updated_at: '',
-    question: {
-        id: '',
-        assessment_id: '',
-        question_text: '',
-        type: '',
-        created_at: '',
-        updated_at: '',
-        assessment: {
-            id: '',
-            course_id: '',
-            title: '',
-            type: '',
-            time_limit: '',
-            retakes_allowed: '',
-            created_at: '',
-            updated_at: ''
-        }
-    }
+    question: question
 });
 
 const submission = Object.freeze({
@@ -162,30 +84,8 @@ const submission = Object.freeze({
     score: '',
     retake_count: '',
     submitted_at: '',
-    student: {
-        id: '',
-        name: '',
-        email: '',
-        role: '',
-        image: '',
-        created_at: '',
-        updated_at: ''
-    },
-    assessment: {
-        id: '',
-        course_id: '',
-        title: '',
-        type: '',
-        time_limit: '',
-        retakes_allowed: '',
-        created_at: '',
-        updated_at: ''
-    }
-});
-
-const city = Object.freeze({
-    id: '',
-    name: ''
+    student: user,
+    assessment: assessment
 });
 
 const exam = Object.freeze({
@@ -198,16 +98,7 @@ const exam = Object.freeze({
     starts_at: '',
     created_at: '',
     updated_at: '',
-    instructor: {
-        id: '',
-        name: '',
-        email: '',
-        role: '',
-        image: '',
-        city_id: '',
-        created_at: '',
-        updated_at: '',
-    },
+    instructor: user,
 });
 
 const examQuestion = Object.freeze({
@@ -224,27 +115,7 @@ const examQuestion = Object.freeze({
     carry_marks: '',
     created_at: '',
     updated_at: '',
-    exam: {
-        id: '',
-        instructor_id: '',
-        title: '',
-        description: '',
-        passing_percentage: '',
-        time_allowed: '',
-        starts_at: '',
-        created_at: '',
-        updated_at: '',
-        instructor: {
-            id: '',
-            name: '',
-            email: '',
-            role: '',
-            image: '',
-            city_id: '',
-            created_at: '',
-            updated_at: '',
-        },
-    },
+    exam: exam
 });
 
 const examSubmission = Object.freeze({
@@ -258,41 +129,22 @@ const examSubmission = Object.freeze({
     total_wrong: '',
     created_at: '',
     updated_at: '',
-    exam: {
-        id: '',
-        instructor_id: '',
-        title: '',
-        description: '',
-        passing_percentage: '',
-        time_allowed: '',
-        starts_at: '',
-        created_at: '',
-        updated_at: '',
-        instructor: {
-            id: '',
-            name: '',
-            email: '',
-            role: '',
-            image: '',
-            city_id: '',
-            created_at: '',
-            updated_at: '',
-        },
-    },
-    student: {
-        id: '',
-        name: '',
-        email: '',
-        role: '',
-        image: '',
-        city_id: '',
-        created_at: '',
-        updated_at: '',
-        city: {
-            id: '',
-            name: '',
-        },
-    },
+    exam: exam,
+    student: user
+});
+
+const progress = Object.freeze({
+    id: '',
+    user_id: '',
+    course_id: '',
+    lesson_index: '',
+    progress_status: '',
+    completion_percentage: '',
+    created_at: '',
+    updated_at: '',
+    user: user,
+    course: course,
+    lesson: lesson
 });
 
 export default {
@@ -307,5 +159,6 @@ export default {
     city,
     exam,
     examQuestion,
-    examSubmission
+    examSubmission,
+    progress
 };

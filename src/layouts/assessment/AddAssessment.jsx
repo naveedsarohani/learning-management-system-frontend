@@ -50,6 +50,11 @@ export default function AddAssessment() {
               name={"retakes_allowed"}
               placeholder={"Total allowed retakes"}
             />
+            <InputField
+              type={"number"}
+              name={"unlocks_at"}
+              placeholder={"Unlock at 0-100% course progress"}
+            />
 
             <InputField type={"hidden"} name={"course_id"} value={courseId} />
 

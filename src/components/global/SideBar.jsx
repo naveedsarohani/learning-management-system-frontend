@@ -6,15 +6,13 @@ import { BsQuestionSquareFill } from "react-icons/bs"
 import { MdQuestionAnswer } from "react-icons/md"
 import { MdTask } from "react-icons/md"
 import { MdPlayLesson } from "react-icons/md"
+import { useAuth } from "../../contexts/Authentication"
+import { role } from "../../uitils/functions/constants"
 
-export default function SideBar({ toggleSidebar, isOpen, userRole }) {
+export default function SideBar({ toggleSidebar, isOpen }) {
+  const { credentials: { user } } = useAuth();
   return (
     <aside>
-      {/* <div>LMS</div>
-        <ul>
-            {userRole === role.ADMIN && <li><Link to={'/instructors'}>Instructor</Link></li>}
-            <li><Link to={'/courses'}>Courses</Link></li>
-        </ul> */}
       <div>
         {/* Toggle Button */}
         <button
@@ -37,7 +35,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
               <h2 className="text-lg font-bold text-white mb-6">Dashboard</h2></Link>
             <nav>
               <ul className="space-y-4 pl-4">
-                <li>
+                {user.role === role.ADMIN && <li>
                   <NavLink
                     to="/dashboard/instructors"
                     className={({ isActive }) =>
@@ -60,7 +58,7 @@ export default function SideBar({ toggleSidebar, isOpen, userRole }) {
                       </>
                     )}
                   </NavLink>
-                </li>
+                </li>}
                 <li>
                   <NavLink
                     to="/dashboard/students"

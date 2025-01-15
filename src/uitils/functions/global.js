@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { operators, role, status } from "./constants";
+import { role, status } from "./constants";
 
 // function to get complete URL
 export function getURL(route, api = true) {
@@ -16,9 +16,7 @@ export function getURL(route, api = true) {
 
 // function to handle input change
 export function handleInputChange(e, set) {
-    set(pre => {
-        return { ...pre, [e.target.name]: e.target.value }
-    });
+    set(pre => ({ ...pre, [e.target.name]: e.target.value }));
 }
 
 // function to handle response appropriately
@@ -41,10 +39,14 @@ export function response(response, setValidationErrors, suppressToast = false) {
             throw new Error(message ?? 'There was validation failure');
         }
 
+        case status.NOT_FOUND: {
+            window.history.back();
+            throw new Error(message ?? 'There was an error occurred');
+        }
+
         case status.BAD_REQUEST:
         case status.UNAUTHORIZED:
         case status.FORBIDDEN:
-        case status.NOT_FOUND:
         case status.INTERNAL_SERVER_ERROR:
         default:
             throw new Error(message ?? 'There an error occured');
@@ -138,8 +140,26 @@ export function where(data = [], relation = {}) {
     const filters = keys.filter(key => key !== 'getOnlyProperty');
     const getOnlyProperty = keys.find(key => key === 'getOnlyProperty');
 
-    const filteredData = data.filter(item => filters.every(filter => item[filter] === relation[filter]));
-    return getOnlyProperty ? filteredData.map(item => item[relation[getOnlyProperty]]) : filteredData;
+    const nestedFilters = filters.filter(key => key.includes('.'));
+
+    const filteredData = data.filter(item => filters.every(filter => {
+        if (nestedFilters.includes(filter)) {
+            const nestedSearch = filter.split('.');
+            return nestedSearch.reduce((obj, key) => obj && obj[key], item) == relation[filter];
+        }
+
+        return item[filter] == relation[filter];
+    }));
+
+    if (getOnlyProperty) {
+        if (getOnlyProperty.includes('.')) {
+            const getNestedObjOnly = getOnlyProperty.split('.');
+            return filteredData.map(item => getNestedObjOnly.reduce((obj, key) => obj && obj[key], item));
+        }
+        return filteredData.map(item => item[relation[getOnlyProperty]]);
+    }
+
+    return filteredData;
 }
 
 // function to capitalize the string

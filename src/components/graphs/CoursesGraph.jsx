@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Bar } from "react-chartjs-2"
 import {
   Chart as ChartJS,
@@ -8,22 +8,30 @@ import {
   Tooltip,
   Legend,
 } from "chart.js"
+import blueprint from "../../uitils/blueprint"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend)
 
-const CoursesGraph = () => {
-  // Dummy data for courses
-  const courses = [
-    { title: "JavaScript Basics", count: 85 },
-    { title: "React Mastery", count: 90 },
-    { title: "CSS Animations", count: 70 },
-    { title: "Node.js Essentials", count: 65 },
-    { title: "MongoDB Deep Dive", count: 50 },
-  ]
+const CoursesGraph = ({ courses = [blueprint.course] }) => {
+  const [graphData, setGraphData] = useState([]);
+
+  useEffect(() => {
+    const courseCounts = courses.reduce((acc, course) => {
+      acc[course.title] = (acc[course.title] || 0) + 1;
+      return acc;
+    }, {});
+
+    const sortedCourses = Object.entries(courseCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([title, count]) => ({ title, count }));
+
+    setGraphData(sortedCourses);
+  }, [courses]);
 
   // Prepare data
-  const labels = courses.map((course) => course.title) // Course titles
-  const dataValues = courses.map((course) => course.count) // Heights of bars
+  const labels = graphData.map(course => course.title) // Course titles
+  const dataValues = graphData.map(course => course.count) // Heights of bars
 
   // Chart configuration
   const data = {
@@ -53,18 +61,18 @@ const CoursesGraph = () => {
     },
     plugins: {
       legend: {
-        display: false, // Hide the legend
+        display: true, // Hide the legend
       },
       tooltip: {
         callbacks: {
-          label: (context) => `${context.raw} users`, // Add units to tooltip
+          label: (context) => `${context.raw} Enrolled Students`,
         },
       },
     },
   }
 
   return (
-    <div className="p-4 bg-gray-100 rounded-lg shadow-md">
+    <div className="p-4 rounded-lg shadow-md">
       <h2 className="text-lg font-bold text-gray-700 mb-4">Top 5 Courses</h2>
       <div className="h-80">
         <Bar data={data} options={options} />

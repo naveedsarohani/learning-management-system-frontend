@@ -7,13 +7,14 @@ export default function DeleteContextProvider({ children }) {
         isBeingDeleted: false,
         route: '',
         id: '',
-        identity: ''
+        identity: '',
+        set: null
     });
 
     const [isDeleted, setIsDeleted] = useState(false);
 
-    function destroy(route, id, identity) {
-        setDeleteCreds({ isBeingDeleted: true, route, id, identity })
+    function destroy(route, id, identity, set = null) {
+        setDeleteCreds({ isBeingDeleted: true, route, id, identity, set })
     }
 
     function setIsDeleting(deletion) {

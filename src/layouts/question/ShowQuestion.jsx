@@ -12,13 +12,7 @@ import {
   isNullOrEmpty,
 } from "../../uitils/functions/global"
 
-export function populateOptions(data, isJSON = true) {
-  if (isJSON) return Object.entries(JSON.parse(data)).map(([key, value], index) => (
-    <li key={index}>
-      {key}: {capitalize(value)}
-    </li>
-  ));
-
+export function populateOptions(data) {
   return Object.entries(data).map(([key, value], index) => (
     <li key={index}>
       {key}: {capitalize(value)}

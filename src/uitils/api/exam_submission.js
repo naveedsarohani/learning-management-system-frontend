@@ -5,6 +5,7 @@ import { capitalize, response, where } from "../functions/global";
 // function to fetch all course records
 async function all(token, set, handler, only = false) {
     handler.setLoading(loading => !loading);
+    handler.setComponentLoaded(false);
     try {
         const responseData = response(await request.get('/exam-submissions', token), false, true);
         if (responseData) {
@@ -13,17 +14,24 @@ async function all(token, set, handler, only = false) {
         }
     }
     catch (error) { toast.error(capitalize(error.message)); }
-    finally { handler.setLoading(loading => !loading); }
+    finally {
+        handler.setLoading(loading => !loading);
+        handler.setComponentLoaded(true);
+    }
 }
 
 async function show(id, token, set, handler) {
     handler.setLoading(loading => !loading);
+    handler.setComponentLoaded(false);
     try {
         const responseData = response(await request.get(`/exam-submissions/${id}`, token), false, true);
         responseData && set(responseData.examSubmission);
     }
     catch (error) { toast.error(capitalize(error.message)); }
-    finally { handler.setLoading(loading => !loading); }
+    finally {
+        handler.setLoading(loading => !loading);
+        handler.setComponentLoaded(true);
+    }
 }
 
 async function store(token, data, handler) {

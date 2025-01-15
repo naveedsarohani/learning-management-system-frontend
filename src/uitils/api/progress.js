@@ -1,17 +1,16 @@
 import { toast } from "react-toastify";
 import request from "../functions/request";
-import { capitalize, response, where } from "../functions/global";
+import { capitalize, isNullOrEmpty, response, where } from "../functions/global";
 
 // function to fetch all course records
-async function all(token, set, handler, only = false) {
+async function all(token, set, handler, options = false) {
     handler.setLoading(loading => !loading);
     handler.setComponentLoaded(false);
     try {
-        const responseData = response(await request.get('/submissions', token), false, true);
-        responseData && set(responseData.submissions);
+        const responseData = response(await request.get('/progresses', token), false, true);
         if (responseData) {
-            if (only) set(where(responseData.submissions, only));
-            else set(responseData.submissions);
+            if (only) set(where(responseData.progresses, only));
+            else set(responseData.progresses);
         }
     }
     catch (error) { toast.error(capitalize(error.message)); }
@@ -21,39 +20,35 @@ async function all(token, set, handler, only = false) {
     }
 }
 
-async function show(id, token, set, handler) {
+async function show(courseId, token, set, handler) {
     handler.setLoading(loading => !loading);
-    handler.setComponentLoaded(false);
     try {
-        const responseData = response(await request.get(`/submissions/${id}`, token), false, true);
-        responseData && set(responseData.submission);
+        const responseData = response(await request.get(`/progresses/${courseId}`, token), false, true);
+        !isNullOrEmpty(responseData.progresses) && set(responseData.progresses[0]);
     }
     catch (error) { toast.error(capitalize(error.message)); }
     finally {
         handler.setLoading(loading => !loading);
-        handler.setComponentLoaded(true);
     }
 }
 
-async function store(token, data, handler) {
+async function initiate(token, data, handler) {
     handler.setLoading(loading => !loading);
     try {
-        response(await request.post('/submissions/', data, token), handler.setValidationErrors);
-        handler.navigate(-1);
+        response(await request.post('/progresses/', data, token), handler.setValidationErrors, true);
     }
     catch (error) {
         toast.error(capitalize(error.message));
     }
     finally { handler.setLoading(loading => !loading); }
-
 }
 
 async function update(id, data, token, handler) {
     handler.setLoading(loading => !loading);
     try {
-        response(await request.put(`/submissions/${id}`, data, token), handler.setValidationErrors);
+        response(await request.put(`/progresses/${id}`, data, token), handler.setValidationErrors, true);
     } catch (error) { toast.error(capitalize(error.message)); }
     finally { handler.setLoading(loading => !loading); }
-
 }
-export default { all, show, store, update };
+
+export default { all, show, initiate, update };

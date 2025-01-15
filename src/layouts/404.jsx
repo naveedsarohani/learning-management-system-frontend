@@ -1,11 +1,13 @@
+import { useEffect } from "react"
 import BackButton from "../components/global/BackButton"
 import { useHandler } from "../contexts/Handler"
 
 export default function NotFound404() {
   const {
-    handler: { location, navigate },
+    handler: { location, setComponentLoaded },
   } = useHandler()
 
+  useEffect(() => { setComponentLoaded(true) }, []);
   return (
     <div className="flex justify-center items-center flex-col min-h-screen gap-5">
       <h1 className="text-6xl font-semibold">404 </h1>

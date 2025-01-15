@@ -4,25 +4,29 @@ import Table from "../../components/global/Table"
 import blueprint from "../../uitils/blueprint"
 import auth from "../../uitils/api/auth"
 import { useAuth } from "../../contexts/Authentication"
-import { formatDate, isNullOrEmpty, readFile } from "../../uitils/functions/global"
+import { capEach, formatDate, isNullOrEmpty, readFile } from "../../uitils/functions/global"
 import ActionButton from "../../components/global/ActionButton"
 import { useDelete } from "../../contexts/Delete"
 import { useHandler } from "../../contexts/Handler"
+import NoContent from "../../components/global/NoContent"
+import { role as userRole } from "../../uitils/functions/constants"
+import enrollment from '../../uitils/api/enrollment';
 
 export default function Users({ role }) {
   const {
-    credentials: { token },
+    credentials: { user, token },
   } = useAuth()
   const { handler } = useHandler();
   const [instructors, setInstructors] = useState([blueprint.user])
   const { destroy } = useDelete()
 
   useEffect(() => {
-    auth.users(token, setInstructors, handler, { role })
+    user.role === userRole.ADMIN && auth.users(token, setInstructors, handler, { role });
+    user.role === userRole.INSTRUCTOR && role == userRole.STUDENT && enrollment.all(token, setInstructors, handler, { 'course.user_id': user.id, getOnlyProperty: 'student' })
   }, [role])
 
   return handler.componentLoaded && <DashboardPageCompement title={`all ${role}`}>
-    <Table
+    {!isNullOrEmpty(instructors) ? <Table
       ths={
         <>
           <td>Sno.</td>
@@ -59,7 +63,8 @@ export default function Users({ role }) {
                   destroy(
                     "/auth/delete",
                     instructor.id,
-                    instructor.name + " " + instructor.role
+                    capEach(instructor.name),
+                    setInstructors
                   )
                 }
               />
@@ -67,6 +72,6 @@ export default function Users({ role }) {
           </tr>
         ))
       }
-    />
+    /> : <NoContent message={`No ${role}s found`} />}
   </DashboardPageCompement>
 }

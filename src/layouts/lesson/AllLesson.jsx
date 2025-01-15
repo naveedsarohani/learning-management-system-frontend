@@ -9,6 +9,8 @@ import blueprint from "../../uitils/blueprint"
 import { formatDate, isNullOrEmpty } from "../../uitils/functions/global"
 import { useDelete } from "../../contexts/Delete"
 import ActionButton from "../../components/global/ActionButton"
+import NoContent from "../../components/global/NoContent"
+import { role } from "../../uitils/functions/constants"
 
 export default function AllLesson() {
   const { destroy } = useDelete()
@@ -19,12 +21,11 @@ export default function AllLesson() {
   const [lessons, setLessons] = useState([blueprint.lesson])
 
   useEffect(() => {
-    lesson.all(token, setLessons, handler)
+    lesson.all(token, setLessons, handler, user.role !== role.ADMIN && { 'course.user_id': user.id });
   }, [handler.navigate, user])
 
   return handler.componentLoaded && <DashboardPageCompement title={"all lessons"}>
-    {/* <h1>The all lessons are below in a table form</h1> */}
-    <Table
+    {!isNullOrEmpty(lessons) ? <Table
       ths={
         <>
           <th className="py-3 px-4">Sno.</th>
@@ -34,6 +35,7 @@ export default function AllLesson() {
           <th>Action</th>
         </>
       }
+
       tds={
         !isNullOrEmpty(lessons) &&
         lessons.map((lesson, index) => (
@@ -52,7 +54,7 @@ export default function AllLesson() {
               <ActionButton
                 name={"Delete"}
                 onClick={() =>
-                  destroy("/lessons", lesson.id, lesson.title + " lesson")
+                  destroy("/lessons", lesson.id, "lesson", setLessons)
                 }
                 color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
               />
@@ -60,6 +62,6 @@ export default function AllLesson() {
           </tr>
         ))
       }
-    />
+    /> : <NoContent message="No course lessons found." />}
   </DashboardPageCompement>
 }

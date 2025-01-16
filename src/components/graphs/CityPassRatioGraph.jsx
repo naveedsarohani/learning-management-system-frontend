@@ -17,18 +17,18 @@ import { isPass } from "../../layouts/result/AllResult"
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const CityPassRatioGraph = ({ results = [blueprint.examSubmission] }) => {
-  const [graphData, setGraphData] = useState([]);
+  const [graphData, setGraphData] = useState([])
 
   useEffect(() => {
     const cityResults = results.reduce((acc, result) => {
-      const city = capEach(result.student.city.name);
-      acc[city] = acc[city] || { total: 0, passed: 0 };
-      acc[city].total++;
+      const city = capEach(result.student.city.name)
+      acc[city] = acc[city] || { total: 0, passed: 0 }
+      acc[city].total++
       if (isPass(result)) {
-        acc[city].passed++;
+        acc[city].passed++
       }
-      return acc;
-    }, {});
+      return acc
+    }, {})
 
     const sortedResults = Object.entries(cityResults)
       .sort((a, b) => b[1].passed / b[1].total - a[1].passed / a[1].total)
@@ -36,24 +36,24 @@ const CityPassRatioGraph = ({ results = [blueprint.examSubmission] }) => {
       .map(([city, result]) => ({
         city,
         passPercentage: (result.passed / result.total) * 100,
-      }));
+      }))
 
-    setGraphData(sortedResults);
-  }, [results]);
+    setGraphData(sortedResults)
+  }, [results])
 
   // Prepare sorted labels and data
   const labels = graphData.map((item) => item.city)
   const dataValues = graphData.map((item) => item.passPercentage)
 
   // Calculate bar thickness based on ratio
-  const maxRatio = Math.max(...dataValues);
-  const barThickness = dataValues.map((ratio) => 50 * (ratio / maxRatio));
+  const maxRatio = Math.max(...dataValues)
+  const barThickness = dataValues.map((ratio) => 50 * (ratio / maxRatio))
 
   const data = {
     labels,
     datasets: [
       {
-        label: "Pass Percentage (%)",
+        label: " Pass Percentage (City-wise)",
         data: dataValues,
         backgroundColor: "rgba(54, 162, 235, 0.8)",
         barThickness: barThickness, // Set dynamic bar thickness
@@ -91,9 +91,7 @@ const CityPassRatioGraph = ({ results = [blueprint.examSubmission] }) => {
 
   return (
     <div className="w-full md:w-1/2 p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-lg font-bold mb-4 text-gray-700">
-        Pass Percentage (City-wise)
-      </h2>
+      <h2 className="text-lg font-bold mb-4 text-gray-700"></h2>
       <Bar data={data} options={options} />
     </div>
   )

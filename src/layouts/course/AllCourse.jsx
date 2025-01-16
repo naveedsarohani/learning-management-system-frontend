@@ -18,7 +18,9 @@ import { role } from "../../uitils/functions/constants"
 
 export default function AllCourses() {
   const { handler } = useHandler()
-  const { credentials: { user, token } } = useAuth()
+  const {
+    credentials: { user, token },
+  } = useAuth()
   const [courses, setCourses] = useState([blueprint.course])
   const { destroy } = useDelete()
 
@@ -27,63 +29,76 @@ export default function AllCourses() {
   // }
 
   useEffect(() => {
-    course.all(token, setCourses, handler, user.role !== role.ADMIN && { user_id: user.id })
+    course.all(
+      token,
+      setCourses,
+      handler,
+      user.role !== role.ADMIN && { user_id: user.id }
+    )
   }, [handler.navigate, user])
 
-  return handler.componentLoaded && <DashboardPageCompement title={"all courses"}>
-    <Link to={"./add"}>
-      <button className=" relative -top-6 left-[60%] sm:left-[82%]  bg-gradient-to-r from-[#21bffd] to-[#217bfe] text-white py-2 px-4 rounded-lg ">
-        Add a new course
-      </button>
-    </Link>
+  return (
+    handler.componentLoaded && (
+      <DashboardPageCompement title={"all courses"}>
+        <Link to={"./add"}>
+          <button className=" relative -top-6 left-[60%] sm:left-[82%]  bg-gradient-to-r from-[#21bffd] to-[#217bfe] text-white py-2 px-4 rounded-lg ">
+            Add a new course
+          </button>
+        </Link>
 
-    {/* <h1>The all courses are below in a table form</h1> */}
-    {!isNullOrEmpty(courses) ? <Table
-      ths={
-        <>
-          <th className="py-3 px-4">Sno.</th>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Created On</th>
-          <th>Action</th>
-        </>
-      }
-      tds={
-        !isNullOrEmpty(courses) &&
-        courses.map((course, index) => (
-          <tr key={course.id}>
-            <td className="p-5">{index + 1}</td>
-            <td className="flex items-center pt-1 gap-2">
-              <td>
-                <img
-                  src={readFile(course.image)}
-                  alt="poster"
-                  className="rounded-full w-10 h-10 border-blue-400 border-[1px]"
-                />
-              </td>
-              {course.title.substring(0, 10)}...
-            </td>
-            <td>{course.description.substring(0, 30)}...</td>
-            <td>{formatDate(course.created_at)}</td>
+        {/* <h1>The all courses are below in a table form</h1> */}
+        {!isNullOrEmpty(courses) ? (
+          <Table
+            ths={
+              <>
+                <th className="py-3 px-4">Sno.</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created On</th>
+                <th>Action</th>
+              </>
+            }
+            tds={
+              !isNullOrEmpty(courses) &&
+              courses.map((course, index) => (
+                <tr key={course.id} className="text-nowrap text-center">
+                  <td className="p-5">{index + 1}</td>
+                  <td className="flex items-center pt-1 gap-2">
+                    <td>
+                      <img
+                        src={readFile(course.image)}
+                        alt="poster"
+                        className="rounded-full w-10 h-10 border-blue-400 border-[1px]"
+                      />
+                    </td>
+                    {course.title.substring(0, 10)}...
+                  </td>
+                  <td>{course.description.substring(0, 30)}...</td>
+                  <td>{formatDate(course.created_at)}</td>
 
-            <td className="flex  gap-2 pt-2">
-              <ActionButton route={`./${course.id}`} name={"View"} />
-              <ActionButton
-                route={`./edit/${course.id}`}
-                name={"Edit"}
-                color="bg-gradient-to-r from-[#ffcc00] to-[#f57f17]"
-              />
-              <ActionButton
-                name={"Delete"}
-                onClick={() =>
-                  destroy("/courses", course.id, "course", setCourses)
-                }
-                color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
-              />
-            </td>
-          </tr>
-        ))
-      }
-    /> : <NoContent message="No courses found. Please try adding some." />}
-  </DashboardPageCompement>
+                  <td className="flex  gap-2 pt-2">
+                    <ActionButton route={`./${course.id}`} name={"View"} />
+                    <ActionButton
+                      route={`./edit/${course.id}`}
+                      name={"Edit"}
+                      color="bg-gradient-to-r from-[#ffcc00] to-[#f57f17]"
+                    />
+                    <ActionButton
+                      name={"Delete"}
+                      onClick={() =>
+                        destroy("/courses", course.id, "course", setCourses)
+                      }
+                      color="bg-gradient-to-r from-[#ff5f57] to-[#d32f2f]"
+                    />
+                  </td>
+                </tr>
+              ))
+            }
+          />
+        ) : (
+          <NoContent message="No courses found. Please try adding some." />
+        )}
+      </DashboardPageCompement>
+    )
+  )
 }

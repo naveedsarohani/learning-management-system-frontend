@@ -63,8 +63,16 @@ export default function Navbar() {
             </button>
           ) : (
             <>
-              <ActionButton name="login" route="/auth/login" />
-              <ActionButton name="register" route="/auth/register" />
+              <ActionButton
+                name="login"
+                route="/auth/login"
+                color="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded shadow-md transition duration-300"
+              />
+              <ActionButton
+                name="register"
+                route="/auth/register"
+                color="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded shadow-md transition duration-300"
+              />
             </>
           )}
 

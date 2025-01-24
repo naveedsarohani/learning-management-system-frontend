@@ -64,13 +64,13 @@ export default function AllCourses() {
                 <tr key={course.id} className="text-nowrap text-center">
                   <td className="p-5">{index + 1}</td>
                   <td className="flex items-center pt-1 gap-2">
-                    <td>
+                    <span>
                       <img
                         src={readFile(course.image)}
                         alt="poster"
                         className="rounded-full w-10 h-10 border-blue-400 border-[1px]"
                       />
-                    </td>
+                    </span>
                     {course.title.substring(0, 10)}...
                   </td>
                   <td>{course.description.substring(0, 30)}...</td>

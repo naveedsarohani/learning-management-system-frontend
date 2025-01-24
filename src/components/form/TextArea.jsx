@@ -7,7 +7,7 @@ import {
 
 export default function TextArea({
   name,
-  value = null,
+  value = undefined,
   set,
   className,
   placeholder,
@@ -18,7 +18,7 @@ export default function TextArea({
 
   return (
     <label>
-      {/* {capEach(separateBy(name, '_'))} */}
+      {capEach(separateBy(name, '_'))}
       <textarea
         name={name}
         className={`${className} w-full mb-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 mt-4`}
@@ -26,8 +26,8 @@ export default function TextArea({
         placeholder={placeholder ?? ""}
         rows={5}
         cols={5}
+        defaultValue={value}
       >
-        {value ?? ""}
       </textarea>
 
       {validationErrors && (

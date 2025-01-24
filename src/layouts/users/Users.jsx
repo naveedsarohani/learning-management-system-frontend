@@ -57,13 +57,13 @@ export default function Users({ role }) {
                 <tr key={instructor.id} className="text-nowrap">
                   <td>{index + 1}</td>
                   <td className="flex items-center pt-1 gap-2">
-                    <td>
+                    <span>
                       <img
                         src={readFile(instructor.image)}
                         alt="display picture"
                         className="rounded-full w-10 h-10 border-blue-400 border-[1px]"
                       />
-                    </td>
+                    </span>
                     {instructor.name}
                   </td>
                   <td>{instructor.email}</td>

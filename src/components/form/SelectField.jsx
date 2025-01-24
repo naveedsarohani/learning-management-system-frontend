@@ -1,5 +1,5 @@
 import { useHandler } from "../../contexts/Handler"
-import { capEach, capitalize, handleInputChange, has } from "../../uitils/functions/global"
+import { capEach, capitalize, handleInputChange, has, separateBy } from "../../uitils/functions/global"
 
 export default function SelectField({
   data = [''],
@@ -19,8 +19,6 @@ export default function SelectField({
         const { id, name } = item;
 
         return <option
-          defaultValue={selectedItem == name}
-          selected={selectedItem == name}
           key={id}
           value={id}
         >
@@ -29,8 +27,6 @@ export default function SelectField({
       }
 
       return <option
-        defaultValue={selectedItem == item}
-        selected={selectedItem == item}
         key={index}
         value={item}
       >
@@ -40,13 +36,14 @@ export default function SelectField({
   }
   return (
     <label className="text-sm">
-      {/* {capEach(separateBy(name, "_"))}:{" "} */}
+      {capEach(separateBy(name, "_"))}{" "}
       <select
+        defaultValue={selectedItem == name}
         name={name}
         onChange={set && ((e) => handleInputChange(e, set))}
         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 mt-4"
       >
-        <option disabled={true} defaultValue={!selectedItem} selected={!selectedItem} value={false}>
+        <option disabled={true} value={undefined}>
           {(defaultOption)}
         </option>
         {getOptions()}

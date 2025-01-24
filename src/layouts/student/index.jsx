@@ -18,8 +18,6 @@ export default function Home() {
     course.all(token, setCourses, handler)
   }, [location.pathname, user])
 
-  console.log(handler.componentLoaded, 'hello');
-
   return handler.componentLoaded && <div className="bg-gray-50 min-h-screen p-6 px-14">
     <h1 className="text-2xl font-bold text-gray-800 mb-6">All Courses</h1>
     {!isNullOrEmpty(courses[0].id) ? (

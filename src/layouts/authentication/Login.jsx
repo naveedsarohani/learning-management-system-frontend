@@ -30,6 +30,7 @@ export default function Login() {
             <Form {...{ handleSubmit }} className="space-y-4  ">
               <div className="mb-2">
                 <InputField
+                  showLabel={false}
                   name={"email"}
                   placeholder={"enter your email address"}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 mt-4"
@@ -37,6 +38,7 @@ export default function Login() {
               </div>
               <div className="mb-8">
                 <InputField
+                  showLabel={false}
                   type={"password"}
                   name={"password"}
                   placeholder={"enter your password"}

@@ -54,9 +54,9 @@ export default function EnrollmentForm({
                 placeholder="Enter your feedback for the course enrollment"
               />
 
-              <InputField type="hidden" name="user_id" value={userId} />
+              <InputField showLabel={false} type="hidden" name="user_id" value={userId} />
 
-              <InputField type="hidden" name="course_id" value={course.id} />
+              <InputField showLabel={false} type="hidden" name="course_id" value={course.id} />
               <div className="mt-3 flex gap-5 ml-2">
                 <SubmitButton name={isLoading(handler, "Confirm Enrollmemt")} />
                 <ActionButton

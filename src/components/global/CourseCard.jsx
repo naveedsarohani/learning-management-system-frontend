@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import blueprint from "../../uitils/blueprint"
-import { capEach, formatDate, readFile } from "../../uitils/functions/global"
+import { capEach, capitalize, formatDate, readFile } from "../../uitils/functions/global"
 import ActionButton from "./ActionButton"
 
 export default function CourseCard({
@@ -21,10 +21,10 @@ export default function CourseCard({
       </div>
       <div className="flex flex-col flex-grow p-4">
         <h1 className="text-md font-semibold text-gray-900 truncate">
-          {course.title}
+          {capitalize(course.title)}
         </h1>
         <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-          {course.description}
+          {capitalize(course.description)}
         </p>
         <div className="mt-auto">
           <span className="text-xs text-gray-500 flex gap-1 items-center">

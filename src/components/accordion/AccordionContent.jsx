@@ -1,5 +1,5 @@
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
-import { FaLock } from "react-icons/fa"
+import { FaLock, FaPlay } from "react-icons/fa"
 import { useDelete } from "../../contexts/Delete"
 import ActionButton from "../global/ActionButton"
 import { capitalize } from "../../uitils/functions/global"
@@ -16,6 +16,7 @@ export default function AccordionContent({
   isLocked = false,
   currentTab,
   del,
+  currentPlaying = null
 }) {
   const { destroy } = useDelete()
 
@@ -27,22 +28,21 @@ export default function AccordionContent({
     >
       <div
         className="w-full bg-gradient-to-r border-b-[1px] border-gray-500 from-[#25bffd] to-[#257bfe] text-white p-1 text-left font-medium  focus:outline-none"
-        onClick={
-          !isLocked &&
-          (() =>
+        onClick={!isLocked
+          ? (() =>
             currentTab.set((currentId) =>
               currentId === itemId ? null : itemId
             ))
-        }
+          : undefined}
       >
         <div className="flex p-2 rounded justify-between items-center w-full order-10">
           {capitalize(tabTitle)}
           {isLocked ? (
             <FaLock />
           ) : currentTab.value == itemId ? (
-            <IoIosArrowUp />
+            (currentPlaying !== null && currentPlaying) ? <FaPlay /> : <IoIosArrowUp />
           ) : (
-            <IoIosArrowDown />
+            (currentPlaying !== null && currentPlaying) ? <FaPlay /> : <IoIosArrowDown />
           )}
         </div>
       </div>

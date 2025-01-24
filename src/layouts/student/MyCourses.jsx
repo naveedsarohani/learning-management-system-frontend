@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useAuth } from "../../contexts/Authentication"
 import { useHandler } from "../../contexts/Handler"
-import course from "../../uitils/api/course"
 import blueprint from "../../uitils/blueprint"
 import CourseCard from "../../components/global/CourseCard"
 import { isNullOrEmpty } from "../../uitils/functions/global"
@@ -16,9 +15,6 @@ export default function MyCourses() {
     useEffect(() => {
         enrollment.all(token, setCourses, handler, { user_id: user.id, getOnlyProperty: 'course' });
     }, [location.pathname, user])
-
-
-    console.log(courses);
 
     return handler.componentLoaded && <div className="bg-gray-50 min-h-screen p-6 px-14">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">My Enrolled Courses</h1>

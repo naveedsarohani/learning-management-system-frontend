@@ -14,7 +14,7 @@ createRoot(document.getElementById("root")).render(
       <AuthenticationProvider>
         <HandlerProvider>
           <App />
-          <ToastContainer />
+          <ToastContainer limit={1}/>
         </HandlerProvider>
       </AuthenticationProvider>
     </DeleteContextProvider>

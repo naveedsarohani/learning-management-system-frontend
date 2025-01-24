@@ -20,24 +20,6 @@ async function users(token, set, handler, only = false) {
     }
 }
 
-// async function show(id, token, set, handler) {
-//     handler.setLoading(loading => !loading);
-//     handler.setComponentLoaded(false);
-//     try {
-//         const responseData = response(await request.get('/auth/users/', token), false, true);
-//         if (responseData) {
-//             if (only) set(where(Object.values(responseData.users), only));
-//             else set(Object.values(responseData.users));
-//         };
-//     }
-//     catch (error) { toast.error(capitalize(error.message)); }
-//     finally {
-//         handler.setLoading(loading => !loading);
-//         handler.setComponentLoaded(true);
-//     }
-// }
-
-
 // function to login
 async function register(data, handler) {
     handler.setLoading(loading => !loading);
@@ -76,11 +58,11 @@ async function logout(token, handler) {
 
     try {
         response(await request.get('/auth/logout', token));
-        handler.revoke();
         handler.navigate('auth/login', { replace: true });
     } catch (error) {
-        toast.error(capitalize(error.message));
+        console.log(error.message);
     } finally {
+        handler.revoke();
         handler.setLoading(loading => !loading);
     }
 }

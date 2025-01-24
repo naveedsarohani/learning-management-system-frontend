@@ -1,33 +1,59 @@
 import React, { useEffect, useState } from "react"
 import blueprint from "../../uitils/blueprint"
 import ActionButton from "./ActionButton"
-import { capEach, getCountDown } from "../../uitils/functions/global"
+import { capEach, padZero } from "../../uitils/functions/global"
+import { DateTime } from "luxon";
 
 const ExamCard = ({ exam = blueprint.exam, isAttempted }) => {
   const [countDownTimer, setCountDownTimer] = useState(false)
   const [ends, setEnds] = useState(false)
 
   useEffect(() => {
-    getCountDown(
-      exam.starts_at,
-      ({ remainingTime, formattedTime: { days, hours, minutes, seconds } }) => {
-        if (remainingTime)
-          setCountDownTimer(
-            `Starts [${days} days, ${hours}:${minutes}:${seconds}]`
-          )
-        else setCountDownTimer(false)
-      }
-    )
+    const startTime = DateTime.fromSQL(exam.starts_at);
 
-    getCountDown(
-      exam.starts_at,
-      ({ remainingTime, formattedTime: { hours, minutes, seconds } }) => {
-        if (remainingTime) setEnds(`${hours}:${minutes}:${seconds}`)
-        else setEnds(true)
-      },
-      exam.time_allowed
-    )
-  }, [])
+    const intervalId = setInterval(() => {
+      const currentTime = DateTime.now();
+      const diff = startTime.diff(currentTime);
+
+      if (diff.as('seconds') <= 0) {
+        setCountDownTimer(false);
+        clearInterval(intervalId);
+      } else {
+        const days = Math.floor(diff.as('days'));
+        const hours = Math.floor(diff.as('hours')) % 24;
+        const minutes = Math.floor(diff.as('minutes')) % 60;
+        const seconds = Math.floor(diff.as('seconds')) % 60;
+
+        setCountDownTimer(`Starts in [${days} days ${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}]`);
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [exam.starts_at]);
+
+  useEffect(() => {
+    if (!countDownTimer) {
+      const startTime = DateTime.fromSQL(exam.starts_at).plus({ minutes: exam.time_allowed });
+
+      const intervalId = setInterval(() => {
+        const currentTime = DateTime.now();
+        const diff = startTime.diff(currentTime);
+
+        if (diff.as('seconds') <= 0) {
+          setEnds(true);
+          clearInterval(intervalId);
+        } else {
+          const hours = Math.floor(diff.as('hours')) % 24;
+          const minutes = Math.floor(diff.as('minutes')) % 60;
+          const seconds = Math.floor(diff.as('seconds')) % 60;
+
+          setEnds(`${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`);
+        }
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [countDownTimer]);
 
   return (
     <div className="max-w-md w-80 mx-auto h-[20rem] bg-white rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105 hover:shadow-xl duration-300">

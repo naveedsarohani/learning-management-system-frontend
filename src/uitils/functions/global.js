@@ -236,17 +236,4 @@ export function calculateMiliseconds(miliseconds) {
     };
 }
 
-// function to evaluate time
-// export function evaluateTime(time, set) {
-//     let remainingSeconds = parseInt(time) * 60;
-//     const intervalId = setInterval(() => {
-//         if (remainingSeconds <= 0) {
-//             clearInterval(intervalId);
-//         } else {
-//             set(`${Math.floor(remainingSeconds / 60)} minutes ${remainingSeconds % 60} seconds`);
-//             remainingSeconds -= 1;
-//         }
-//     }, 1000);
-
-//     return () => clearInterval(intervalId);
-// }
+export const padZero = (value) => (value.toString().padStart(2, '0'));

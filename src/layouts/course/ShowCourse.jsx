@@ -80,6 +80,7 @@ export default function ShowCourse() {
         {!isNullOrEmpty(lessons) ?
           lessons.map((lesson) => (
             <AccordionContent
+              key={lesson.id}
               itemId={lesson.id}
               tabTitle={lesson.title}
               currentTab={{ value: currentLessonId, set: setCurrentLessonId }}
@@ -103,6 +104,7 @@ export default function ShowCourse() {
         {!isNullOrEmpty(assessments) ?
           assessments.map((assessment) => (
             <AccordionContent
+              key={assessment.id}
               itemId={assessment.id}
               tabTitle={assessment.title}
               currentTab={{ value: currentAssId, set: setCurrentAssId }}

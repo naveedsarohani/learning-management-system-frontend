@@ -2,27 +2,37 @@ import React, { useEffect, useState } from "react";
 import question from "../../uitils/api/question";
 import submission from "../../uitils/api/submission";
 import answer from "../../uitils/api/answer";
-import '../../uitils/functions/check_before_reload'
 import blueprint from "../../uitils/blueprint";
 import { useAuth } from "../../contexts/Authentication";
 import { useHandler } from "../../contexts/Handler";
 import { useParams } from "react-router-dom";
-import { capEach, capitalize, getCountDown, isLoading, readFile } from "../../uitils/functions/global";
+import { capEach, capitalize, isLoading, isNullOrEmpty, padZero, readFile } from "../../uitils/functions/global";
+import { debounce } from 'lodash';
+import { DateTime } from "luxon";
 
 export default function AttemptAssessment() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [questions, setQuestions] = useState([blueprint.question]);
     const [answers, setAnswers] = useState([blueprint.answer]);
+    const [preSubmission, setPreSubmission] = useState(blueprint.submission);
     const [selectedOption, setSelectedOption] = useState(null);
-    const [remainingTime, setRemainingTime] = useState({});
+    const [remainingTime, setRemainingTime] = useState(false);
     const [score, setScore] = useState(0);
     const { credentials: { token, user } } = useAuth();
     const { handler } = useHandler();
     const { assessmentId } = useParams();
+    const [autoSubmitted, setAutoSubmitted] = useState(false);
 
-    const handleNext = () => {
-        if (!selectedOption) return alert("Please select an option before proceeding!");
+    const handleNext = ({ autoSubmit = false }) => {
         let totalScore = score;
+        if (autoSubmit) {
+            handleSubmit(totalScore);
+            return;
+        }
+
+        else if (!selectedOption && !autoSubmit) {
+            return alert("Please select an option before proceeding!");
+        };
 
         if (findAnswer(questions[currentQuestionIndex].id).is_correct == selectedOption) {
             totalScore += 1;
@@ -36,36 +46,89 @@ export default function AttemptAssessment() {
         if (currentQuestionIndex === questions.length - 1) {
             return handleSubmit(totalScore);
         }
-    };
+    }
 
     const handleSubmit = async (score) => {
+        if (preSubmission && preSubmission.score > score) {
+            score = preSubmission.score;
+        }
+
+        let retakeCount = 0;
+        if (preSubmission) {
+            retakeCount = preSubmission.retake_count;
+        }
+
         await submission.store(token, {
             assessment_id: parseInt(assessmentId),
             student_id: user.id,
-            retake_count: 1,
+            retake_count: retakeCount + 1,
             score: score,
         }, handler);
-    };
+    }
 
     const findAnswer = questionId => {
-        return answers.find(answer => answer.question_id === parseInt(questionId)) ?? blueprint.answer;
-    };
+        return answers.find(answer => answer.question_id === questionId) ?? blueprint.answer;
+    }
+
+    const handleAutoSubmit = debounce(() => {
+        const examAttemptPath = /.*\/me\/courses\/\d+\/attempt-assessment\/\d+$/;
+        if (examAttemptPath.test(handler.location.pathname)) {
+            handleNext({ autoSubmit: true });
+        }
+    }, 500);
+    
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            if (score > 0 || selectedOption !== null) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
+        };
+    
+        window.addEventListener('beforeunload', handleBeforeUnload);
+    
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [score, selectedOption]);
 
     useEffect(() => {
-        question.all(token, setQuestions, handler, { assessment_id: parseInt(assessmentId) });
+        if (remainingTime === 'Times up!' && !autoSubmitted) {
+            setAutoSubmitted(true);
+            handleAutoSubmit({ autoSubmitted: true });
+        }
+    }, [remainingTime, handleAutoSubmit]);
+
+    useEffect(() => {
+        submission.all(token, submissions => {
+            if (!isNullOrEmpty(submissions[0])) setPreSubmission(submissions[0]);
+            else setPreSubmission(null);
+        }, handler, { assessment_id: assessmentId })
+        question.all(token, setQuestions, handler, { assessment_id: assessmentId });
         answer.all(token, setAnswers, handler);
     }, []);
 
     useEffect(() => {
-        if (questions.length > 0 && questions[currentQuestionIndex]) {
-            const questionId = questions[currentQuestionIndex].id;
-            const timeLimit = questions[currentQuestionIndex].assessment.time_limit;
+        let intervalId;
+        if (questions.length > 0 && questions[currentQuestionIndex].id !== '') {
+            const timeLimit = questions[currentQuestionIndex].assessment.time_limit * 60; // Convert minutes to seconds
+            const startTime = DateTime.now();
+            const endTime = startTime.plus({ seconds: timeLimit });
 
-            getCountDown(new Date().toString(), ({ remainingTime, formattedTime: { minutes, seconds } }) => {
-                if (remainingTime !== 0) {
-                    setRemainingTime(prevState => ({ ...prevState, [questionId]: `${minutes}:${seconds}` }));
+            intervalId = setInterval(() => {
+                const remainingTime = endTime.diff(DateTime.now());
+                const minutes = Math.floor(remainingTime.as('seconds') / 60);
+                const seconds = Math.floor(remainingTime.as('seconds') % 60);
+
+                if (remainingTime.as('seconds') <= 0) {
+                    setRemainingTime('Times up!');
+                    clearInterval(intervalId);
+                } else {
+                    setRemainingTime(`${padZero(minutes)}:${padZero(seconds)}`);
                 }
-            }, timeLimit);
+            }, 1000);
+
+            return () => clearInterval(intervalId);
         }
     }, [questions, currentQuestionIndex]);
 
@@ -91,7 +154,7 @@ export default function AttemptAssessment() {
                 {/* Timer */}
                 <div className="flex justify-between items-center mt-4">
                     <p className="text-gray-500 text-sm">Time remaining</p>
-                    <p className="text-lg font-semibold text-gray-800">{remainingTime[questions[currentQuestionIndex].id]}</p>
+                    <p className="text-lg font-semibold text-gray-800">{remainingTime}</p>
                 </div>
 
                 {/* Question */}

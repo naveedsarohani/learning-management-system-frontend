@@ -4,23 +4,31 @@ import blueprint from "../../uitils/blueprint"
 import { useAuth } from "../../contexts/Authentication"
 import { useHandler } from "../../contexts/Handler"
 import { useParams } from "react-router-dom"
-import { capEach, capitalize, getCountDown, isLoading, isNullOrEmpty, readFile, where } from "../../uitils/functions/global"
+import { capEach, capitalize, isLoading, isNullOrEmpty, padZero, readFile, where } from "../../uitils/functions/global"
 import submission from '../../uitils/api/exam_submission';
+import { DateTime } from "luxon"
+import { debounce } from 'lodash';
 
 export default function AttemptExam() {
     const [currentQuestionIndex, setCurrentQuestionindex] = useState(0)
     const [questions, setQuestions] = useState([blueprint.examQuestion])
     const [selectedOption, setSelectedOption] = useState(null)
-    const [remainingTime, setRemainingTime] = useState('N/A');
+    const [remainingTime, setRemainingTime] = useState(false);
+    const [autoSubmitted, setAutoSubmitted] = useState(false);
     const [attempted, setAttempted] = useState({})
     const { credentials: { token, user } } = useAuth();
     const { handler } = useHandler();
     const { examId } = useParams();
 
-    const handleNext = () => {
-        if (!selectedOption) return alert("Please select an option before proceeding!");
+    const handleNext = ({ autoSubmit = false }) => {
+        if (autoSubmit) {
+            handleSubmit(attempted);
+            return;
+        }
 
-        setAttempted(pre => {
+        else if (!autoSubmit && !selectedOption) return alert("Please select an option before proceeding!");
+
+        selectedOption && setAttempted(pre => {
             return {
                 ...pre,
                 [currentQuestionIndex]: selectedOption
@@ -32,7 +40,12 @@ export default function AttemptExam() {
         }
 
         if (currentQuestionIndex === questions.length - 1) {
-            handleSubmit({ ...attempted, [currentQuestionIndex]: selectedOption })
+            const attemptedQuestions = { ...attempted };
+            if (selectedOption) {
+                attemptedQuestions[currentQuestionIndex] = selectedOption
+            }
+
+            handleSubmit(attemptedQuestions);
             return;
         }
 
@@ -75,20 +88,71 @@ export default function AttemptExam() {
             total_questions: questions.length,
             obtained_marks: obtainedMarks, total_marks: totalMarks,
             total_correct: totalCorrect, total_wrong: totalWrong,
-        }, handler);
+        }, handler).then(() => {
+            handler.navigate(-1);
+        });
     }
 
     useEffect(() => {
-        question.all(token, setQuestions, handler, { exam_id: parseInt(examId) });
-    }, []);
+        const handleBeforeUnload = (event) => {
+            if (Object.keys(attempted).length > 0) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [attempted]);
 
     useEffect(() => {
-        !isNullOrEmpty(questions[currentQuestionIndex].exam.starts_at) && getCountDown(questions[currentQuestionIndex].exam.starts_at, ({ remainingTime, formattedTime: { hours, minutes, seconds } }) => {
-            if (remainingTime !== 0) setRemainingTime(`${hours}:${minutes}:${seconds}`);
-        }, questions[currentQuestionIndex].exam.time_allowed)
+        question.all(token, setQuestions, handler, { exam_id: examId });
+    }, []);
+
+    const handleAutoSubmit = debounce(() => {
+        const examAttemptPath = /.*\/me\/exams\/\d+\/attempt$/;
+        if (examAttemptPath.test(handler.location.pathname)) {
+            handleNext({ autoSubmit: true });
+        }
+    }, 500);
+
+    useEffect(() => {
+        if (remainingTime === 'Times up!' && !autoSubmitted) {
+            setAutoSubmitted(true);
+            handleAutoSubmit();
+        }
+    }, [remainingTime, handleAutoSubmit]);
+
+    useEffect(() => {
+        if (!isNullOrEmpty(questions[currentQuestionIndex].exam.starts_at)) {
+            const startTime = DateTime
+                .fromSQL(questions[currentQuestionIndex].exam.starts_at)
+                .plus({ minutes: questions[currentQuestionIndex].exam.time_allowed });
+
+            const intervalId = setInterval(() => {
+                const currentTime = DateTime.now();
+                const diff = startTime.diff(currentTime);
+
+                if (diff.as('seconds') <= 0) {
+                    setRemainingTime('Times up!');
+                    clearInterval(intervalId);
+                } else {
+                    const hours = Math.floor(diff.as('hours')) % 24;
+                    const minutes = Math.floor(diff.as('minutes')) % 60;
+                    const seconds = Math.floor(diff.as('seconds')) % 60;
+
+                    setRemainingTime(`${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`);
+                }
+            }, 1000);
+
+            return () => clearInterval(intervalId);
+        }
     }, [questions]);
 
-    return handler.componentLoaded && <div className="w-full flex justify-center items-center">
+    return handler.componentLoaded && questions[0].exam && < div className="w-full flex justify-center items-center" >
         <div className="w-full max-w-5xl bg-white shadow-lg rounded-lg p-8 relative mt-5 border-2 border-gray-00">
             {/* Header */}
             <div className="flex justify-between items-center border-b pb-4">
@@ -163,5 +227,5 @@ export default function AttemptExam() {
                 </div>
             </div>
         </div>
-    </div>
+    </div >
 }

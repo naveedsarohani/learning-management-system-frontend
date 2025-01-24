@@ -8,14 +8,16 @@ async function all(token, set, handler, only = false) {
     handler.setComponentLoaded(false);
     try {
         const responseData = response(await request.get('/questions', token), false, true);
-        if (responseData) {
+        if (responseData.questions) {
             if (only) set(where(responseData.questions, only));
             else set(responseData.questions);
         }
     }
     catch (error) { toast.error(capitalize(error.message)); }
-    finally { handler.setLoading(loading => !loading);
-        handler.setComponentLoaded(true); }
+    finally {
+        handler.setLoading(loading => !loading);
+        handler.setComponentLoaded(true);
+    }
 }
 
 async function show(id, token, set, handler) {

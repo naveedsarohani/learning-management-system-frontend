@@ -2,7 +2,7 @@ import React from "react"
 import blueprint from "../../uitils/blueprint"
 import ActionButton from "./ActionButton"
 
-const AssessmentCard = ({ assessment = blueprint.assessment }) => {
+const AssessmentCard = ({ assessment = blueprint.assessment, submission = blueprint.submission }) => {
   return (
     <div className="max-w-lg mx-auto bg-white rounded-xl border border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
       <div className="p-5">
@@ -18,16 +18,22 @@ const AssessmentCard = ({ assessment = blueprint.assessment }) => {
             {assessment.time_limit} mins
           </p>
           <p className="text-gray-600">
-            <span className="font-semibold text-gray-800">Retakes:</span>{" "}
-            {assessment.retakes_allowed}
+            <span className="font-semibold text-gray-800">Remaining Ratakes:</span>{" "}
+            {parseInt(assessment.retakes_allowed) - parseInt(submission.retake_count)}
           </p>
         </div>
         <div className="mt-5 flex justify-center">
-          <ActionButton
-            name="Attempt Now"
-            route={`./attempt-assessment/${assessment.id}`}
-            color="bg-gradient-to-r from-[#21bffd] to-[#217bfe]  text-white py-2 px-6 rounded-md shadow hover:shadow-md transition-all duration-300"
-          />
+          {(parseInt(assessment.retakes_allowed) - parseInt(submission.retake_count)) > 0
+            ? <ActionButton
+              name="Attempt Now"
+              route={`./attempt-assessment/${assessment.id}`}
+              color="bg-gradient-to-r from-[#21bffd] to-[#217bfe]  text-white py-2 px-6 rounded-md shadow hover:shadow-md transition-all duration-300"
+            />
+            : <ActionButton
+              name="Attempts completed"
+              color="bg-gray-500 text-white py-2 px-6 rounded-md shadow hover:shadow-md transition-all duration-300 hover:cursor-not-allowed"
+            />}
+
         </div>
       </div>
     </div>

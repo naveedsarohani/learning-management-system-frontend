@@ -13,7 +13,9 @@ async function all(token, set, handler, only = false) {
             else set(responseData.assessments);
         }
     }
-    catch (error) { toast.error(capitalize(error.message)); }
+    catch (error) {
+        !toast.isActive && toast.error(capitalize(error.message));
+    }
     finally {
         handler.setLoading(loading => !loading);
         handler.setComponentLoaded(true);
@@ -26,7 +28,9 @@ async function show(id, token, set, handler) {
         const responseData = response(await request.get(`/assessments/${id}`, token), false, true);
         responseData && set(responseData.assessment);
     }
-    catch (error) { toast.error(capitalize(error.message)); }
+    catch (error) {
+        !toast.isActive && toast.error(capitalize(error.message));
+    }
     finally { handler.setLoading(loading => !loading); }
 }
 
@@ -37,7 +41,7 @@ async function store(token, data, handler) {
         handler.navigate(-1);
     }
     catch (error) {
-        toast.error(capitalize(error.message));
+        !toast.isActive && toast.error(capitalize(error.message));
     }
     finally { handler.setLoading(loading => !loading); }
 
@@ -48,7 +52,9 @@ async function update(id, data, token, handler) {
     try {
         response(await request.put(`/assessments/${id}`, data, token), handler.setValidationErrors);
         handler.navigate(-1);
-    } catch (error) { toast.error(capitalize(error.message)); }
+    } catch (error) {
+        !toast.isActive && toast.error(capitalize(error.message));
+    }
     finally { handler.setLoading(loading => !loading); }
 
 }

@@ -39,12 +39,6 @@ export default function EditAssessment() {
             <Form {...{ handleSubmit }}>
               {/* Title Field */}
               <div className="mb-4">
-                <label
-                  htmlFor="title"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Title
-                </label>
                 <InputField
                   name={"title"}
                   value={assessment.title}

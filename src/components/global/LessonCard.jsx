@@ -5,7 +5,8 @@ export default function LessonCard({
     lesson = blueprint.lesson,
     showTitle = true,
     next,
-    showControls = false
+    showControls = false,
+    clickToPlay
 }) {
     return (
         <div>
@@ -14,6 +15,7 @@ export default function LessonCard({
                 src={readFile(lesson.content)}
                 onEnded={next}
                 controls={showControls}
+                onClick={clickToPlay}
             ></video>
         </div>
     );

@@ -38,13 +38,11 @@ async function store(token, data, handler) {
     handler.setLoading(loading => !loading);
     try {
         response(await request.post('/exam-submissions/', data, token), handler.setValidationErrors);
-        handler.navigate(-1);
     }
     catch (error) {
         toast.error(capitalize(error.message));
     }
     finally { handler.setLoading(loading => !loading); }
-
 }
 
 async function update(id, data, token, handler) {

@@ -9,12 +9,13 @@ import {
 export default function InputField({
   type,
   name,
-  value = null,
+  value = undefined,
   className,
   placeholder,
   accept,
   set = null,
   customeFunc = null,
+  showLabel = true
 }) {
   const {
     handler: { validationErrors },
@@ -22,7 +23,7 @@ export default function InputField({
 
   return (
     <label className="block text-sm">
-      {/* {capEach(separateBy(name, "_"))}{" "} */}
+      {showLabel && type != 'hidden' && capEach(separateBy(name, "_"))}{" "}
       <input
         className={
           className ??

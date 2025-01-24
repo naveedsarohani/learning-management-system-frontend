@@ -26,15 +26,6 @@ export default function Navbar() {
 
   return (
     <header>
-      {/* <nav>
-            <ol>
-                {user
-                    ? <li onClick={handleLogout}><button>Logout</button></li>
-                    : <li><Link to={'/auth/login'}>Login</Link></li>
-                }
-            </ol>
-        </nav> */}
-
       <nav className="bg-gradient-to-r from-[#217bfe] to-[#21bffd] w-full  flex flex-wrap justify-between items-center px-2 sm:px-6 py-2 bg-white shadow-sm ">
         {/* Navbar Left */}
         <div className="flex items-center space-x-2 text-white">
@@ -46,13 +37,6 @@ export default function Navbar() {
 
         {/* Navbar Right */}
         <div className="flex  items-center space-x-4 relative mt-2 sm:mt-0 w-full sm:w-auto">
-          {/* Search Input */}
-          <input
-            type="text"
-            placeholder="Type here..."
-            className="px-4 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-300 w-full sm:w-auto"
-          />
-
           {/* Profile Icon */}
           {!isNullOrEmpty(user.id) ? (
             <button
@@ -66,12 +50,12 @@ export default function Navbar() {
               <ActionButton
                 name="login"
                 route="/auth/login"
-                color="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded shadow-md transition duration-300"
+                color="bg-gray-200 hover:bg-gray-300 text-black font-medium py-2 px-4 rounded shadow-md transition duration-300"
               />
               <ActionButton
                 name="register"
                 route="/auth/register"
-                color="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded shadow-md transition duration-300"
+                color="bg-gray-200 hover:bg-gray-300 text-black font-medium py-2 px-4 rounded shadow-md transition duration-300"
               />
             </>
           )}

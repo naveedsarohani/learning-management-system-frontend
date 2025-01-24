@@ -12,6 +12,7 @@ import {
   formatDate,
   isNullOrEmpty,
   readFile,
+  where,
 } from "../../uitils/functions/global"
 import NoContent from "../../components/global/NoContent"
 import LessonCard from "../../components/global/LessonCard"
@@ -23,6 +24,9 @@ import AssessmentCard from "../../components/global/AssessmentCard"
 import progressapi from "../../uitils/api/progress"
 import ProgressBar from "../../components/global/ProgressBar"
 import question from "../../uitils/api/question"
+import VideoPlayer from "../../components/global/VideoPlayer"
+import submission from "../../uitils/api/submission"
+import ActionButton from "../../components/global/ActionButton"
 
 const Course = () => {
   const { courseId } = useParams()
@@ -34,6 +38,7 @@ const Course = () => {
   const [assessments, setAssessments] = useState([blueprint.assessment])
   const [questions, setQuestions] = useState([blueprint.question])
   const [lessons, setLessons] = useState([blueprint.lesson])
+  const [preSubmissions, setPreSubmissions] = useState([blueprint.submission])
   const [progress, setProgress] = useState(blueprint.progress)
   const [enrolledUsers, setEnrolledUsers] = useState([])
   const [showEnrollmentForm, setShowEnrollmentForm] = useState(false)
@@ -41,35 +46,22 @@ const Course = () => {
   const [currentLessonId, setCurrentLessonId] = useState(null)
   const [currentAssId, setCurrentAssId] = useState(null)
   const [videoEnded, setVideoEnded] = useState(false)
-
-  const setUnlockNext = async (index) => {
-    const newProgress = {
-      completion_percentage: calcPercetage(lessons.length, index),
-      lesson_index: index + 1,
-    }
-
-    await progressapi.update(courseId, newProgress, token, handler).then(() => {
-      setVideoEnded((pre) => !pre)
-    })
-  }
-
-  const calcPercetage = (total, given, option = null) => {
-    return (given / total) * 100
-  }
+  const [currentVideoIndex, setCurrentVideoindex] = useState(0)
 
   useEffect(() => {
-    enrollment.all(token, setEnrolledUsers, handler, {
+    token && enrollment.all(token, setEnrolledUsers, handler, {
       course_id: parseInt(courseId),
       getOnlyProperty: "user_id",
     })
     courseapi.show(courseId, token, setCourse, handler)
-    assessment.all(token, setAssessments, handler, {
+    token && assessment.all(token, setAssessments, handler, {
       course_id: parseInt(courseId),
     })
-    lesson.all(token, setLessons, handler, { course_id: parseInt(courseId) })
-    question.all(token, setQuestions, handler, {
+    lesson.all(token, setLessons, handler, { course_id: courseId })
+    token && question.all(token, setQuestions, handler, {
       getOnlyProperty: "assessment_id",
     })
+    token && submission.all(token, setPreSubmissions, handler);
   }, [])
 
   useEffect(() => {
@@ -77,8 +69,12 @@ const Course = () => {
   }, [enrolledUsers])
 
   useEffect(() => {
-    progressapi.show(courseId, token, setProgress, handler)
+    token && progressapi.show(courseId, token, setProgress, handler)
   }, [isEnrolled, videoEnded])
+
+  useEffect(() => {
+    !isNullOrEmpty(progress) && setCurrentVideoindex(progress.lesson_index);
+  }, [progress]);
 
   return (
     handler.componentLoaded && (
@@ -103,11 +99,18 @@ const Course = () => {
                 {capitalize(course.title)}
               </h1>
               <div className="course-image mb-4">
-                <img
-                  src={readFile(course.image)}
-                  alt={course.title}
-                  className="w-screen  rounded-lg object-cover max-h-[20rem]"
-                />
+                {isEnrolled && !isNullOrEmpty(lessons[0].id)
+                  ? <VideoPlayer
+                    key={currentVideoIndex}
+                    videos={where(lessons, { getOnlyProperty: 'content' })}
+                    playing={currentVideoIndex}
+                    setEnded={setVideoEnded}
+                  />
+                  : <img
+                    src={readFile(course.image)}
+                    alt={course.title}
+                    className="w-screen  rounded-lg object-cover max-h-[20rem]"
+                  />}
               </div>
               <p className="text-gray-700 mb-4">
                 {capitalize(course.description)}
@@ -140,63 +143,68 @@ const Course = () => {
               </Link>
 
               {/* Enroll Button */}
-              {!isEnrolled && (
-                <div className="enroll-button mt-8 flex justify-center">
-                  <button
-                    onClick={() => setShowEnrollmentForm(true)}
-                    className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow hover:bg-blue-700"
-                  >
-                    Enroll Now
-                  </button>
-                </div>
-              )}
+              {!isEnrolled && <div className="enroll-button mt-8 flex justify-center">
+                {token ? <ActionButton
+                  name={'Enroll Now'}
+                  onClick={() => setShowEnrollmentForm(true)}
+                  color="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow hover:bg-blue-700"
+                /> : <ActionButton
+                  name={'Login to enroll'}
+                  route={'/auth/login'}
+                  color="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow hover:bg-blue-700"
+                />}
+              </div>
+              }
             </div>
 
-            {
-              <div className="course-content bg-white shadow-md rounded-lg p-6">
-                <div>
-                  <Accordion title="Course Content">
-                    {!isNullOrEmpty(lessons[0]) ? (
-                      lessons.map((lesson, index) => (
-                        <AccordionContent
-                          tabTitle={capitalize(lesson.title)}
-                          itemId={lesson.id}
-                          currentTab={{
-                            value: currentLessonId,
-                            set: setCurrentLessonId,
-                          }}
-                          noAction={true}
-                          isLocked={
-                            !isEnrolled || index > progress.lesson_index
-                          }
-                        >
-                          {isEnrolled && index <= progress.lesson_index && (
-                            <LessonCard
-                              key={lesson.id}
-                              showTitle={false}
-                              lesson={lesson}
-                              next={() => setUnlockNext(index + 1)}
-                              showControls={true}
-                            />
-                          )}
-                        </AccordionContent>
-                      ))
-                    ) : (
-                      <div className="flex justify-center items-center h-32 bg-gray-100 rounded-lg">
-                        <NoContent message="There are no lessons for this course" />
-                      </div>
-                    )}
-                  </Accordion>
-                </div>
+            {isEnrolled && <div className="course-content bg-white shadow-md rounded-lg p-6">
+              <div>
+                <Accordion title="Course Content">
+                  {!isNullOrEmpty(lessons[0]) ? (
+                    lessons.map((lesson, index) => (
+                      <AccordionContent
+                        key={lesson.id}
+                        currentPlaying={currentVideoIndex == index}
+                        tabTitle={capitalize(lesson.title)}
+                        itemId={lesson.id}
+                        currentTab={{
+                          value: currentLessonId,
+                          set: setCurrentLessonId,
+                        }}
+                        noAction={true}
+                        isLocked={
+                          !isEnrolled || index > progress.lesson_index
+                        }
+                      >
+                        {isEnrolled && index <= progress.lesson_index && (
+                          <LessonCard
+                            key={lesson.id}
+                            showTitle={false}
+                            lesson={lesson}
+                            clickToPlay={() => {
+                              setCurrentVideoindex(index);
+                            }}
+                          />
+                        )}
+                      </AccordionContent>
+                    ))
+                  ) : (
+                    <div className="flex justify-center items-center h-32 bg-gray-100 rounded-lg">
+                      <NoContent message="There are no lessons for this course" />
+                    </div>
+                  )}
+                </Accordion>
               </div>
+            </div>
             }
 
-            {/* {!isEnrolled && (
+            {!isEnrolled && (
               <div className="course-content bg-white shadow-md rounded-lg p-6">
                 <div>
                   <Accordion title="Course Content">
                     {!isNullOrEmpty(lessons[0]) ? (
                       lessons.map((lesson, index) => <AccordionContent
+                        key={lesson.id}
                         tabTitle={capitalize(lesson.title)}
                         itemId={lesson.id}
                         currentTab={{
@@ -214,7 +222,7 @@ const Course = () => {
                   </Accordion>
                 </div>
               </div>
-            )} */}
+            )}
 
             {isEnrolled && (
               <div className="course-content bg-white shadow-md rounded-lg p-6">
@@ -225,6 +233,7 @@ const Course = () => {
                         (assessment) =>
                           questions.includes(assessment.id) && (
                             <AccordionContent
+                              key={assessment.id}
                               tabTitle={capitalize(assessment.title)}
                               hoverTitle={`The assessment will be unlocked at ${assessment.unlocks_at}% of course completion`}
                               itemId={assessment.id}
@@ -240,8 +249,8 @@ const Course = () => {
                             >
                               {parseFloat(progress.completion_percentage) >=
                                 parseFloat(assessment.unlocks_at) && (
-                                <AssessmentCard assessment={assessment} />
-                              )}
+                                  <AssessmentCard submission={preSubmissions.find(submission => submission.assessment_id == assessment.id)} assessment={assessment} />
+                                )}
                             </AccordionContent>
                           )
                       )

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuth } from "../../contexts/Authentication"
 import { useHandler } from "../../contexts/Handler"
 import exam from "../../uitils/api/exam"
@@ -21,12 +21,8 @@ export default function MyExams() {
   useEffect(() => {
     exam.all(token, setExams, handler)
     question.all(token, setQuestions, handler, { getOnlyProperty: "exam_id" })
-    submission.all(token, setSubmissions, handler, {
-      getOnlyProperty: "exam_id",
-    })
+    submission.all(token, setSubmissions, handler, { student_id: user.id, getOnlyProperty: "exam_id" })
   }, [location.pathname, user])
-
-  console.log(questions)
 
   return (
     handler.componentLoaded && (

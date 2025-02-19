@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useAuth } from "../../contexts/Authentication"
 import { useHandler } from "../../contexts/Handler"
-import course from "../../uitils/api/course"
+import lesson from "../../uitils/api/lesson"
 import blueprint from "../../uitils/blueprint"
 import CourseCard from "../../components/global/CourseCard"
 import { isNullOrEmpty } from "../../uitils/functions/global"
@@ -15,7 +15,7 @@ export default function Home() {
   const { handler } = useHandler()
 
   useEffect(() => {
-    course.all(token, setCourses, handler)
+    lesson.all(token, setCourses, handler, { getOnlyProperty: 'course' });
   }, [location.pathname, user])
 
   return handler.componentLoaded && <div className="bg-gray-50 min-h-screen p-6 px-14">

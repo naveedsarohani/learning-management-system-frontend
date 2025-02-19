@@ -2,7 +2,8 @@ import React from "react"
 import blueprint from "../../uitils/blueprint"
 import ActionButton from "./ActionButton"
 
-const AssessmentCard = ({ assessment = blueprint.assessment, submission = blueprint.submission }) => {
+const AssessmentCard = ({ assessment = blueprint.assessment, submission }) => {
+  console.log(submission);
   return (
     <div className="max-w-lg mx-auto bg-white rounded-xl border border-gray-300 shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
       <div className="p-5">
@@ -19,11 +20,11 @@ const AssessmentCard = ({ assessment = blueprint.assessment, submission = bluepr
           </p>
           <p className="text-gray-600">
             <span className="font-semibold text-gray-800">Remaining Ratakes:</span>{" "}
-            {parseInt(assessment.retakes_allowed) - parseInt(submission.retake_count)}
+            {submission ? (parseInt(assessment.retakes_allowed) - parseInt(submission.retake_count)) : parseInt(assessment.retakes_allowed)}
           </p>
         </div>
         <div className="mt-5 flex justify-center">
-          {(parseInt(assessment.retakes_allowed) - parseInt(submission.retake_count)) > 0
+          {(submission ? (parseInt(assessment.retakes_allowed) - parseInt(submission.retake_count)) : parseInt(assessment.retakes_allowed)) > 0
             ? <ActionButton
               name="Attempt Now"
               route={`./attempt-assessment/${assessment.id}`}

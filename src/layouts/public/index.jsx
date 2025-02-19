@@ -1,23 +1,33 @@
 import { useEffect, useState } from "react"
 import { useAuth } from "../../contexts/Authentication"
-import course from "../../uitils/api/course"
 import { useHandler } from "../../contexts/Handler"
 import blueprint from "../../uitils/blueprint"
 import CourseCard from "../../components/global/CourseCard"
 import InstructorCard from "../../components/global/InstructorCard"
-import auth from "../../uitils/api/auth"
+import lesson from "../../uitils/api/lesson"
+import { where } from "../../uitils/functions/global"
 
 export default function Home() {
   const {
     credentials: { user, token },
   } = useAuth()
+
   const [instructors, setInstructors] = useState([blueprint.user])
   const [courses, setCourses] = useState([blueprint.course])
   const { handler } = useHandler()
 
+  const handle = (data) => {
+    setCourses(data);
+    setInstructors(data.reduce((acc, curr) => {
+      if (!acc.find(user => user.id === curr.user.id)) {
+        acc.push(curr.user);
+      }
+      return acc;
+    }, []));
+  }
+
   useEffect(() => {
-    course.all(token, setCourses, handler)
-    auth.users(token, setInstructors, handler, { role: "instructor" })
+    lesson.all(token, handle, handler, { getOnlyProperty: 'course' });
   }, [location.pathname, user])
 
   return (

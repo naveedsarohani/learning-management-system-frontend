@@ -1,5 +1,10 @@
+import { useHandler } from "../../contexts/Handler";
+
 export default function Form({ children, handleSubmit }) {
+    const { handler } = useHandler();
+
     function onSubmit(e) {
+        handler.setValidationErrors(false);
         e.preventDefault();
 
         const data = {};

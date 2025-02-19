@@ -34,7 +34,7 @@ export default function AddAssessment() {
             <SelectField
               name={"type"}
               value={"Choose the assessment type"}
-              data={["quiz", "test", "exam"]}
+              data={["quiz"]}
             />
 
             <InputField

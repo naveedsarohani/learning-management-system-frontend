@@ -75,7 +75,6 @@ const Course = () => {
   useEffect(() => {
     !isNullOrEmpty(progress) && setCurrentVideoindex(progress.lesson_index);
   }, [progress]);
-
   return (
     handler.componentLoaded && (
       <>
@@ -103,7 +102,7 @@ const Course = () => {
                   ? <VideoPlayer
                     key={currentVideoIndex}
                     videos={where(lessons, { getOnlyProperty: 'content' })}
-                    playing={currentVideoIndex}
+                    playing={lessons.length > currentVideoIndex ? currentVideoIndex : lessons.length - 1}
                     setEnded={setVideoEnded}
                   />
                   : <img
